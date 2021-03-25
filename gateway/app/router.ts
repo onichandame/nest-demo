@@ -6,7 +6,7 @@ import { schema } from "./graphql/resolver";
 export default (app: Application) => {
   const { controller, router } = app;
 
-  router.all(`/graphql`, GraphQL({ schema }));
+  router.all(`/graphql`, GraphQL({ schema, graphiql: true }));
 
   router.get("/status", controller.home.status);
 };

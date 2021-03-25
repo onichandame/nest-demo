@@ -1,12 +1,10 @@
-apps/*/run
-apps/*/logs
-apps/**/*.js
-apps/**/*.jsc
-apps/**/typings/app
-apps/**/typings/config
-apps/server-op/app/public
-!apps/*/index.js
-!apps/server-op/fe-bundle/*.js
+*/run
+*/logs
+**/*.js
+**/*.jsc
+**/typings/app
+**/typings/config
+server-op/app/public
 
 .env*
 
@@ -22,7 +20,5 @@ node_modules
 coverage
 swagger.json
 yarn-error.log
-
-/kesci-mono
 
 yarn.lock
