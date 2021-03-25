@@ -1,0 +1,21 @@
+2021-03-23 05:27:05,015 INFO 591871 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-multipart/app/schedule/clean_tmpdir.js
+2021-03-23 05:27:05,015 INFO 591871 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-logrotator/app/schedule/clean_log.js
+2021-03-23 05:27:05,015 INFO 591871 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-logrotator/app/schedule/rotate_by_file.js
+2021-03-23 05:27:10,011 INFO 591860 [Timer] /kesci-mono/node_modules/egg-multipart/app/schedule/clean_tmpdir.js next time will execute after 82969994ms at 2021-03-24 04:30:00.005
+2021-03-23 05:27:10,011 INFO 591860 [Timer] /kesci-mono/node_modules/egg-logrotator/app/schedule/clean_log.js next time will execute after 66769989ms at 2021-03-24 00:00:00.000
+2021-03-23 05:27:10,012 INFO 591860 [Timer] /kesci-mono/node_modules/egg-logrotator/app/schedule/rotate_by_file.js next time will execute after 66770988ms at 2021-03-24 00:00:01.000
+2021-03-24 10:05:09,726 INFO 671897 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-multipart/app/schedule/clean_tmpdir.js
+2021-03-24 10:05:09,727 INFO 671897 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-logrotator/app/schedule/clean_log.js
+2021-03-24 10:05:09,727 INFO 671897 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-logrotator/app/schedule/rotate_by_file.js
+2021-03-24 10:05:14,874 INFO 671886 [Timer] /kesci-mono/node_modules/egg-multipart/app/schedule/clean_tmpdir.js next time will execute after 66285130ms at 2021-03-25 04:30:00.004
+2021-03-24 10:05:14,875 INFO 671886 [Timer] /kesci-mono/node_modules/egg-logrotator/app/schedule/clean_log.js next time will execute after 50085125ms at 2021-03-25 00:00:00.000
+2021-03-24 10:05:14,875 INFO 671886 [Timer] /kesci-mono/node_modules/egg-logrotator/app/schedule/rotate_by_file.js next time will execute after 50086125ms at 2021-03-25 00:00:01.000
+2021-03-24 10:05:56,521 INFO 671919 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-multipart/app/schedule/clean_tmpdir.js
+2021-03-24 10:05:56,521 INFO 671919 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-logrotator/app/schedule/clean_log.js
+2021-03-24 10:05:56,521 INFO 671919 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-logrotator/app/schedule/rotate_by_file.js
+2021-03-24 10:06:49,909 INFO 672083 [Timer] /kesci-mono/node_modules/egg-multipart/app/schedule/clean_tmpdir.js next time will execute after 66190095ms at 2021-03-25 04:30:00.004
+2021-03-24 10:06:49,910 INFO 672083 [Timer] /kesci-mono/node_modules/egg-logrotator/app/schedule/clean_log.js next time will execute after 49990090ms at 2021-03-25 00:00:00.000
+2021-03-24 10:06:49,911 INFO 672083 [Timer] /kesci-mono/node_modules/egg-logrotator/app/schedule/rotate_by_file.js next time will execute after 49991090ms at 2021-03-25 00:00:01.001
+2021-03-24 10:06:49,481 INFO 672105 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-multipart/app/schedule/clean_tmpdir.js
+2021-03-24 10:06:49,481 INFO 672105 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-logrotator/app/schedule/clean_log.js
+2021-03-24 10:06:49,481 INFO 672105 [egg-schedule]: register schedule /kesci-mono/node_modules/egg-logrotator/app/schedule/rotate_by_file.js
