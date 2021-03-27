@@ -2,7 +2,19 @@
   "private": true,
   "name": "graphql-demo",
   "author": "onichandame",
-  "workspaces": [
-    "gateway"
-  ]
+  "scripts": {
+    "dev": "wsrun -a run dev"
+  },
+  "workspaces": {
+    "packages": [
+      "apps/*"
+    ],
+    "nohoist": [
+      "**/egg*"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "wsrun": "^5.2.4"
+  }
 }

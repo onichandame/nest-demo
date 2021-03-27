@@ -1,0 +1,36 @@
+2021-03-27 08:49:20,752 INFO 782435 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/org/logs/org","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"org-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"agent"}
+2021-03-27 08:49:20,763 INFO 782435 [egg:core] dump config after load, 5ms
+2021-03-27 08:49:20,829 INFO 782435 [egg-watcher] Start watching: ["/graphql-demo/apps/org/app","/graphql-demo/apps/org/config","/graphql-demo/apps/org/mocks","/graphql-demo/apps/org/mocks_proxy","/graphql-demo/apps/org/app.js"]
+2021-03-27 08:49:20,829 INFO 782435 [egg-watcher] Start watching: "/graphql-demo/apps/org/app"
+2021-03-27 08:49:20,829 INFO 782435 [egg-watcher] Start watching: "/graphql-demo/apps/org/config"
+2021-03-27 08:49:20,829 INFO 782435 [egg-watcher] Start watching: "/graphql-demo/apps/org/mocks"
+2021-03-27 08:49:20,830 INFO 782435 [egg-watcher] Start watching: "/graphql-demo/apps/org/mocks_proxy"
+2021-03-27 08:49:20,830 INFO 782435 [egg-watcher] Start watching: "/graphql-demo/apps/org/app.js"
+2021-03-27 08:49:20,830 INFO 782435 [egg-watcher:agent] watcher start success
+2021-03-27 08:49:20,876 INFO 782435 [egg:core] dump config after ready, 9ms
+2021-03-27 08:50:18,956 INFO 782885 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/org/logs/org","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"org-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"agent"}
+2021-03-27 08:50:18,968 INFO 782885 [egg:core] dump config after load, 6ms
+2021-03-27 08:50:19,036 INFO 782885 [egg-watcher] Start watching: ["/graphql-demo/apps/org/app","/graphql-demo/apps/org/config","/graphql-demo/apps/org/mocks","/graphql-demo/apps/org/mocks_proxy","/graphql-demo/apps/org/app.js"]
+2021-03-27 08:50:19,036 INFO 782885 [egg-watcher] Start watching: "/graphql-demo/apps/org/app"
+2021-03-27 08:50:19,037 INFO 782885 [egg-watcher] Start watching: "/graphql-demo/apps/org/config"
+2021-03-27 08:50:19,037 INFO 782885 [egg-watcher] Start watching: "/graphql-demo/apps/org/mocks"
+2021-03-27 08:50:19,037 INFO 782885 [egg-watcher] Start watching: "/graphql-demo/apps/org/mocks_proxy"
+2021-03-27 08:50:19,037 INFO 782885 [egg-watcher] Start watching: "/graphql-demo/apps/org/app.js"
+2021-03-27 08:50:19,038 INFO 782885 [egg-watcher:agent] watcher start success
+2021-03-27 08:50:19,064 INFO 782885 [egg:core] dump config after ready, 18ms
+2021-03-27 08:50:31,776 WARN 782885 [agent:development] reload worker because /graphql-demo/apps/org/app/types.ts rename
+2021-03-27 08:50:31,574 INFO 782885 [egg-watcher] Received a change event from eventSource: {"event":"rename","path":"/graphql-demo/apps/org/app/types.ts","remove":true,"isDirectory":false,"isFile":false}
+2021-03-27 08:51:15,743 INFO 783339 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/org/logs/org","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"org-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"agent"}
+2021-03-27 08:51:15,754 INFO 783339 [egg:core] dump config after load, 5ms
+2021-03-27 08:51:15,832 INFO 783339 [egg-watcher] Start watching: ["/graphql-demo/apps/org/app","/graphql-demo/apps/org/config","/graphql-demo/apps/org/mocks","/graphql-demo/apps/org/mocks_proxy","/graphql-demo/apps/org/app.js"]
+2021-03-27 08:51:15,832 INFO 783339 [egg-watcher] Start watching: "/graphql-demo/apps/org/app"
+2021-03-27 08:51:15,833 INFO 783339 [egg-watcher] Start watching: "/graphql-demo/apps/org/config"
+2021-03-27 08:51:15,833 INFO 783339 [egg-watcher] Start watching: "/graphql-demo/apps/org/mocks"
+2021-03-27 08:51:15,833 INFO 783339 [egg-watcher] Start watching: "/graphql-demo/apps/org/mocks_proxy"
+2021-03-27 08:51:15,833 INFO 783339 [egg-watcher] Start watching: "/graphql-demo/apps/org/app.js"
+2021-03-27 08:51:15,834 INFO 783339 [egg-watcher:agent] watcher start success
+2021-03-27 08:51:15,861 INFO 783339 [egg:core] dump config after ready, 18ms
+2021-03-27 08:52:46,700 INFO 783339 [egg-watcher] Received a change event from eventSource: {"event":"change","path":"/graphql-demo/apps/org/app/resolver/org.ts","stat":{"dev":1048653,"mode":33188,"nlink":1,"uid":0,"gid":0,"rdev":0,"blksize":4096,"ino":37530357,"size":1241,"blocks":8,"atimeMs":1616835023358.0876,"mtimeMs":1616835166699.1084,"ctimeMs":1616835166699.1084,"birthtimeMs":1616834647516.923,"atime":"2021-03-27T08:50:23.358Z","mtime":"2021-03-27T08:52:46.699Z","ctime":"2021-03-27T08:52:46.699Z","birthtime":"2021-03-27T08:44:07.517Z"},"remove":false,"isDirectory":false,"isFile":true}
+2021-03-27 08:52:46,703 INFO 783339 [egg-watcher] Received a change event from eventSource: {"event":"change","path":"/graphql-demo/apps/org/app/resolver/org.ts","stat":{"dev":1048653,"mode":33188,"nlink":1,"uid":0,"gid":0,"rdev":0,"blksize":4096,"ino":37530357,"size":1241,"blocks":8,"atimeMs":1616835023358.0876,"mtimeMs":1616835166699.1084,"ctimeMs":1616835166699.1084,"birthtimeMs":1616834647516.923,"atime":"2021-03-27T08:50:23.358Z","mtime":"2021-03-27T08:52:46.699Z","ctime":"2021-03-27T08:52:46.699Z","birthtime":"2021-03-27T08:44:07.517Z"},"remove":false,"isDirectory":false,"isFile":true}
+2021-03-27 08:52:46,704 INFO 783339 [egg-watcher] Received a change event from eventSource: {"event":"change","path":"/graphql-demo/apps/org/app/resolver/org.ts","stat":{"dev":1048653,"mode":33188,"nlink":1,"uid":0,"gid":0,"rdev":0,"blksize":4096,"ino":37530357,"size":1241,"blocks":8,"atimeMs":1616835023358.0876,"mtimeMs":1616835166699.1084,"ctimeMs":1616835166699.1084,"birthtimeMs":1616834647516.923,"atime":"2021-03-27T08:50:23.358Z","mtime":"2021-03-27T08:52:46.699Z","ctime":"2021-03-27T08:52:46.699Z","birthtime":"2021-03-27T08:44:07.517Z"},"remove":false,"isDirectory":false,"isFile":true}
+2021-03-27 08:52:46,905 WARN 783339 [agent:development] reload worker because /graphql-demo/apps/org/app/resolver/org.ts change

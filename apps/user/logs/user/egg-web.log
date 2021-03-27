@@ -1,0 +1,234 @@
+2021-03-27 04:34:24,445 INFO 763452 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 04:34:24,505 INFO 763452 [egg-multipart] stream mode enable
+2021-03-27 04:34:24,616 INFO 763452 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 04:34:24,619 INFO 763452 [egg-security] use methodnoallow middleware
+2021-03-27 04:34:24,623 INFO 763452 [egg-security] use noopen middleware
+2021-03-27 04:34:24,628 INFO 763452 [egg-security] use nosniff middleware
+2021-03-27 04:34:24,630 INFO 763452 [egg-security] use xssProtection middleware
+2021-03-27 04:34:24,630 INFO 763452 [egg-security] use xframe middleware
+2021-03-27 04:34:24,633 INFO 763452 [egg-security] use dta middleware
+2021-03-27 04:34:24,633 INFO 763452 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 04:34:28,486 INFO 763452 [egg:core] dump config after load, 4ms
+2021-03-27 04:34:28,513 INFO 763452 [egg-watcher:application] watcher start success
+2021-03-27 04:34:28,616 INFO 763452 [egg:core] dump config after ready, 16ms
+2021-03-27 04:37:44,136 INFO 763952 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 04:37:44,201 INFO 763952 [egg-multipart] stream mode enable
+2021-03-27 04:37:44,281 INFO 763952 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 04:37:44,284 INFO 763952 [egg-security] use methodnoallow middleware
+2021-03-27 04:37:44,290 INFO 763952 [egg-security] use noopen middleware
+2021-03-27 04:37:44,291 INFO 763952 [egg-security] use nosniff middleware
+2021-03-27 04:37:44,313 INFO 763952 [egg-security] use xssProtection middleware
+2021-03-27 04:37:44,314 INFO 763952 [egg-security] use xframe middleware
+2021-03-27 04:37:44,314 INFO 763952 [egg-security] use dta middleware
+2021-03-27 04:37:44,315 INFO 763952 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 04:37:44,328 INFO 763952 [egg:core] dump config after load, 5ms
+2021-03-27 04:37:44,354 INFO 763952 [egg-watcher:application] watcher start success
+2021-03-27 04:37:44,500 INFO 763952 [egg:core] dump config after ready, 20ms
+2021-03-27 05:04:53,973 INFO 764329 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 05:04:54,004 INFO 764329 [egg-multipart] stream mode enable
+2021-03-27 05:04:54,060 INFO 764329 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 05:04:54,062 INFO 764329 [egg-security] use methodnoallow middleware
+2021-03-27 05:04:54,062 INFO 764329 [egg-security] use noopen middleware
+2021-03-27 05:04:54,065 INFO 764329 [egg-security] use nosniff middleware
+2021-03-27 05:04:54,066 INFO 764329 [egg-security] use xssProtection middleware
+2021-03-27 05:04:54,067 INFO 764329 [egg-security] use xframe middleware
+2021-03-27 05:04:54,067 INFO 764329 [egg-security] use dta middleware
+2021-03-27 05:04:54,067 INFO 764329 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 05:04:54,118 INFO 764329 [egg:core] dump config after load, 4ms
+2021-03-27 05:04:54,129 INFO 764329 [egg-watcher:application] watcher start success
+2021-03-27 05:04:54,182 INFO 764329 [egg:core] dump config after ready, 8ms
+2021-03-27 05:06:20,603 INFO 764643 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 05:06:20,646 INFO 764643 [egg-multipart] stream mode enable
+2021-03-27 05:06:20,714 INFO 764643 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 05:06:20,716 INFO 764643 [egg-security] use methodnoallow middleware
+2021-03-27 05:06:20,717 INFO 764643 [egg-security] use noopen middleware
+2021-03-27 05:06:20,717 INFO 764643 [egg-security] use nosniff middleware
+2021-03-27 05:06:20,717 INFO 764643 [egg-security] use xssProtection middleware
+2021-03-27 05:06:20,718 INFO 764643 [egg-security] use xframe middleware
+2021-03-27 05:06:20,718 INFO 764643 [egg-security] use dta middleware
+2021-03-27 05:06:20,718 INFO 764643 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 05:06:20,730 INFO 764643 [egg:core] dump config after load, 5ms
+2021-03-27 05:06:20,755 INFO 764643 [egg-watcher:application] watcher start success
+2021-03-27 05:06:20,854 INFO 764643 [egg:core] dump config after ready, 22ms
+2021-03-27 05:06:26,011 INFO 764664 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 05:06:26,055 INFO 764664 [egg-multipart] stream mode enable
+2021-03-27 05:06:26,145 INFO 764664 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 05:06:26,148 INFO 764664 [egg-security] use methodnoallow middleware
+2021-03-27 05:06:26,148 INFO 764664 [egg-security] use noopen middleware
+2021-03-27 05:06:26,148 INFO 764664 [egg-security] use nosniff middleware
+2021-03-27 05:06:26,149 INFO 764664 [egg-security] use xssProtection middleware
+2021-03-27 05:06:26,149 INFO 764664 [egg-security] use xframe middleware
+2021-03-27 05:06:26,149 INFO 764664 [egg-security] use dta middleware
+2021-03-27 05:06:26,149 INFO 764664 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 05:06:26,161 INFO 764664 [egg:core] dump config after load, 5ms
+2021-03-27 05:06:26,174 INFO 764664 [egg-watcher:application] watcher start success
+2021-03-27 05:06:26,254 INFO 764664 [egg:core] dump config after ready, 13ms
+2021-03-27 05:06:51,036 INFO 764684 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 05:06:51,076 INFO 764684 [egg-multipart] stream mode enable
+2021-03-27 05:06:51,170 INFO 764684 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 05:06:51,172 INFO 764684 [egg-security] use methodnoallow middleware
+2021-03-27 05:06:51,173 INFO 764684 [egg-security] use noopen middleware
+2021-03-27 05:06:51,173 INFO 764684 [egg-security] use nosniff middleware
+2021-03-27 05:06:51,174 INFO 764684 [egg-security] use xssProtection middleware
+2021-03-27 05:06:51,174 INFO 764684 [egg-security] use xframe middleware
+2021-03-27 05:06:51,174 INFO 764684 [egg-security] use dta middleware
+2021-03-27 05:06:51,175 INFO 764684 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 05:06:51,250 INFO 764684 [egg:core] dump config after load, 6ms
+2021-03-27 05:06:51,269 INFO 764684 [egg-watcher:application] watcher start success
+2021-03-27 05:06:51,370 INFO 764684 [egg:core] dump config after ready, 8ms
+2021-03-27 05:07:34,771 INFO 764933 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 05:07:34,817 INFO 764933 [egg-multipart] stream mode enable
+2021-03-27 05:07:34,901 INFO 764933 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 05:07:34,904 INFO 764933 [egg-security] use methodnoallow middleware
+2021-03-27 05:07:34,904 INFO 764933 [egg-security] use noopen middleware
+2021-03-27 05:07:34,905 INFO 764933 [egg-security] use nosniff middleware
+2021-03-27 05:07:34,905 INFO 764933 [egg-security] use xssProtection middleware
+2021-03-27 05:07:34,906 INFO 764933 [egg-security] use xframe middleware
+2021-03-27 05:07:34,906 INFO 764933 [egg-security] use dta middleware
+2021-03-27 05:07:34,906 INFO 764933 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 05:07:34,919 INFO 764933 [egg:core] dump config after load, 6ms
+2021-03-27 05:07:34,933 INFO 764933 [egg-watcher:application] watcher start success
+2021-03-27 05:07:35,025 INFO 764933 [egg:core] dump config after ready, 18ms
+2021-03-27 05:08:47,898 INFO 765092 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 05:08:47,941 INFO 765092 [egg-multipart] stream mode enable
+2021-03-27 05:08:48,020 INFO 765092 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 05:08:48,023 INFO 765092 [egg-security] use methodnoallow middleware
+2021-03-27 05:08:48,023 INFO 765092 [egg-security] use noopen middleware
+2021-03-27 05:08:48,024 INFO 765092 [egg-security] use nosniff middleware
+2021-03-27 05:08:48,024 INFO 765092 [egg-security] use xssProtection middleware
+2021-03-27 05:08:48,025 INFO 765092 [egg-security] use xframe middleware
+2021-03-27 05:08:48,025 INFO 765092 [egg-security] use dta middleware
+2021-03-27 05:08:48,025 INFO 765092 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 05:08:48,036 INFO 765092 [egg:core] dump config after load, 5ms
+2021-03-27 05:08:48,049 INFO 765092 [egg-watcher:application] watcher start success
+2021-03-27 05:08:48,118 INFO 765092 [egg:core] dump config after ready, 8ms
+2021-03-27 08:36:50,195 INFO 780560 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:36:50,242 INFO 780560 [egg-multipart] stream mode enable
+2021-03-27 08:36:50,488 INFO 780560 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:36:50,493 INFO 780560 [egg-security] use methodnoallow middleware
+2021-03-27 08:36:50,500 INFO 780560 [egg-security] use noopen middleware
+2021-03-27 08:36:50,501 INFO 780560 [egg-security] use nosniff middleware
+2021-03-27 08:36:50,502 INFO 780560 [egg-security] use xssProtection middleware
+2021-03-27 08:36:50,503 INFO 780560 [egg-security] use xframe middleware
+2021-03-27 08:36:50,504 INFO 780560 [egg-security] use dta middleware
+2021-03-27 08:36:50,504 INFO 780560 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:36:50,595 INFO 780560 [egg:core] dump config after load, 7ms
+2021-03-27 08:36:50,611 INFO 780560 [egg-watcher:application] watcher start success
+2021-03-27 08:36:50,674 INFO 780560 [egg:core] dump config after ready, 8ms
+2021-03-27 08:39:06,436 INFO 780658 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:39:06,476 INFO 780658 [egg-multipart] stream mode enable
+2021-03-27 08:39:06,555 INFO 780658 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:39:06,558 INFO 780658 [egg-security] use methodnoallow middleware
+2021-03-27 08:39:06,558 INFO 780658 [egg-security] use noopen middleware
+2021-03-27 08:39:06,559 INFO 780658 [egg-security] use nosniff middleware
+2021-03-27 08:39:06,559 INFO 780658 [egg-security] use xssProtection middleware
+2021-03-27 08:39:06,560 INFO 780658 [egg-security] use xframe middleware
+2021-03-27 08:39:06,560 INFO 780658 [egg-security] use dta middleware
+2021-03-27 08:39:06,560 INFO 780658 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:39:06,573 INFO 780658 [egg:core] dump config after load, 6ms
+2021-03-27 08:39:06,589 INFO 780658 [egg-watcher:application] watcher start success
+2021-03-27 08:39:06,671 INFO 780658 [egg:core] dump config after ready, 14ms
+2021-03-27 08:42:00,662 INFO 780760 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:42:00,695 INFO 780760 [egg-multipart] stream mode enable
+2021-03-27 08:42:00,759 INFO 780760 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:42:00,760 INFO 780760 [egg-security] use methodnoallow middleware
+2021-03-27 08:42:00,761 INFO 780760 [egg-security] use noopen middleware
+2021-03-27 08:42:00,761 INFO 780760 [egg-security] use nosniff middleware
+2021-03-27 08:42:00,762 INFO 780760 [egg-security] use xssProtection middleware
+2021-03-27 08:42:00,762 INFO 780760 [egg-security] use xframe middleware
+2021-03-27 08:42:00,763 INFO 780760 [egg-security] use dta middleware
+2021-03-27 08:42:00,763 INFO 780760 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:42:00,775 INFO 780760 [egg:core] dump config after load, 6ms
+2021-03-27 08:42:00,787 INFO 780760 [egg-watcher:application] watcher start success
+2021-03-27 08:42:00,846 INFO 780760 [egg:core] dump config after ready, 8ms
+2021-03-27 08:49:17,155 INFO 782446 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:49:17,208 INFO 782446 [egg-multipart] stream mode enable
+2021-03-27 08:49:17,301 INFO 782446 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:49:17,303 INFO 782446 [egg-security] use methodnoallow middleware
+2021-03-27 08:49:17,304 INFO 782446 [egg-security] use noopen middleware
+2021-03-27 08:49:17,305 INFO 782446 [egg-security] use nosniff middleware
+2021-03-27 08:49:17,305 INFO 782446 [egg-security] use xssProtection middleware
+2021-03-27 08:49:17,306 INFO 782446 [egg-security] use xframe middleware
+2021-03-27 08:49:17,308 INFO 782446 [egg-security] use dta middleware
+2021-03-27 08:49:17,308 INFO 782446 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:49:17,326 INFO 782446 [egg:core] dump config after load, 11ms
+2021-03-27 08:49:17,377 INFO 782446 [egg-watcher:application] watcher start success
+2021-03-27 08:49:17,529 INFO 782446 [egg:core] dump config after ready, 30ms
+2021-03-27 08:50:24,769 INFO 782939 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:50:24,827 INFO 782939 [egg-multipart] stream mode enable
+2021-03-27 08:50:24,910 INFO 782939 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:50:24,913 INFO 782939 [egg-security] use methodnoallow middleware
+2021-03-27 08:50:24,913 INFO 782939 [egg-security] use noopen middleware
+2021-03-27 08:50:24,914 INFO 782939 [egg-security] use nosniff middleware
+2021-03-27 08:50:24,915 INFO 782939 [egg-security] use xssProtection middleware
+2021-03-27 08:50:24,915 INFO 782939 [egg-security] use xframe middleware
+2021-03-27 08:50:24,919 INFO 782939 [egg-security] use dta middleware
+2021-03-27 08:50:24,919 INFO 782939 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:50:24,932 INFO 782939 [egg:core] dump config after load, 7ms
+2021-03-27 08:50:24,973 INFO 782939 [egg-watcher:application] watcher start success
+2021-03-27 08:50:25,167 INFO 782939 [egg:core] dump config after ready, 18ms
+2021-03-27 08:50:45,339 INFO 783051 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:50:45,378 INFO 783051 [egg-multipart] stream mode enable
+2021-03-27 08:50:45,433 INFO 783051 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:50:45,435 INFO 783051 [egg-security] use methodnoallow middleware
+2021-03-27 08:50:45,435 INFO 783051 [egg-security] use noopen middleware
+2021-03-27 08:50:45,436 INFO 783051 [egg-security] use nosniff middleware
+2021-03-27 08:50:45,436 INFO 783051 [egg-security] use xssProtection middleware
+2021-03-27 08:50:45,436 INFO 783051 [egg-security] use xframe middleware
+2021-03-27 08:50:45,437 INFO 783051 [egg-security] use dta middleware
+2021-03-27 08:50:45,437 INFO 783051 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:50:45,473 INFO 783051 [egg:core] dump config after load, 4ms
+2021-03-27 08:50:45,484 INFO 783051 [egg-watcher:application] watcher start success
+2021-03-27 08:50:45,541 INFO 783051 [egg:core] dump config after ready, 8ms
+2021-03-27 08:51:19,328 INFO 783357 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:51:19,399 INFO 783357 [egg-multipart] stream mode enable
+2021-03-27 08:51:19,500 INFO 783357 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:51:19,503 INFO 783357 [egg-security] use methodnoallow middleware
+2021-03-27 08:51:19,504 INFO 783357 [egg-security] use noopen middleware
+2021-03-27 08:51:19,504 INFO 783357 [egg-security] use nosniff middleware
+2021-03-27 08:51:19,505 INFO 783357 [egg-security] use xssProtection middleware
+2021-03-27 08:51:19,505 INFO 783357 [egg-security] use xframe middleware
+2021-03-27 08:51:19,506 INFO 783357 [egg-security] use dta middleware
+2021-03-27 08:51:19,506 INFO 783357 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:51:19,523 INFO 783357 [egg:core] dump config after load, 9ms
+2021-03-27 08:51:19,557 INFO 783357 [egg-watcher:application] watcher start success
+2021-03-27 08:51:19,716 INFO 783357 [egg:core] dump config after ready, 26ms
+2021-03-27 08:56:04,544 INFO 783691 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:56:04,574 INFO 783691 [egg-multipart] stream mode enable
+2021-03-27 08:56:10,767 INFO 783691 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:56:10,770 INFO 783691 [egg-security] use methodnoallow middleware
+2021-03-27 08:56:10,771 INFO 783691 [egg-security] use noopen middleware
+2021-03-27 08:56:10,772 INFO 783691 [egg-security] use nosniff middleware
+2021-03-27 08:56:10,772 INFO 783691 [egg-security] use xssProtection middleware
+2021-03-27 08:56:10,773 INFO 783691 [egg-security] use xframe middleware
+2021-03-27 08:56:10,774 INFO 783691 [egg-security] use dta middleware
+2021-03-27 08:56:10,774 INFO 783691 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:56:10,788 INFO 783691 [egg:core] dump config after load, 6ms
+2021-03-27 08:56:10,835 INFO 783691 [egg-watcher:application] watcher start success
+2021-03-27 08:56:10,939 INFO 783691 [egg:core] dump config after ready, 21ms
+2021-03-27 08:56:40,625 INFO 783873 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 08:56:40,655 INFO 783873 [egg-multipart] stream mode enable
+2021-03-27 08:56:40,705 INFO 783873 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 08:56:40,707 INFO 783873 [egg-security] use methodnoallow middleware
+2021-03-27 08:56:40,708 INFO 783873 [egg-security] use noopen middleware
+2021-03-27 08:56:40,708 INFO 783873 [egg-security] use nosniff middleware
+2021-03-27 08:56:40,708 INFO 783873 [egg-security] use xssProtection middleware
+2021-03-27 08:56:40,709 INFO 783873 [egg-security] use xframe middleware
+2021-03-27 08:56:40,709 INFO 783873 [egg-security] use dta middleware
+2021-03-27 08:56:40,709 INFO 783873 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 08:56:40,718 INFO 783873 [egg:core] dump config after load, 4ms
+2021-03-27 08:56:40,738 INFO 783873 [egg-watcher:application] watcher start success
+2021-03-27 08:56:40,800 INFO 783873 [egg:core] dump config after ready, 9ms
+2021-03-27 09:06:10,194 INFO 783905 [egg:logger] init all loggers with options: {"dir":"/graphql-demo/apps/user/logs/user","encoding":"utf8","env":"local","level":"INFO","consoleLevel":"INFO","disableConsoleAfterReady":false,"outputJSON":false,"buffer":true,"appLogName":"user-web.log","coreLogName":"egg-web.log","agentLogName":"egg-agent.log","errorLogName":"common-error.log","coreLogger":{"consoleLevel":"WARN"},"allowDebugAtProd":false,"type":"application"}
+2021-03-27 09:06:10,235 INFO 783905 [egg-multipart] stream mode enable
+2021-03-27 09:06:10,282 INFO 783905 [egg-static] starting static serve /public/ -> /graphql-demo/apps/user/app/public
+2021-03-27 09:06:10,284 INFO 783905 [egg-security] use methodnoallow middleware
+2021-03-27 09:06:10,284 INFO 783905 [egg-security] use noopen middleware
+2021-03-27 09:06:10,285 INFO 783905 [egg-security] use nosniff middleware
+2021-03-27 09:06:10,285 INFO 783905 [egg-security] use xssProtection middleware
+2021-03-27 09:06:10,286 INFO 783905 [egg-security] use xframe middleware
+2021-03-27 09:06:10,286 INFO 783905 [egg-security] use dta middleware
+2021-03-27 09:06:10,286 INFO 783905 [egg-security] compose 6 middlewares into one security middleware
+2021-03-27 09:06:10,295 INFO 783905 [egg:core] dump config after load, 4ms
+2021-03-27 09:06:10,305 INFO 783905 [egg-watcher:application] watcher start success
+2021-03-27 09:06:10,363 INFO 783905 [egg:core] dump config after ready, 10ms

@@ -6,4 +6,28 @@
 
 主要的限制因素是现有stack过于依赖egg，因此最好是在现有框架上做增量。
 
+# 目标、方法
+
+目标分为5步，依次完成。
+
+## Query/Mutate
+
+GraphQL的基础操作，用来代替REST。基本思路是在egg router上加一个Graphql端点，允许逐步将旧的REST API迁移进新的端点，最终实现统一。
+
+## GraphiQL
+
+在graphql端点上加载playground，非开发人员可以用这个界面获取最新的API定义并实时测试。
+
+## Subscription
+
+在完成上述目标的基础上，应实现Subscription操作。（Apollo对Subscription的支持较差，federation尚不支持subscription，因此搁置）
+
+## Authorization
+
+Playground需要保护，简单的username/password即可。
+
+## 融合
+
+在微服务架构中，最终目标是将所有服务的端点融合进一个gateway，在客户端看来只有一个端点。渐进式的方案是用反代转发入站流量，最终转为federation。
+
 [egg-graphql]: https://github.com/eggjs/egg-graphql

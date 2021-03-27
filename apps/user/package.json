@@ -1,0 +1,72 @@
+{
+  "name": "user",
+  "version": "0.0.0",
+  "description": "Kesci-NG demo service",
+  "egg": {
+    "framework": "@kesci-lib/egg-framework",
+    "typescript": true
+  },
+  "scripts": {
+    "start": "egg-scripts start --workers=1 --title=egg-server-Kesci-NG-User",
+    "stop": "egg-scripts stop --title=egg-server-Kesci-NG-User",
+    "dev": "egg-bin dev -r egg-ts-helper/register --port=3001",
+    "debug": "egg-bin debug -r egg-ts-helper/register",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "npm run clean && egg-bin test",
+    "cov": "npm run clean && egg-bin cov",
+    "lint": "npm run format",
+    "format": "prettier -c .",
+    "tsc": "ets && tsc -p tsconfig.json",
+    "ci": "npm run lint && npm run cov && npm run tsc",
+    "clean": "ets clean",
+    "autod": "autod",
+    "typings": "ets ",
+    "pkg-alpine": "npm run tsc && pkg -t node12.18.1-alpine-x64 .",
+    "doc": "esc . ./doc || true",
+    "docker:build-and-push": "cd ../../ && APP=${npm_package_name#\"@kesci/\"} ./build_and_push.sh",
+    "docker:release": "export VERSION=v$npm_package_version && npm run docker:build-and-push"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format"
+    }
+  },
+  "dependencies": {
+    "@alicloud/pop-core": "^1.7.9",
+    "@kesci-lib/egg-framework": "^3.0.2",
+    "@kesci-lib/kesci-common-decorators": "^3.0.2",
+    "@types/lodash": "^4.14.116",
+    "apollo-server-koa": "^2.22.1",
+    "axios": "^0.18.0",
+    "class-validator": "^0.13.1",
+    "dotenv": "^6.2.0",
+    "egg": "^2.6.1",
+    "egg-passport": "^2.1.1",
+    "egg-scripts": "^2.6.0",
+    "egg-swagger-compiler": "git+https://git@gitlab-a3uxYvFhKUDLt7.kesci.com/Kesci-libs/egg-swagger-compiler.git#v1.0.2",
+    "ioredis": "^4.16.3",
+    "koa-graphql": "^0.8.0",
+    "koa-router": "^10.0.0",
+    "mongoose": "~5.10.0",
+    "otplib": "^10.0.1",
+    "qiniu": "^7.2.2",
+    "qs": "^6.6.0",
+    "reflect-metadata": "^0.1.13",
+    "superagent-use": "^0.1.0",
+    "superagent-verbose-errors": "^1.0.1",
+    "type-graphql": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/koa-graphql": "^0.8.4",
+    "@types/mongoose": "~5.10.0",
+    "egg-bin": "^4.15.0"
+  },
+  "engines": {
+    "node": ">=12.20.0"
+  },
+  "eslintIgnore": [
+    "coverage"
+  ],
+  "author": "Kesci",
+  "license": "MIT"
+}
