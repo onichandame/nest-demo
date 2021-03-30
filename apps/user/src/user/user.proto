@@ -1,0 +1,5 @@
+package user
+service
+message User{
+  int32 _id =1
+}
