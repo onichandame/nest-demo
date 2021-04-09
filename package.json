@@ -1,20 +1,8 @@
 {
+  "name": "nest-demo",
   "private": true,
-  "name": "graphql-demo",
-  "author": "onichandame",
-  "scripts": {
-    "dev": "wsrun -a run dev"
-  },
-  "workspaces": {
-    "packages": [
-      "apps/*"
-    ],
-    "nohoist": [
-      "**/egg*"
-    ]
-  },
-  "devDependencies": {
-    "concurrently": "^6.0.0",
-    "wsrun": "^5.2.4"
-  }
+  "workspaces": [
+    "backend",
+    "frontend"
+  ]
 }
