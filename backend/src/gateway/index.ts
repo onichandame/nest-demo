@@ -9,7 +9,7 @@ const logger = new Logger(`Gateway`)
 const bootstrap = async () => {
   const app = await createGateway(GatewayModule)
   const config = app.get(ConfigService)
-  await app.listen(config.get(`PORT`) || `3002`, () =>
+  await app.listen(config.get(`PORT`) || `3000`, () =>
     logger.log(`gateway ready`)
   )
 }
