@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 
-import { StatusResolver } from './status.resolver'
+import { StatusResolver } from './resolver'
 
 @Module({ providers: [StatusResolver] })
 export class StatusModule {}

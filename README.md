@@ -1,33 +1,27 @@
 # 问题
 
-需要解决的直接问题是前后端分离后，后端的API更改无法实时更新进reader-friendly的文档内。而且随着迭代后API越来越复杂，文档和API必定会脱节，导致后续开发需要回到代码内部寻找逻辑。因此需要找到一个能以某种形式实时记录API，允许非后端开发人员获取API最新的定义和用法。
+1. 僵硬的微服务架构无法很好地应对越来越复杂的需求，很多时候一条完整的业务逻辑散乱在不同的微服务中
+2. 分散的model和service让网络拓扑杂乱无章
+3. 后端API无法实时维护描述文档，对前端很不友好
 
-# 限制
+# 历史经验
 
-主要的限制因素是现有stack过于依赖egg，因此最好是在现有框架上做增量。
+1. 微服务治理应尽量放在部署阶段
+2. 一条独立的业务逻辑应内聚在一个模块中
+3. GET无法发送复杂的request，应采用POST或PUT实现API
 
-# 目标、方法
+# 实现方案
 
-目标分为5步，依次完成。
+基础框架采用NestJs，项目结构如下：
 
-## Query/Mutate
-
-GraphQL的基础操作，用来代替REST。基本思路是在egg router上加一个Graphql端点，允许逐步将旧的REST API迁移进新的端点，最终实现统一。
-
-## GraphiQL
-
-在graphql端点上加载playground，非开发人员可以用这个界面获取最新的API定义并实时测试。
-
-## Subscription
-
-在完成上述目标的基础上，应实现Subscription操作。（Apollo对Subscription的支持较差，federation尚不支持subscription，因此搁置）
-
-## Authorization
-
-Playground需要保护，简单的username/password即可。
-
-## 融合
-
-在微服务架构中，最终目标是将所有服务的端点融合进一个gateway，在客户端看来只有一个端点。渐进式的方案是用反代转发入站流量，最终转为federation。
-
-[egg-graphql]: https://github.com/eggjs/egg-graphql
+- package.json
+- main.ts(access point of all services)
+- model(common module shared by all services)
+  - user.ts
+  - org.ts
+- gateway(exposed to frontend)
+  - index.ts
+  - resolver.ts
+- auth(backend microservice)
+  - index.ts
+  - controller.ts

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 
-import { StatusModule } from './status'
+import { StatusModule } from '../status'
 
 @Module({
   imports: [
