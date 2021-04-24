@@ -1,22 +1,42 @@
 import { Logger, Module, DynamicModule } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { Transport, MicroserviceOptions } from '@nestjs/microservices'
+import {
+  ClientProxyFactory,
+  Transport,
+  MicroserviceOptions,
+} from '@nestjs/microservices'
 import { NestFactory } from '@nestjs/core'
 import { ConfigModule } from '@nestjs/config'
 
+import { ClientToken } from './constants'
+
 // supplementary modules
 import { DbModule } from './db'
-import { Model } from './model'
 
 // services
 import { GatewayModule } from './gateway'
-import { AuthModule } from './auth'
+import { UserModule } from './user'
+
+const DefaultNatsUrl = `nats://localhost:4222`
 
 @Module({})
 class BaseModule {
   static forRoot(module: any): DynamicModule {
     return {
-      imports: [DbModule, ConfigModule.forRoot(), Model, module],
+      imports: [DbModule, ConfigModule.forRoot(), module],
+      providers: [
+        {
+          provide: ClientToken,
+          inject: [ConfigService],
+          useFactory: (configService: ConfigService) =>
+            ClientProxyFactory.create({
+              transport: Transport.NATS,
+              options: {
+                url: configService.get<string>(`NATS_URL`) || DefaultNatsUrl,
+              },
+            }),
+        },
+      ],
       module: BaseModule,
     }
   }
@@ -25,14 +45,20 @@ class BaseModule {
 const createGateway = async (module: any) =>
   NestFactory.create(BaseModule.forRoot(module))
 
-const createMicroservice = async (module: any) =>
-  NestFactory.createMicroservice<MicroserviceOptions>(
+const createMicroservice = async (module: any) => {
+  const context = await NestFactory.createApplicationContext(
+    BaseModule.forRoot(module)
+  )
+  const configService = context.get<ConfigService>(ConfigService)
+  const app = NestFactory.createMicroservice<MicroserviceOptions>(
     BaseModule.forRoot(module),
     {
       transport: Transport.NATS,
-      options: { queue: `auth`, name: `auth`, url: `nats://localhost:4222` },
+      options: { url: configService.get<string>(`NATS_URL`) || DefaultNatsUrl },
     }
   )
+  return app
+}
 
 const bootstrap = async () => {
   const appName = process.env.APP || `unknowApp`
@@ -41,8 +67,8 @@ const bootstrap = async () => {
     switch (appName) {
       case `gateway`:
         return createGateway(GatewayModule)
-      case `auth`:
-        return createMicroservice(AuthModule)
+      case `user`:
+        return createMicroservice(UserModule)
       default:
         throw new Error(`${appName} not valid app!`)
     }

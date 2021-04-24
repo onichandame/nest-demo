@@ -1,4 +1,4 @@
-export enum RoleAction {
+export enum RbacAction {
   QUERY = 0,
   CREATE,
   UPDATE,
@@ -11,3 +11,4 @@ export enum ServiceName {
 
 export const SEP1 = `:`
 export const SEP2 = `_`
+export const ClientToken = Symbol(`microservice`)
