@@ -1,6 +1,9 @@
 import { ObjectID, ObjectIdColumn } from 'typeorm'
+import { ObjectType, Field } from '@nestjs/graphql'
 
+@ObjectType()
 export class Base {
-  @ObjectIdColumn({ nullable: false })
+  @Field(() => String)
+  @ObjectIdColumn()
   id: ObjectID
 }

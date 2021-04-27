@@ -8,11 +8,15 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        let mongoUrl = configService.get<string>(`MONGO_URL`)
+        let mongoUrl =
+          configService.get<string>(`MONGO_URL`) ||
+          `mongodb://localhost:27017/test`
         return {
           url: mongoUrl,
+          synchronize: true,
           autoLoadEntities: true,
           type: `mongodb`,
+          keepConnectionAlive: true,
         }
       },
     }),

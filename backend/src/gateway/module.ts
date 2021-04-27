@@ -2,9 +2,12 @@ import { Module } from '@nestjs/common'
 import { GraphQLModule } from '@nestjs/graphql'
 
 import { StatusModule } from '../status'
+import { MicroserviceClientModule } from '../microservice'
+import { UserResolver } from './user.resolver'
 
 @Module({
   imports: [
+    MicroserviceClientModule,
     StatusModule,
     GraphQLModule.forRoot({
       autoSchemaFile: true,
@@ -12,5 +15,6 @@ import { StatusModule } from '../status'
       subscriptions: { path: `/graphql/ws` },
     }),
   ],
+  providers: [UserResolver],
 })
 export class GatewayModule {}

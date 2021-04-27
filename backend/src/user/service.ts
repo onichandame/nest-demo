@@ -1,16 +1,22 @@
-import { Injectable, Inject } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
+import { InjectEntityManager } from '@nestjs/typeorm'
+import { EntityManager } from 'typeorm'
 
-import { DbModelUserService, User } from '../db'
+import { User } from '../db'
 import { UserUpdateArgs, UserRegisterArgs } from '../types'
 
 @Injectable()
 export class UserService {
-  constructor(@Inject() private users: DbModelUserService) {}
+  constructor(@InjectEntityManager() private db: EntityManager) {}
   async register(args: UserRegisterArgs) {
-    return this.users.create(args)
+    return this.db.save(this.db.create<User>(User, args))
+  }
+
+  async list() {
+    return this.db.find<User>(User)
   }
 
   async update(id: string, args: UserUpdateArgs) {
-    return this.users.update({ id }, args)
+    return this.db.update<User>(User, { id }, args)
   }
 }

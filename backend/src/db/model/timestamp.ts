@@ -1,10 +1,15 @@
 import { CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Field, ObjectType } from '@nestjs/graphql'
 
 import { Base } from './base'
 
+@ObjectType()
 export class Timestamp extends Base {
-  @CreateDateColumn({ nullable: false })
+  @Field()
+  @CreateDateColumn()
   CreatedAt: Date
-  @UpdateDateColumn({ nullable: true })
-  UpdatedAt?: Date
+
+  @Field()
+  @UpdateDateColumn()
+  UpdatedAt: Date
 }

@@ -1,14 +1,8 @@
 import { Logger, Module, DynamicModule } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import {
-  ClientProxyFactory,
-  Transport,
-  MicroserviceOptions,
-} from '@nestjs/microservices'
+import { Transport, MicroserviceOptions } from '@nestjs/microservices'
 import { NestFactory } from '@nestjs/core'
 import { ConfigModule } from '@nestjs/config'
-
-import { ClientToken } from './constants'
 
 // supplementary modules
 import { DbModule } from './db'
@@ -21,40 +15,36 @@ const DefaultNatsUrl = `nats://localhost:4222`
 
 @Module({})
 class BaseModule {
-  static forRoot(module: any): DynamicModule {
+  static forRoot(module?: any): DynamicModule {
+    const modules = [DbModule, ConfigModule.forRoot()]
+    if (module) modules.push(module)
     return {
-      imports: [DbModule, ConfigModule.forRoot(), module],
-      providers: [
-        {
-          provide: ClientToken,
-          inject: [ConfigService],
-          useFactory: (configService: ConfigService) =>
-            ClientProxyFactory.create({
-              transport: Transport.NATS,
-              options: {
-                url: configService.get<string>(`NATS_URL`) || DefaultNatsUrl,
-              },
-            }),
-        },
-      ],
+      imports: modules,
       module: BaseModule,
     }
   }
+}
+
+const getConfigService = async () => {
+  const context = await NestFactory.createApplicationContext(
+    BaseModule.forRoot()
+  )
+  const service = context.get<ConfigService>(ConfigService)
+  await context.close() // has to close or mongo connection 'default' will conflict
+  return service
 }
 
 const createGateway = async (module: any) =>
   NestFactory.create(BaseModule.forRoot(module))
 
 const createMicroservice = async (module: any) => {
-  const context = await NestFactory.createApplicationContext(
-    BaseModule.forRoot(module)
-  )
-  const configService = context.get<ConfigService>(ConfigService)
+  const configService = await getConfigService()
+  const natsUrl = configService.get<string>(`NATS_URL`) || DefaultNatsUrl
   const app = NestFactory.createMicroservice<MicroserviceOptions>(
     BaseModule.forRoot(module),
     {
       transport: Transport.NATS,
-      options: { url: configService.get<string>(`NATS_URL`) || DefaultNatsUrl },
+      options: { url: natsUrl },
     }
   )
   return app
@@ -74,8 +64,9 @@ const bootstrap = async () => {
     }
   }
   const app = await getApp()
-  const config = app.get(ConfigService)
-  await app.listenAsync(config.get(`PORT`) || 3000)
+  const configs = await getConfigService()
+  const port = configs.get<string>(`PORT`) || 3000
+  await app.listenAsync(port)
   logger.log(`${appName} ready`)
 }
 

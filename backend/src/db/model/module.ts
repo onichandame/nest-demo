@@ -1,13 +1,9 @@
 import { Module } from '@nestjs/common'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
-// services
-import { DbModelHelperModule } from './helper'
-
-// schemas
-import { DbModelUserModule } from './user'
-import { DbModelRbacModule } from './rbac'
+import * as Schemas from './schemas'
 
 @Module({
-  imports: [DbModelHelperModule, DbModelUserModule, DbModelRbacModule],
+  imports: [TypeOrmModule.forFeature(Object.values(Schemas))],
 })
 export class DbModelModule {}
