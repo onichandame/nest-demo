@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { StatusModule } from '../status'
 import { MicroserviceClientModule } from '../microservice'
 import { UserResolver } from './user.resolver'
+import { AuthenticateResolver } from './authenticate.resolver'
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { UserResolver } from './user.resolver'
       subscriptions: { path: `/graphql/ws` },
     }),
   ],
-  providers: [UserResolver],
+  providers: [UserResolver, AuthenticateResolver],
 })
 export class GatewayModule {}

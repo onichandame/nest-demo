@@ -12,9 +12,9 @@ import { ClientToken } from '../../constants'
       inject: [ConfigService],
       useFactory: (configs: ConfigService) =>
         ClientProxyFactory.create({
-          transport: Transport.NATS,
+          transport: Transport.REDIS,
           options: {
-            url: configs.get<string>(`NATS_URL`) || `nats://localhost:4222`,
+            url: configs.get<string>(`REDIS_URL`) || `redis://localhost:6379`,
           },
         }),
     },

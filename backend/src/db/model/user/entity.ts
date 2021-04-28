@@ -1,7 +1,6 @@
-import { Index, OneToMany, OneToOne, Entity, Column } from 'typeorm'
+import { Index, OneToMany, Entity, Column } from 'typeorm'
 import { ObjectType, Field } from '@nestjs/graphql'
 
-import { Credential } from '../credential'
 import { Timestamp } from '../timestamp'
 import { RbacRole } from '../rbac'
 
@@ -19,9 +18,8 @@ export class User extends Timestamp {
   email: string
 
   @Field({ nullable: true })
-  @OneToOne(() => Credential)
   @Column({ nullable: true })
-  credential?: Credential
+  password?: string
 
   @Field(() => [RbacRole], { nullable: true })
   @OneToMany(() => RbacRole, role => role.id)

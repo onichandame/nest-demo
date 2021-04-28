@@ -13,6 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
           `mongodb://localhost:27017/test`
         return {
           url: mongoUrl,
+          useUnifiedTopology: true,
           synchronize: true,
           autoLoadEntities: true,
           type: `mongodb`,

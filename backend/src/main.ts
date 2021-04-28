@@ -1,22 +1,34 @@
-import { Logger, Module, DynamicModule } from '@nestjs/common'
+import { Global, Logger, Module, DynamicModule } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { Transport, MicroserviceOptions } from '@nestjs/microservices'
 import { NestFactory } from '@nestjs/core'
 import { ConfigModule } from '@nestjs/config'
 
-// supplementary modules
+import { RedisModule } from './redis'
+import configuration from './config'
 import { DbModule } from './db'
 
-// services
+// apps
 import { GatewayModule } from './gateway'
 import { UserModule } from './user'
+import { AuthenticateModule } from './authenticate'
+import { AuthorizeModule } from './authorize'
 
-const DefaultNatsUrl = `nats://localhost:4222`
+const microserviceMap = {
+  user: UserModule,
+  authenticate: AuthenticateModule,
+  authorize: AuthorizeModule,
+}
 
+@Global()
 @Module({})
 class BaseModule {
   static forRoot(module?: any): DynamicModule {
-    const modules = [DbModule, ConfigModule.forRoot()]
+    const modules = [
+      RedisModule,
+      DbModule,
+      ConfigModule.forRoot({ load: [configuration] }),
+    ]
     if (module) modules.push(module)
     return {
       imports: modules,
@@ -34,17 +46,19 @@ const getConfigService = async () => {
   return service
 }
 
-const createGateway = async (module: any) =>
-  NestFactory.create(BaseModule.forRoot(module))
+const createGateway = async (module: any) => {
+  const app = await NestFactory.create(BaseModule.forRoot(module))
+  return app
+}
 
 const createMicroservice = async (module: any) => {
   const configService = await getConfigService()
-  const natsUrl = configService.get<string>(`NATS_URL`) || DefaultNatsUrl
+  const msgProviderUrl = configService.get<string>(`REDIS_URL`)
   const app = NestFactory.createMicroservice<MicroserviceOptions>(
     BaseModule.forRoot(module),
     {
-      transport: Transport.NATS,
-      options: { url: natsUrl },
+      transport: Transport.REDIS,
+      options: { url: msgProviderUrl },
     }
   )
   return app
@@ -54,14 +68,10 @@ const bootstrap = async () => {
   const appName = process.env.APP || `unknowApp`
   const logger = new Logger(appName)
   const getApp = () => {
-    switch (appName) {
-      case `gateway`:
-        return createGateway(GatewayModule)
-      case `user`:
-        return createMicroservice(UserModule)
-      default:
-        throw new Error(`${appName} not valid app!`)
-    }
+    if (appName === `gateway`) return createGateway(GatewayModule)
+    else if (appName in microserviceMap)
+      return createMicroservice(microserviceMap[appName])
+    else throw new Error(`${appName} not valid app!`)
   }
   const app = await getApp()
   const configs = await getConfigService()
