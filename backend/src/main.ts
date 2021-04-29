@@ -10,11 +10,13 @@ import { DbModule } from './db'
 
 // apps
 import { GatewayModule } from './gateway'
+import { JobModule } from './job'
 import { UserModule } from './user'
 import { AuthenticateModule } from './authenticate'
-import { AuthorizeModule } from './authorize'
+import { AuthorizeModule, AuthorizeGuard } from './authorize'
 
 const microserviceMap = {
+  job: JobModule,
   user: UserModule,
   authenticate: AuthenticateModule,
   authorize: AuthorizeModule,
@@ -48,6 +50,7 @@ const getConfigService = async () => {
 
 const createGateway = async (module: any) => {
   const app = await NestFactory.create(BaseModule.forRoot(module))
+  app.useGlobalGuards(new AuthorizeGuard())
   return app
 }
 
@@ -58,7 +61,7 @@ const createMicroservice = async (module: any) => {
     BaseModule.forRoot(module),
     {
       transport: Transport.REDIS,
-      options: { url: msgProviderUrl },
+      options: { url: msgProviderUrl, retryAttempts: -1 },
     }
   )
   return app

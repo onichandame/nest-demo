@@ -1,8 +1,7 @@
-export enum RbacAction {
-  QUERY = 0,
-  CREATE,
-  UPDATE,
-  DELETE,
+export enum Role {
+  GUEST = 0,
+  USER,
+  ADMIN,
 }
 
 export enum ServiceName {
@@ -16,6 +15,9 @@ export const SESSION_TTL = 60 * 60 * 24 * 1.5
 
 export const ClientToken = Symbol(`microservice`)
 
+const JobPattern = { service: `job` }
+export const JobInitAdminPattern = { ...JobPattern, cmd: `initAdmin` }
+
 const UserServicePattern = { service: `user` }
 export const UserRegisterPattern = {
   ...UserServicePattern,
@@ -28,4 +30,8 @@ export const AuthenticateLoginPattern = { ...AuthenticatePattern, cmd: `login` }
 export const AuthenticateUpdatePassPattern = {
   ...AuthenticatePattern,
   cmd: `updatePass`,
+}
+export const AuthenticateDeserializeSessionPattern = {
+  ...AuthenticatePattern,
+  cmd: `deserializeSession`,
 }

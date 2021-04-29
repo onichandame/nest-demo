@@ -1,6 +1,10 @@
 import { User } from './db'
 import { ObjectType, ArgsType, Field } from '@nestjs/graphql'
 
+export type JobArgs = {
+  async?: boolean
+}
+
 @ArgsType()
 class SessionedArgs {
   @Field({ nullable: true })
@@ -24,6 +28,9 @@ export class UserRegisterArgs implements Pick<User, 'name' | 'email'> {
   @Field()
   name!: string
 }
+
+@ArgsType()
+export class UserListArgs extends ListArgs {}
 
 @ArgsType()
 export class UserUpdateArgs

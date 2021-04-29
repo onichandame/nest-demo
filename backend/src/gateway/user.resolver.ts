@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 
 import { User } from '../db'
-import { UserRegisterArgs } from '../types'
+import { UserRegisterArgs, UserListArgs } from '../types'
 import { ClientToken, UserRegisterPattern, UserListPattern } from '../constants'
 
 @Resolver()
@@ -16,7 +16,7 @@ export class UserResolver {
   }
 
   @Query(() => [User])
-  async listUsers(): Promise<User[]> {
-    return this.client.send(UserListPattern, {}).toPromise()
+  async listUsers(@Args() args: UserListArgs): Promise<User[]> {
+    return this.client.send(UserListPattern, { ...args }).toPromise()
   }
 }

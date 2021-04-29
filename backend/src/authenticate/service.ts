@@ -41,4 +41,11 @@ export class AuthenticateService {
       }
     return result
   }
+
+  async getUserFromSession(key: string) {
+    const id = await this.sessions.getSession(key)
+    if (!id) throw new Error(`session not found: ${key}`)
+    const user = await this.db.findOneOrFail(User, id)
+    return user
+  }
 }

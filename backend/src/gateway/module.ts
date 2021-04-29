@@ -3,6 +3,8 @@ import { GraphQLModule } from '@nestjs/graphql'
 
 import { StatusModule } from '../status'
 import { MicroserviceClientModule } from '../microservice'
+import { GatewayAuthenticatePlugin } from './authenticate.plugin'
+
 import { UserResolver } from './user.resolver'
 import { AuthenticateResolver } from './authenticate.resolver'
 
@@ -16,6 +18,6 @@ import { AuthenticateResolver } from './authenticate.resolver'
       subscriptions: { path: `/graphql/ws` },
     }),
   ],
-  providers: [UserResolver, AuthenticateResolver],
+  providers: [GatewayAuthenticatePlugin, UserResolver, AuthenticateResolver],
 })
 export class GatewayModule {}
