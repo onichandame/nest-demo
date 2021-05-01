@@ -21,14 +21,18 @@ export class User extends Timestamp {
 
   @Field({
     nullable: true,
-    middleware: [guardFieldForAttribute({ role: Role.ADMIN })],
+    middleware: [guardFieldForAttribute({ banned: true })],
   })
   @Column({ nullable: true })
   password?: string
 
   @Field(() => [Int], {
     nullable: true,
-    middleware: [guardFieldForAttribute({ or: [{ role: Role.ADMIN }] })],
+    middleware: [
+      guardFieldForAttribute<User>({
+        or: [{ role: Role.ADMIN }, { self: ctx => ctx.source.id.toString() }],
+      }),
+    ],
   })
   @Column({ nullable: true })
   roles?: Role[]
