@@ -1,7 +1,13 @@
-import { User } from './db'
 import { ObjectType, ArgsType, Field } from '@nestjs/graphql'
 
+import { User } from './db'
+
+export type Context = {
+  userPromise: Promise<User>
+}
+
 export type JobArgs = {
+  job: string
   async?: boolean
 }
 

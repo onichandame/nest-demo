@@ -18,21 +18,27 @@ export class GatewayAuthenticatePlugin implements ApolloServerPlugin {
   constructor(@Inject(ClientToken) private client: ClientProxy) {}
 
   private async deserializeSession(sessionKey: string): Promise<User> {
-    const user = await this.client
-      .send(AuthenticateDeserializeSessionPattern, sessionKey)
-      .toPromise()
-    return user
+    try {
+      const user = await this.client
+        .send(AuthenticateDeserializeSessionPattern, sessionKey)
+        .toPromise()
+      return user
+    } catch (e) {
+      console.error(e)
+      return null
+    }
   }
 
   requestDidStart(ctx: GraphQLRequestContext): GraphQLRequestListener {
     const sessionKey = ctx.request.variables.session
     ctx.context.session = sessionKey
     if (sessionKey)
-      ctx.context.userPromise = this.deserializeSession(sessionKey).catch(e => {
-        ctx.logger.warn(e)
-        delete ctx.context.session
-        delete ctx.context.userPromise
-      })
+      ctx.context.userPromise = this.deserializeSession(sessionKey).catch(
+        () => {
+          delete ctx.context.session
+          delete ctx.context.userPromise
+        }
+      )
     return
   }
 }

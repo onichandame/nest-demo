@@ -5,21 +5,20 @@ import { NestFactory } from '@nestjs/core'
 import { ConfigModule } from '@nestjs/config'
 
 import { RedisModule } from './redis'
-import configuration from './config'
+import { LockModule } from './lock'
 import { DbModule } from './db'
+import configuration from './config'
 
 // apps
 import { GatewayModule } from './gateway'
 import { JobModule } from './job'
 import { UserModule } from './user'
 import { AuthenticateModule } from './authenticate'
-import { AuthorizeModule, AuthorizeGuard } from './authorize'
 
 const microserviceMap = {
   job: JobModule,
   user: UserModule,
   authenticate: AuthenticateModule,
-  authorize: AuthorizeModule,
 }
 
 @Global()
@@ -28,6 +27,7 @@ class BaseModule {
   static forRoot(module?: any): DynamicModule {
     const modules = [
       RedisModule,
+      LockModule,
       DbModule,
       ConfigModule.forRoot({ load: [configuration] }),
     ]
@@ -50,7 +50,6 @@ const getConfigService = async () => {
 
 const createGateway = async (module: any) => {
   const app = await NestFactory.create(BaseModule.forRoot(module))
-  app.useGlobalGuards(new AuthorizeGuard())
   return app
 }
 
@@ -61,7 +60,7 @@ const createMicroservice = async (module: any) => {
     BaseModule.forRoot(module),
     {
       transport: Transport.REDIS,
-      options: { url: msgProviderUrl, retryAttempts: -1 },
+      options: { url: msgProviderUrl, retryAttempts: 1 },
     }
   )
   return app

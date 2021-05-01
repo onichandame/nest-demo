@@ -14,6 +14,7 @@ import { ClientToken } from '../../constants'
         ClientProxyFactory.create({
           transport: Transport.REDIS,
           options: {
+            retryAttempts: 1,
             url: configs.get<string>(`REDIS_URL`) || `redis://localhost:6379`,
           },
         }),

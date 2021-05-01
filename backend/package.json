@@ -45,6 +45,7 @@
     "bcryptjs": "^2.4.3",
     "cache-manager": "^3.4.3",
     "cache-manager-ioredis": "^2.1.0",
+    "cron-parser": "^3.5.0",
     "graphql": "^15.5.0",
     "graphql-subscriptions": "^1.2.1",
     "graphql-tools": "^7.0.4",
