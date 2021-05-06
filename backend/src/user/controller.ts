@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common'
 import { MessagePattern } from '@nestjs/microservices'
 
-import { UserRegisterArgs } from '../types'
+import { UserRegisterArgs } from '../inputs'
 import { UserRegisterPattern, UserListPattern } from '../constants'
 import { UserService } from './service'
 

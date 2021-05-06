@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common'
 import { ClientProxy } from '@nestjs/microservices'
 
 import { User } from '../db'
-import { UserRegisterArgs, UserListArgs } from '../types'
+import { UserRegisterArgs, UserListArgs } from '../inputs'
 import { ClientToken, UserRegisterPattern, UserListPattern } from '../constants'
 
 @Resolver()

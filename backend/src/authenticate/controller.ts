@@ -6,7 +6,7 @@ import {
   AuthenticateLoginPattern,
   AuthenticateUpdatePassPattern,
 } from '../constants'
-import { UserLoginArgs } from '../types'
+import { UserLoginArgs } from '../inputs'
 import { AuthenticateService } from './service'
 
 @Controller()

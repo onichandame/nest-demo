@@ -2,7 +2,8 @@ import { Args, Resolver, Mutation } from '@nestjs/graphql'
 import { ClientProxy } from '@nestjs/microservices'
 import { Inject } from '@nestjs/common'
 
-import { UserLoginArgs, UserLoginReply } from '../types'
+import { UserLoginArgs } from '../inputs'
+import { UserLoginReply } from '../outputs'
 import { ClientToken, AuthenticateLoginPattern } from '../constants'
 
 @Resolver()

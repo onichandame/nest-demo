@@ -3,7 +3,8 @@ import { hash } from 'bcryptjs'
 import { Int, ObjectType, Field } from '@nestjs/graphql'
 
 import { Role } from '../../../constants'
-import { guardFieldForAttribute } from '../authorize.guard'
+import { Verb } from '../../../types'
+import { guardFieldForAttribute } from '../../../authorize'
 import { Timestamp } from '../timestamp'
 
 @ObjectType()
@@ -30,6 +31,7 @@ export class User extends Timestamp {
     nullable: true,
     middleware: [
       guardFieldForAttribute<User>({
+        verb: Verb.READ,
         or: [{ role: Role.ADMIN }, { self: ctx => ctx.source.id.toString() }],
       }),
     ],

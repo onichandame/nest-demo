@@ -3,7 +3,8 @@ import { EntityManager } from 'typeorm'
 import { InjectEntityManager } from '@nestjs/typeorm'
 import { compare } from 'bcryptjs'
 
-import { UserLoginArgs, UserLoginReply } from '../types'
+import { UserLoginArgs } from '../inputs'
+import { UserLoginReply } from '../outputs'
 import { SessionService } from '../session'
 import { User } from '../db'
 

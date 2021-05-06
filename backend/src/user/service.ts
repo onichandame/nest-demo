@@ -3,7 +3,7 @@ import { InjectEntityManager } from '@nestjs/typeorm'
 import { EntityManager } from 'typeorm'
 
 import { User } from '../db'
-import { UserUpdateArgs, UserRegisterArgs } from '../types'
+import { UserUpdateArgs, UserRegisterArgs } from '../inputs'
 
 @Injectable()
 export class UserService {
