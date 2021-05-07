@@ -2,6 +2,7 @@ import { FC } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Layout } from './layout'
+import { States } from './states'
 
 export const App: FC = () => {
   return (
@@ -14,7 +15,9 @@ export const App: FC = () => {
           sizes="16x16"
         />
       </Helmet>
-      <Layout></Layout>
+      <States>
+        <Layout></Layout>
+      </States>
     </div>
   )
 }
