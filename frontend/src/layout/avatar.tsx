@@ -3,12 +3,12 @@ import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
 import { v1 as createUid } from 'uuid'
 
-import { Auth } from '../context'
+import { User } from '../context'
 
 export const Avatar: FC = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const [menuId] = useState(createUid())
-  const [user] = useContext(Auth)
+  const [user] = useContext(User)
   return (
     <div>
       <IconButton

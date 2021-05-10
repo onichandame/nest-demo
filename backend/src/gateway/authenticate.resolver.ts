@@ -1,10 +1,15 @@
-import { Args, Resolver, Mutation } from '@nestjs/graphql'
+import { Query, Args, Resolver, Mutation } from '@nestjs/graphql'
 import { ClientProxy } from '@nestjs/microservices'
 import { Inject } from '@nestjs/common'
 
-import { UserLoginArgs } from '../inputs'
+import { User } from '../db'
+import { UserLoginArgs, ValidateSessionArgs } from '../inputs'
 import { UserLoginReply } from '../outputs'
-import { ClientToken, AuthenticateLoginPattern } from '../constants'
+import {
+  ClientToken,
+  AuthenticateLoginPattern,
+  AuthenticateDeserializeSessionPattern,
+} from '../constants'
 
 @Resolver()
 export class AuthenticateResolver {
@@ -13,5 +18,10 @@ export class AuthenticateResolver {
   @Mutation(() => UserLoginReply)
   async login(@Args() args: UserLoginArgs): Promise<UserLoginReply> {
     return this.client.send(AuthenticateLoginPattern, args).toPromise()
+  }
+
+  @Query(() => User)
+  async validateSession(@Args() args: ValidateSessionArgs) {
+    return this.client.send(AuthenticateDeserializeSessionPattern, args.session)
   }
 }

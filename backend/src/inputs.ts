@@ -51,3 +51,9 @@ export class UserLoginArgs implements Pick<User, 'password'> {
   @Field()
   password: string
 }
+
+@ArgsType()
+export class ValidateSessionArgs implements SessionedArgs {
+  @Field()
+  session: string
+}
