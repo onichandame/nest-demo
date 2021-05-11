@@ -12,7 +12,7 @@ export const App: FC = () => {
         <link
           rel="shortcut icon"
           href="https://cdn.kesci.com/favicon.ico"
-          sizes="16x16"
+          type="image/x-icon"
         />
       </Helmet>
       <States>

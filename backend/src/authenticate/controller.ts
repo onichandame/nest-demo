@@ -1,12 +1,13 @@
 import { Controller } from '@nestjs/common'
-import { MessagePattern } from '@nestjs/microservices'
+import { MessagePattern, RpcException } from '@nestjs/microservices'
 
 import {
   AuthenticateDeserializeSessionPattern,
   AuthenticateLoginPattern,
+  AuthenticateLogoutPattern,
   AuthenticateUpdatePassPattern,
 } from '../constants'
-import { UserLoginArgs } from '../inputs'
+import { UserLoginArgs, UserLogoutArgs } from '../inputs'
 import { AuthenticateService } from './service'
 
 @Controller()
@@ -15,7 +16,20 @@ export class AuthenticateController {
 
   @MessagePattern(AuthenticateLoginPattern)
   async login(args: UserLoginArgs) {
-    return this.authSvc.loginUser(args)
+    try {
+      return await this.authSvc.loginUser(args)
+    } catch (e) {
+      throw new RpcException(e.message)
+    }
+  }
+
+  @MessagePattern(AuthenticateLogoutPattern)
+  async logout(args: UserLogoutArgs) {
+    try {
+      return await this.authSvc.logoutUser(args)
+    } catch (e) {
+      throw new RpcException(e.message)
+    }
   }
 
   @MessagePattern(AuthenticateUpdatePassPattern)
@@ -23,6 +37,10 @@ export class AuthenticateController {
 
   @MessagePattern(AuthenticateDeserializeSessionPattern)
   async deserializeSession(sessionKey: string) {
-    return this.authSvc.getUserFromSession(sessionKey)
+    try {
+      return await this.authSvc.getUserFromSession(sessionKey)
+    } catch (e) {
+      throw new RpcException(e.message)
+    }
   }
 }

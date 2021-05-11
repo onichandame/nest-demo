@@ -3,12 +3,18 @@ import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
 import { v1 as createUid } from 'uuid'
 
+import { Login } from '../components'
 import { User } from '../context'
 
 export const Avatar: FC = () => {
+  const [open, setOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const [menuId] = useState(createUid())
   const [user] = useContext(User)
+  const onClickedItem = () => {
+    setOpen(false)
+    setAnchorEl(null)
+  }
   return (
     <div>
       <IconButton
@@ -34,10 +40,11 @@ export const Avatar: FC = () => {
           </div>
         ) : (
           <div>
-            <MenuItem>login</MenuItem>
+            <MenuItem onClick={onClickedItem}>login</MenuItem>
           </div>
         )}
       </Menu>
+      <Login open={open} onClose={() => setOpen(false)} />
     </div>
   )
 }

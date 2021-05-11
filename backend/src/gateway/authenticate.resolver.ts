@@ -3,11 +3,12 @@ import { ClientProxy } from '@nestjs/microservices'
 import { Inject } from '@nestjs/common'
 
 import { User } from '../db'
-import { UserLoginArgs, ValidateSessionArgs } from '../inputs'
+import { UserLoginArgs, ValidateSessionArgs, UserLogoutArgs } from '../inputs'
 import { UserLoginReply } from '../outputs'
 import {
   ClientToken,
   AuthenticateLoginPattern,
+  AuthenticateLogoutPattern,
   AuthenticateDeserializeSessionPattern,
 } from '../constants'
 
@@ -17,7 +18,15 @@ export class AuthenticateResolver {
 
   @Mutation(() => UserLoginReply)
   async login(@Args() args: UserLoginArgs): Promise<UserLoginReply> {
-    return this.client.send(AuthenticateLoginPattern, args).toPromise()
+    const session = await this.client
+      .send(AuthenticateLoginPattern, args)
+      .toPromise()
+    return { session }
+  }
+
+  @Mutation()
+  async logout(@Args() args: UserLogoutArgs) {
+    return this.client.send(AuthenticateLogoutPattern, args)
   }
 
   @Query(() => User)

@@ -6,6 +6,10 @@ import { Cache } from 'cache-manager'
 export class SessionService {
   constructor(@Inject(CACHE_MANAGER) private cache: Cache) {}
 
+  async revokeSession(key: string) {
+    return this.cache.del(key)
+  }
+
   async createSession(id: string) {
     const key = getRandomStr()
     await this.cache.set(key, id)

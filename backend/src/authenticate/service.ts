@@ -3,8 +3,7 @@ import { EntityManager } from 'typeorm'
 import { InjectEntityManager } from '@nestjs/typeorm'
 import { compare } from 'bcryptjs'
 
-import { UserLoginArgs } from '../inputs'
-import { UserLoginReply } from '../outputs'
+import { UserLoginArgs, UserLogoutArgs } from '../inputs'
 import { SessionService } from '../session'
 import { User } from '../db'
 
@@ -20,7 +19,6 @@ export class AuthenticateService {
   }
 
   async loginUser(args: UserLoginArgs) {
-    let result: UserLoginReply
     const user = (
       await this.db.find<User>(User, {
         where: {
@@ -29,18 +27,17 @@ export class AuthenticateService {
         take: 1,
       })
     )[0]
-    if (!user) result = { ok: false, reason: `user not found` }
+    if (!user) throw new Error(`user not found`)
     else if (
       !!user.password &&
       !(await this.validateCredentials(args.password, user.password))
     )
-      result = { ok: false, reason: `credential not valid` }
-    else
-      result = {
-        ok: true,
-        session: await this.sessions.createSession(user.id.toString()),
-      }
-    return result
+      throw new Error(`credential not valid`)
+    else return this.sessions.createSession(user.id.toString())
+  }
+
+  async logoutUser(args: UserLogoutArgs) {
+    return this.sessions.revokeSession(args.session)
   }
 
   async getUserFromSession(key: string) {

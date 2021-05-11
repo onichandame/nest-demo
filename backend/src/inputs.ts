@@ -57,3 +57,5 @@ export class ValidateSessionArgs implements SessionedArgs {
   @Field()
   session: string
 }
+
+export { ValidateSessionArgs as UserLogoutArgs }

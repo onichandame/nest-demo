@@ -41,7 +41,7 @@ export class GatewayAuthenticatePlugin implements ApolloServerPlugin {
         .toPromise()
       return user
     } catch (e) {
-      console.error(e)
+      console.log(e)
       return null
     }
   }
@@ -52,7 +52,6 @@ export class GatewayAuthenticatePlugin implements ApolloServerPlugin {
   }
 
   requestDidStart(ctx: GraphQLRequestContext<Context>): GraphQLRequestListener {
-    console.log(ctx.request.operationName)
     ctx.context.verb = this.getVerb(ctx.request.operationName)
     const sessionKey = ctx.request.variables.session
     ctx.context.session = sessionKey

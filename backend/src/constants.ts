@@ -35,6 +35,10 @@ export const UserListPattern = { ...UserServicePattern, cmd: `list` }
 
 const AuthenticatePattern = { service: `authenticate` }
 export const AuthenticateLoginPattern = { ...AuthenticatePattern, cmd: `login` }
+export const AuthenticateLogoutPattern = {
+  ...AuthenticatePattern,
+  cmd: `logout`,
+}
 export const AuthenticateUpdatePassPattern = {
   ...AuthenticatePattern,
   cmd: `updatePass`,
