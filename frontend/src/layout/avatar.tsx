@@ -3,7 +3,7 @@ import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import { AccountCircle } from '@material-ui/icons'
 import { v1 as createUid } from 'uuid'
 
-import { Login } from '../components'
+import { Login, Logout } from '../components'
 import { User } from '../context'
 
 export const Avatar: FC = () => {
@@ -15,6 +15,7 @@ export const Avatar: FC = () => {
     setOpen(false)
     setAnchorEl(null)
   }
+  const onMenuClose = () => setOpen(false)
   return (
     <div>
       <IconButton
@@ -44,7 +45,11 @@ export const Avatar: FC = () => {
           </div>
         )}
       </Menu>
-      <Login open={open} onClose={() => setOpen(false)} />
+      {!!user ? (
+        <Logout open={open} onClose={onMenuClose} />
+      ) : (
+        <Login open={open} onClose={onMenuClose} />
+      )}
     </div>
   )
 }
