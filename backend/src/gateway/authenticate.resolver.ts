@@ -4,7 +4,7 @@ import { Inject } from '@nestjs/common'
 
 import { User } from '../db'
 import { UserLoginArgs, ValidateSessionArgs, UserLogoutArgs } from '../inputs'
-import { UserLoginReply } from '../outputs'
+import { UserLoginReply, EmptyReply } from '../outputs'
 import {
   ClientToken,
   AuthenticateLoginPattern,
@@ -24,9 +24,10 @@ export class AuthenticateResolver {
     return { session }
   }
 
-  @Mutation()
-  async logout(@Args() args: UserLogoutArgs) {
-    return this.client.send(AuthenticateLogoutPattern, args)
+  @Mutation(() => EmptyReply)
+  async logout(@Args() args: UserLogoutArgs): Promise<EmptyReply> {
+    await this.client.send(AuthenticateLogoutPattern, args).toPromise()
+    return { ok: true }
   }
 
   @Query(() => User)

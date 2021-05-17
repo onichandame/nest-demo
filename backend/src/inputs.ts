@@ -37,7 +37,8 @@ export class UserListArgs extends ListArgs {}
 @ArgsType()
 export class UserUpdateArgs
   extends SessionedArgs
-  implements Partial<Pick<User, 'email' | 'name'>> {
+  implements Partial<Pick<User, 'email' | 'name'>>
+{
   @Field({ nullable: true })
   name?: string
   @Field({ nullable: true })

@@ -1,4 +1,11 @@
-import { Index, Entity, Column, BeforeInsert, BeforeUpdate } from 'typeorm'
+import {
+  OneToMany,
+  Index,
+  Entity,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
+} from 'typeorm'
 import { hash } from 'bcryptjs'
 import { Int, ObjectType, Field } from '@nestjs/graphql'
 
@@ -6,6 +13,7 @@ import { Role } from '../../../constants'
 import { Verb } from '../../../types'
 import { guardFieldForAttribute } from '../../../authorize'
 import { Timestamp } from '../timestamp'
+import { Lab } from '../lab'
 
 @ObjectType()
 @Entity({})
@@ -38,6 +46,10 @@ export class User extends Timestamp {
   })
   @Column({ nullable: true })
   roles?: Role[]
+
+  @OneToMany(() => Lab, lab => lab.user)
+  @Field(() => [Lab])
+  labs: Lab[]
 
   @BeforeInsert()
   @BeforeUpdate()
