@@ -1,24 +1,10 @@
 {
-  "name": "nest-demo",
+  "name": "kesci-nest-demo",
   "private": true,
-  "scripts": {
-    "dev:backend": "cross-env PORT=3002 yarn workspace backend dev",
-    "dev:frontend": "cross-env PORT=3001 yarn workspace frontend dev",
-    "clean:proxy": "docker rm -f proxy",
-    "dev:proxy": "npm run clean:proxy ; docker run --add-host=host.docker.internal:host-gateway --net host --rm --name proxy -p 3000:3000 -v $PWD/nginx.conf:/etc/nginx/nginx.conf:ro nginx:alpine",
-    "dev": "concurrently -k \"npm run dev:backend\" \"npm run dev:frontend\" \"npm run dev:proxy\" "
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "arrowParens": "avoid"
-  },
   "workspaces": [
-    "backend",
-    "frontend"
+    "libs/*",
+    "apps/*"
   ],
-  "devDependencies": {
-    "concurrently": "^6.0.1",
-    "cross-env": "^7.0.3"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
