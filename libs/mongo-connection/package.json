@@ -54,7 +54,7 @@
   "dependencies": {
     "@nestjs/common": "^7.6.15",
     "@nestjs/config": "^0.6.3",
-    "@nestjs/typeorm": "^7.1.5",
+    "@nestjs/mongoose": "^7.2.4",
     "mongodb": "^3.6.6"
   }
 }

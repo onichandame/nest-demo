@@ -5,6 +5,20 @@
     "libs/*",
     "apps/*"
   ],
+  "scripts": {
+    "clean:mongo": "docker rm -f mongo",
+    "clean:infra": "concurrently \"npm run clean:mongo\"",
+    "dev:mongo": "docker run -d --name mongo --restart always -p 27017:27017 mongo",
+    "dev:infra": "npm run dev:mongo",
+    "dev:gateway": "cross-env PORT=3000 yarn workspace gateway start:dev",
+    "dev:user": "cross-env PORT=3001 yarn workspace user start:dev",
+    "dev:services": "concurrently \"npm run dev:user\"",
+    "dev:apps": "concurrently \"sleep 10 && npm run dev:gateway\" \"npm run dev:services\"",
+    "dev": "npm run clean:infra && concurrently \"npm run dev:infra\" \"npm run dev:apps\""
+  },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "concurrently": "^6.1.0",
+    "cross-env": "^7.0.3"
+  }
 }

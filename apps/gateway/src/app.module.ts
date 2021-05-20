@@ -14,7 +14,7 @@ import { AppService } from './app.service';
           server: { path: `/graphql` },
           gateway: {
             serviceList: [
-              { name: `users`, url: `http://localhost:3001/graphql` },
+              { name: `user`, url: `http://localhost:3001/graphql` },
             ],
           },
         };

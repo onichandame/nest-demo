@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync({
+    MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-        const url =
+        const uri =
           config.get<string>(`MONGO_URL`) || `mongodb://localhost:27017/test`;
         return {
-          url,
+          uri,
           useUnifiedTopology: true,
           autoLoadEntities: true,
           synchronize: true,

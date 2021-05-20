@@ -1,14 +1,11 @@
-import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Field, GraphQLISODateTime } from '@nestjs/graphql';
+import { Prop, Schema } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-import { Base } from './base';
-
-export class Timestamp extends Base {
-  @Field(() => GraphQLISODateTime)
-  @CreateDateColumn()
+@Schema({ timestamps: { createdAt: `CreatedAt`, updatedAt: `UpdatedAt` } })
+export class Timestamp extends Document {
+  @Prop()
   CreatedAt!: Date;
 
-  @Field(() => GraphQLISODateTime)
-  @UpdateDateColumn()
+  @Prop()
   UpdatedAt!: Date;
 }
