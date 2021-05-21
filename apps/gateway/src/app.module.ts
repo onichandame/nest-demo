@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLGatewayModule } from '@nestjs/graphql';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MongoConnectionModule } from '@kesci/mongo-connection';
 
 @Module({
   imports: [
     GraphQLGatewayModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
+      imports: [MongoConnectionModule],
       useFactory: async () => {
         return {
           server: { path: `/graphql` },
@@ -21,7 +18,5 @@ import { AppService } from './app.service';
       },
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@apollo/federation": "^0.25.0",
-    "@kesci/datatype": "^0.1.0",
+    "@kesci/model": "0.0.0",
     "@kesci/mongo-connection": "^0.0.0",
     "@kesci/nest": "^0.1.0",
     "@nestjs-query/query-graphql": "^0.27.0",

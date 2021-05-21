@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { StripAutoFields } from '@kesci/datatype';
+import { StripAutoFields } from '@kesci/model';
 import {
   IsString,
   IsEmail,

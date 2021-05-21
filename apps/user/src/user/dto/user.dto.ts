@@ -1,9 +1,8 @@
 import { ObjectType, ID, GraphQLISODateTime, Directive } from '@nestjs/graphql';
 import { ObjectID } from 'mongodb';
 import { FilterableField } from '@nestjs-query/query-graphql';
-import { StripDocumentProperties } from '@kesci/datatype';
 
-import { User } from '../user.entity';
+import { User, StripDocumentProperties } from '@kesci/model';
 
 @ObjectType(`User`)
 @Directive(`@key(fields: "_id")`)

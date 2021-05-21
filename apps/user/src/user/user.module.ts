@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryMongooseModule } from '@nestjs-query/query-mongoose';
 
-import { User, UserSchema } from './user.entity';
+import { User, UserSchema } from '@kesci/model';
 import { UserDTO, UserCreateDTO, UserUpdateDTO } from './dto';
 
 @Module({

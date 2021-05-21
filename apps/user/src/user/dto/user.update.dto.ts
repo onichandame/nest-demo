@@ -6,7 +6,7 @@ import {
   IsEmail,
 } from 'class-validator';
 import { Field, InputType } from '@nestjs/graphql';
-import { StripAutoFields } from '@kesci/datatype';
+import { StripAutoFields } from '@kesci/model';
 
 import { UserDTO } from './user.dto';
 

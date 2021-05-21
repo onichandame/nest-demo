@@ -4,11 +4,13 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=10"
+  },
+  "peerDependencies": {
+    "@nestjs/config": "^0.6.3"
   },
   "scripts": {
     "start": "tsdx watch",
@@ -53,7 +55,6 @@
   },
   "dependencies": {
     "@nestjs/common": "^7.6.16",
-    "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.16",
     "@nestjs/platform-express": "^7.6.17"
   }

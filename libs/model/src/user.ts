@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Timestamp } from '@kesci/datatype';
+
+import { Persistent } from './common';
 
 @Schema()
-export class User extends Timestamp {
+export class User extends Persistent {
   @Prop({ required: true })
-  name: string;
+  name!: string;
 
   @Prop({ required: false })
   email?: string;
