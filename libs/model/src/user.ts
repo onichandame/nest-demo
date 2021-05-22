@@ -12,3 +12,11 @@ export class User extends Persistent {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+UserSchema.index(
+  { name: 1 },
+  { unique: true, partialFilterExpression: { Deleted: false } }
+);
+UserSchema.index(
+  { email: 1 },
+  { sparse: true, unique: true, partialFilterExpression: { Deleted: false } }
+);

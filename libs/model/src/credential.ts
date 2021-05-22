@@ -6,8 +6,10 @@ import { User } from './user';
 
 @Schema()
 export class Credential extends Timestamp {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: `User` })
+  @Prop({ required: true, type: mongoose.Schema.Types.ObjectId, ref: `User` })
   user!: User;
+  @Prop()
+  password?: string;
 }
 
 export const CredentialSchema = SchemaFactory.createForClass(Credential);
