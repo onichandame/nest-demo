@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import { Persistent } from './common';
+import { Credential } from './credential';
 
 @Schema()
 export class User extends Persistent {
@@ -20,3 +21,10 @@ UserSchema.index(
   { email: 1 },
   { sparse: true, unique: true, partialFilterExpression: { Deleted: false } }
 );
+UserSchema.virtual(`activated`, {
+  ref: `Credential`,
+  localField: `_id`,
+  foreignField: `user`,
+  justOne: true,
+  get: (doc: Credential) => !!doc,
+});

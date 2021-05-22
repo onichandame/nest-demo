@@ -15,6 +15,7 @@ import { UserDTO, UserCreateDTO, UserUpdateDTO } from './dto';
       ],
       resolvers: [
         {
+          delete: { disabled: true },
           DTOClass: UserDTO,
           CreateDTOClass: UserCreateDTO,
           UpdateDTOClass: UserUpdateDTO,

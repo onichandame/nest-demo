@@ -1,6 +1,7 @@
-import { ObjectType, ID, GraphQLISODateTime, Directive } from '@nestjs/graphql';
+import { ObjectType, ID, Directive } from '@nestjs/graphql';
 import { ObjectID } from 'mongodb';
 import { FilterableField } from '@nestjs-query/query-graphql';
+import { ISODate } from '@kesci/graphql';
 
 import { User, StripDocumentProperties } from '@kesci/model';
 
@@ -9,10 +10,12 @@ import { User, StripDocumentProperties } from '@kesci/model';
 export class UserDTO implements StripDocumentProperties<User> {
   @FilterableField(() => ID)
   _id: ObjectID;
-  @FilterableField(() => GraphQLISODateTime)
+  @FilterableField(() => ISODate)
   CreatedAt: Date;
-  @FilterableField(() => GraphQLISODateTime)
+  @FilterableField(() => ISODate)
   UpdatedAt: Date;
+  @FilterableField(() => Boolean)
+  Deleted: boolean;
   @FilterableField()
   name: string;
   @FilterableField({ nullable: true })

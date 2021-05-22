@@ -1,3 +1,3 @@
-import { Timestamp } from '../common';
+import { Persistent, Timestamp } from '../common';
 
-export type StripAutoFields<T> = Omit<T, keyof Timestamp>;
+export type StripAutoFields<T> = Omit<T, keyof Persistent | keyof Timestamp>;
