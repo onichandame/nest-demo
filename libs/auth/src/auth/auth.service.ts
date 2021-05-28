@@ -5,12 +5,11 @@ import { User } from '@kesci/model';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User.name) private user: Model<User>) {}
-
-  async findUser(id: string) {
-    return this.user
+  constructor(@InjectModel(User.name) private users: Model<User>) {}
+  async getUser(id: string) {
+    return this.users
       .findById(id)
-      .orFail(new Error(`user ${id} not found`))
+      .orFail(new Error(`用户${id}找不到`))
       .exec();
   }
 }

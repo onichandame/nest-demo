@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { Persistent } from './common';
-import { Credential } from './credential';
+import { Persistent } from '../common';
+import { Credential } from '../credential';
 
 @Schema()
 export class User extends Persistent {

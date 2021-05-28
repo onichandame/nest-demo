@@ -7,7 +7,15 @@ import { UserModule } from './user';
 @Module({
   imports: [
     MongoConnectionModule,
-    GraphQLFederationModule.forRoot({ autoSchemaFile: true }),
+    GraphQLFederationModule.forRoot({
+      autoSchemaFile: true,
+      context: ({ req }) => {
+        const userStr = req.header(`x-kesci-user`);
+        if (userStr) {
+          return JSON.parse(userStr);
+        }
+      },
+    }),
     UserModule,
   ],
 })

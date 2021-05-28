@@ -4,7 +4,8 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "engines": {
     "node": ">=10"
@@ -18,11 +19,7 @@
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
-  "peerDependencies": {
-    "@nestjs/common": "^7.6.17",
-    "@nestjs/mongoose": "^7.2.4",
-    "mongoose": "^5.11.18"
-  },
+  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -34,28 +31,25 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@kesci/model",
+  "name": "@kesci/constants",
   "author": "onichandame",
-  "module": "dist/model.esm.js",
+  "module": "dist/constants.esm.js",
   "size-limit": [
     {
-      "path": "dist/model.cjs.production.min.js",
+      "path": "dist/constants.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/model.esm.js",
+      "path": "dist/constants.esm.js",
       "limit": "10 KB"
     }
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.3",
+    "@size-limit/preset-small-lib": "^4.11.0",
     "husky": "^6.0.0",
-    "size-limit": "^4.10.3",
+    "size-limit": "^4.11.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.2.0",
     "typescript": "^4.2.4"
-  },
-  "dependencies": {
-    "@nestjs/mongoose": "^7.2.4"
   }
 }
