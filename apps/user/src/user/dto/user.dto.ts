@@ -1,12 +1,18 @@
 import { ObjectType, ID, Directive } from '@nestjs/graphql';
 import { ObjectID } from 'mongodb';
-import { FilterableField } from '@nestjs-query/query-graphql';
+import { Authorize, FilterableField } from '@nestjs-query/query-graphql';
 import { ISODate } from '@kesci/graphql';
 
 import { User, StripDocumentProperties } from '@kesci/model';
 
 @ObjectType(`User`)
 @Directive(`@key(fields: "_id")`)
+@Authorize<UserDTO>({
+  authorize: async (ctx: { user?: User }) => {
+    console.log(ctx.user);
+    return { Deleted: { is: false } };
+  },
+})
 export class UserDTO implements StripDocumentProperties<User> {
   @FilterableField(() => ID)
   _id: ObjectID;

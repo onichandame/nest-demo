@@ -10,6 +10,7 @@ import {
 //import { AuthGuard } from '@nestjs/passport';
 
 //import { AuthModule } from '@kesci/auth';
+import { createFederationModule, createFederationGateway } from './factories';
 
 const defaultPort = 80;
 
@@ -29,13 +30,15 @@ class Base {
 }
 
 export const getBootstrapper = (args: {
-  app: any;
+  app?: any;
   gateway?: boolean;
   port?: number;
 }) => {
   return async () => {
-    const modules = [args.app];
-    //if (args.gateway) modules.push(AuthModule);
+    const modules = [];
+    if (args.app) modules.push(args.app);
+    if (args.gateway) modules.push(createFederationGateway());
+    else modules.push(createFederationModule());
     const app = await NestFactory.create(Base.forRoot(modules));
     //if (args.gateway) app.useGlobalGuards(new GqlSessionGuard());
     const config = app.get(ConfigService);
@@ -45,3 +48,4 @@ export const getBootstrapper = (args: {
 };
 
 export * from './decorators';
+export * from './factories';

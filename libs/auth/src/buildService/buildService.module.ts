@@ -6,10 +6,10 @@ class DataSource extends RemoteGraphQLDataSource {
   async willSendRequest({
     request,
     context,
-  }: Parameters<RemoteGraphQLDataSource['willSendRequest']>[0]) {
+  }: Parameters<NonNullable<RemoteGraphQLDataSource['willSendRequest']>>[0]) {
     const { user } = context;
     if (user) {
-      request.http.headers.set(`x-kesci-user`, JSON.stringify(user));
+      request.http?.headers.set(`x-kesci-user`, JSON.stringify(user));
     }
   }
 }
@@ -21,7 +21,7 @@ class DataSource extends RemoteGraphQLDataSource {
       provide: GATEWAY_BUILD_SERVICE,
       useFactory:
         (DataSource) =>
-        ({ url }) =>
+        ({ url }: { url: string; name: string }) =>
           new DataSource({ url }),
       inject: [DataSource],
     },

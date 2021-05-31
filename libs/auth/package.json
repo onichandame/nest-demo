@@ -4,25 +4,22 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "build": "tsc",
+    "test": "jest",
+    "format": "pretty-quick --staged"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "express": "^4.17.1"
+  },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "npm run format"
     }
   },
   "prettier": {
@@ -45,10 +42,7 @@
     }
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.11.0",
     "husky": "^6.0.0",
-    "size-limit": "^4.11.0",
-    "tsdx": "^0.14.1",
     "tslib": "^2.2.0",
     "typescript": "^4.3.2"
   },
