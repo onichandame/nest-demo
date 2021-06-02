@@ -49,6 +49,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
+    "@kesci/constants": "^0",
     "@nestjs/mongoose": "^7.2.4"
   }
 }

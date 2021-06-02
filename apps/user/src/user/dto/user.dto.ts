@@ -1,4 +1,5 @@
 import { ObjectType, ID, Directive } from '@nestjs/graphql';
+import { ROLE } from '@kesci/constants';
 import { ObjectID } from 'mongodb';
 import { Authorize, FilterableField } from '@nestjs-query/query-graphql';
 import { ISODate } from '@kesci/graphql';
@@ -9,8 +10,12 @@ import { User, StripDocumentProperties } from '@kesci/model';
 @Directive(`@key(fields: "_id")`)
 @Authorize<UserDTO>({
   authorize: async (ctx: { user?: User }) => {
-    console.log(ctx.user);
-    return { Deleted: { is: false } };
+    if (
+      !ctx.user.roles.some((role) =>
+        [ROLE.BRAHMIN, ROLE.KSHATRIYA].includes(role),
+      )
+    )
+      return { Deleted: { is: false } };
   },
 })
 export class UserDTO implements StripDocumentProperties<User> {
@@ -26,4 +31,6 @@ export class UserDTO implements StripDocumentProperties<User> {
   name: string;
   @FilterableField({ nullable: true })
   email?: string;
+  @FilterableField(() => Number)
+  roles: ROLE[];
 }

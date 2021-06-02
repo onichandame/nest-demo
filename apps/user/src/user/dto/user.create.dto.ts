@@ -1,6 +1,8 @@
 import { InputType, Field } from '@nestjs/graphql';
+import { ROLE } from '@kesci/constants';
 import { StripAutoFields } from '@kesci/model';
 import {
+  IsEnum,
   IsString,
   IsEmail,
   IsOptional,
@@ -22,4 +24,8 @@ export class UserCreateDTO implements StripAutoFields<UserDTO> {
   @IsOptional()
   @Field({ nullable: true })
   email?: string;
+
+  @IsEnum(ROLE, { each: true })
+  @Field(() => [ROLE], { defaultValue: [ROLE.SHUDRA] })
+  roles: ROLE[];
 }

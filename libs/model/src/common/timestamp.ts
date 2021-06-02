@@ -1,8 +1,7 @@
 import { Prop, Schema } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 
 @Schema({ timestamps: { createdAt: `CreatedAt`, updatedAt: `UpdatedAt` } })
-export class Timestamp extends Document {
+export class Timestamp {
   @Prop()
   CreatedAt!: Date;
 

@@ -1,0 +1,18 @@
+{
+  "name": "@kesci/miscellaneous",
+  "version": "0.0.0",
+  "description": "垃圾桶",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "author": "onichandame",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  }
+}

@@ -1,3 +1,5 @@
+import { registerEnumType } from '@nestjs/graphql';
+
 export const jwtToken = `f8fd9c8d-f4ce-43ed-9c29-9743a598591d`;
 
 export enum ROLE {
@@ -7,10 +9,18 @@ export enum ROLE {
   GUEST = 0,
   // 普通用户
   SHUDRA,
-  // 超级用户
+  // 高级用户
   VAISHYA,
   // 次管
   KSHATRIYA,
   // 超管
   BRAHMIN,
 }
+registerEnumType(ROLE, { name: `ROLE` });
+
+export enum JobStatus {
+  ERROR = -1,
+  PENDING = 0,
+  FINISHED,
+}
+registerEnumType(JobStatus, { name: `JobStatus` });

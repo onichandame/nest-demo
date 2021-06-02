@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ROLE } from '@kesci/constants';
 
 import { Persistent } from '../common';
 import { Credential } from '../credential';
@@ -7,6 +8,9 @@ import { Credential } from '../credential';
 export class User extends Persistent {
   @Prop({ required: true })
   name!: string;
+
+  @Prop({ type: () => [ROLE], enum: ROLE, default: [ROLE.DALIT] })
+  roles!: ROLE[];
 
   @Prop({ required: false })
   email?: string;
