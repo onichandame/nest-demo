@@ -11,7 +11,7 @@ export abstract class BaseJob {
   }
 
   isOverLimit(count: number) {
-    return this.limit < 0 || count < this.limit;
+    return this.limit < 0 || count >= this.limit;
   }
 }
 
@@ -30,11 +30,8 @@ export abstract class BaseCronJob extends BaseJob {
 export abstract class BaseIntervalJob extends BaseJob {
   // ms
   abstract interval: number;
-  immediate = false;
 }
 
 export abstract class BaseNceJob extends BaseIntervalJob {
   abstract limit: number;
-
-  interval = 0;
 }

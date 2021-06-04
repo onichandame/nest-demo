@@ -6,7 +6,7 @@ import { Credential } from '../credential';
 
 @Schema()
 export class User extends Persistent {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   name!: string;
 
   @Prop({ type: () => [ROLE], enum: ROLE, default: [ROLE.DALIT] })

@@ -11,6 +11,7 @@ import { User, StripDocumentProperties } from '@kesci/model';
 @Authorize<UserDTO>({
   authorize: async (ctx: { user?: User }) => {
     if (
+      !ctx.user ||
       !ctx.user.roles.some((role) =>
         [ROLE.BRAHMIN, ROLE.KSHATRIYA].includes(role),
       )
@@ -31,6 +32,8 @@ export class UserDTO implements StripDocumentProperties<User> {
   name: string;
   @FilterableField({ nullable: true })
   email?: string;
-  @FilterableField(() => Number)
+  @FilterableField(() => [ROLE], {
+    allowedComparisons: [`eq`, `neq`, `in`, `notIn`],
+  })
   roles: ROLE[];
 }

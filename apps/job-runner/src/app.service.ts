@@ -1,4 +1,9 @@
-import { Logger, Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import {
+  Inject,
+  Logger,
+  Injectable,
+  OnApplicationBootstrap,
+} from '@nestjs/common';
 import { JobStatus } from '@kesci/constants';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -6,6 +11,7 @@ import { waitTil } from '@kesci/miscellaneous';
 import { JobRecord } from '@kesci/model';
 
 import { BaseJob, BaseCronJob, BaseIntervalJob } from './jobs/base';
+import { JobsToken } from './constants';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
@@ -15,6 +21,7 @@ export class AppService implements OnApplicationBootstrap {
 
   constructor(
     @InjectModel(JobRecord.name) private jobRecords: Model<JobRecord>,
+    @Inject(JobsToken) private jobs: BaseJob[],
   ) {}
 
   private async initRecord(job: string, prev?: JobRecord) {
@@ -31,13 +38,13 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   private async closeRecord(
-    id: string,
+    record: JobRecord,
     status: JobStatus.ERROR | JobStatus.FINISHED,
     output: string,
   ) {
     return await this.jobRecords
       .findOneAndUpdate(
-        { _id: id, status: JobStatus.PENDING },
+        { _id: record.id, status: JobStatus.PENDING },
         { status, output },
       )
       .exec();
@@ -57,7 +64,9 @@ export class AppService implements OnApplicationBootstrap {
     return this.jobRecords.count(this.getFilter(job)).exec();
   }
 
-  private async runJob(job: BaseJob, record: string) {
+  private async runJob(job: BaseJob, prevRecord?: JobRecord) {
+    const record = await this.initRecord(job.name, prevRecord);
+    this.logger.log(`job ${job.name} started`);
     try {
       const result = await job.run();
       await this.closeRecord(
@@ -65,21 +74,21 @@ export class AppService implements OnApplicationBootstrap {
         JobStatus.FINISHED,
         JSON.stringify(result),
       );
+      this.logger.log(`job ${job.name} finished`);
     } catch (e) {
       await this.closeRecord(
         record,
         JobStatus.FINISHED,
         JSON.stringify(e.message),
       );
+      this.logger.log(`job ${job.name} failed with error: ${e.message}`);
     }
   }
 
   private loadJobs() {
     this.cronJobs.clear();
     this.intervalJobs.clear();
-    const Jobs: { [key: string]: { new (): BaseJob } } = require(`./jobs`);
-    for (const Job of Object.values(Jobs)) {
-      const job = new Job();
+    for (const job of Object.values(this.jobs)) {
       if (job instanceof BaseCronJob) this.cronJobs.add(job);
       else if (job instanceof BaseIntervalJob) this.intervalJobs.add(job);
     }
@@ -93,10 +102,7 @@ export class AppService implements OnApplicationBootstrap {
       if (job.isOverLimit(count)) break;
       if (!job.hasBeenRun(date, prevRecord)) {
         await waitTil(date);
-        const record = await this.initRecord(job.name, prevRecord);
-        if (record) {
-          await this.runJob(job, record.id.toString());
-        }
+        await this.runJob(job, prevRecord);
       }
     }
   }
@@ -106,14 +112,13 @@ export class AppService implements OnApplicationBootstrap {
       const count = await this.countRecords(job);
       if (job.isOverLimit(count)) break;
       const prevRecord = await this.getLastRecord(job);
-      const nextTick = new Date(prevRecord.CreatedAt.getTime() + job.interval);
-      await waitTil(nextTick);
-      const record = await this.initRecord(job.name, prevRecord);
-      if (record) {
-        try {
-          await this.runJob(job, record.id.toString());
-        } catch (e) {}
+      if (prevRecord) {
+        const nextTick = new Date(
+          prevRecord.CreatedAt.getTime() + job.interval,
+        );
+        await waitTil(nextTick);
       }
+      await this.runJob(job, prevRecord);
     }
   }
 

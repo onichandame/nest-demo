@@ -1,1 +1,1 @@
-export * from './initAdmin';
+export * from './jobs.module';
