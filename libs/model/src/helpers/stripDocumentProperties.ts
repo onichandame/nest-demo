@@ -1,6 +1,6 @@
-import { Document } from 'mongoose';
+import { DocumentType, defaultClasses } from '@typegoose/typegoose';
 
-export type StripDocumentProperties<T extends Document> = Omit<
+export type StripDocumentProperties<T = any> = Omit<
   T,
-  keyof Document
+  keyof DocumentType<defaultClasses.Base>
 >;

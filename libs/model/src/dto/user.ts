@@ -1,10 +1,11 @@
 import { ObjectType, ID, Directive } from '@nestjs/graphql';
 import { ROLE } from '@kesci/constants';
-import { ObjectID } from 'mongodb';
 import { Authorize, FilterableField } from '@nestjs-query/query-graphql';
 import { ISODate } from '@kesci/graphql';
 
-import { User, StripDocumentProperties } from '@kesci/model';
+import { User } from '../db';
+import { Id } from '../types';
+import { StripDocumentProperties } from '../helpers';
 
 @ObjectType(`User`)
 @Directive(`@key(fields: "_id")`)
@@ -13,27 +14,28 @@ import { User, StripDocumentProperties } from '@kesci/model';
     if (
       !ctx.user ||
       !ctx.user.roles.some((role) =>
-        [ROLE.BRAHMIN, ROLE.KSHATRIYA].includes(role),
+        [ROLE.BRAHMIN, ROLE.KSHATRIYA].includes(role)
       )
     )
       return { Deleted: { is: false } };
+    else return {};
   },
 })
 export class UserDTO implements StripDocumentProperties<User> {
   @FilterableField(() => ID)
-  _id: ObjectID;
+  _id!: Id;
   @FilterableField(() => ISODate)
-  CreatedAt: Date;
+  CreatedAt!: Date;
   @FilterableField(() => ISODate)
-  UpdatedAt: Date;
+  UpdatedAt!: Date;
   @FilterableField(() => Boolean)
-  Deleted: boolean;
+  Deleted!: boolean;
   @FilterableField()
-  name: string;
+  name!: string;
   @FilterableField({ nullable: true })
   email?: string;
   @FilterableField(() => [ROLE], {
     allowedComparisons: [`eq`, `neq`, `in`, `notIn`],
   })
-  roles: ROLE[];
+  roles!: ROLE[];
 }

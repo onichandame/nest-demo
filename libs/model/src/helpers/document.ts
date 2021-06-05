@@ -1,4 +1,3 @@
-import { Document as MonDocument } from 'mongoose';
-import { ObjectId } from 'mongodb';
+import { DocumentType } from '@typegoose/typegoose';
 
-export type Document<TDoc> = TDoc & MonDocument<ObjectId>;
+export type Document<TDoc> = DocumentType<TDoc>;

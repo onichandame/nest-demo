@@ -3,9 +3,8 @@ import { RemoteGraphQLDataSource } from '@apollo/gateway';
 import { verify, sign } from 'jsonwebtoken';
 import * as yup from 'yup';
 import { Request } from 'express';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from '@kesci/model';
+import { InjectModel } from 'nestjs-typegoose';
+import { User, Model } from '@kesci/model';
 
 import { publicKey, privateKey, algorithm } from '../secrets';
 import { userHeader } from './auth.constants';
@@ -16,7 +15,7 @@ const PayloadSchema = yup
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User.name) private users: Model<User>) {}
+  constructor(@InjectModel(User) private users: Model<User>) {}
 
   private isRequestValid(req: Request): req is Request {
     return req && req.header && typeof req.header === `function`;

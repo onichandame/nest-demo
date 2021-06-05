@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ROLE } from '@kesci/constants';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
-import { Credential, User, StripAutoFields } from '@kesci/model';
+import { InjectModel } from 'nestjs-typegoose';
+import { Model, Credential, User } from '@kesci/model';
 
 import { BaseNceJob } from './base';
 
@@ -12,9 +11,9 @@ export class InitAdmin extends BaseNceJob {
   limit = 1;
 
   constructor(
-    @InjectModel(User.name) private users: Model<StripAutoFields<User>>,
-    @InjectModel(Credential.name)
-    private creds: Model<StripAutoFields<Credential>>,
+    @InjectModel(User) private users: Model<typeof User>,
+    @InjectModel(Credential)
+    private creds: Model<typeof Credential>,
   ) {
     super();
   }

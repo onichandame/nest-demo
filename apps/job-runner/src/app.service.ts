@@ -5,13 +5,11 @@ import {
   OnApplicationBootstrap,
 } from '@nestjs/common';
 import { JobStatus } from '@kesci/constants';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectModel } from 'nestjs-typegoose';
 import { waitTil } from '@kesci/miscellaneous';
-import { JobRecord } from '@kesci/model';
+import { Model, JobRecord, Document } from '@kesci/model';
 
-import { BaseJob, BaseCronJob, BaseIntervalJob } from './jobs/base';
-import { JobsToken } from './constants';
+import { JobsToken, BaseJob, BaseCronJob, BaseIntervalJob } from './jobs';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
@@ -20,11 +18,12 @@ export class AppService implements OnApplicationBootstrap {
   private intervalJobs = new Set<BaseIntervalJob>();
 
   constructor(
-    @InjectModel(JobRecord.name) private jobRecords: Model<JobRecord>,
+    @InjectModel(JobRecord)
+    private jobRecords: Model<JobRecord>,
     @Inject(JobsToken) private jobs: BaseJob[],
   ) {}
 
-  private async initRecord(job: string, prev?: JobRecord) {
+  private async initRecord(job: string, prev?: Document<JobRecord>) {
     try {
       return await this.jobRecords.create({
         job,
@@ -38,7 +37,7 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   private async closeRecord(
-    record: JobRecord,
+    record: Document<JobRecord>,
     status: JobStatus.ERROR | JobStatus.FINISHED,
     output: string,
   ) {
@@ -46,6 +45,7 @@ export class AppService implements OnApplicationBootstrap {
       .findOneAndUpdate(
         { _id: record.id, status: JobStatus.PENDING },
         { status, output },
+        { new: true },
       )
       .exec();
   }
@@ -54,35 +54,40 @@ export class AppService implements OnApplicationBootstrap {
     return { job: job.name };
   }
 
-  private async getLastRecord(job: BaseJob) {
+  async getLastRecord(job: BaseJob) {
     return this.jobRecords
       .findOne(this.getFilter(job), {}, { sort: { CreatedAt: -1 } })
       .exec();
+  }
+
+  get currentJobs() {
+    return this.jobs;
   }
 
   private async countRecords(job: BaseJob) {
     return this.jobRecords.count(this.getFilter(job)).exec();
   }
 
-  private async runJob(job: BaseJob, prevRecord?: JobRecord) {
-    const record = await this.initRecord(job.name, prevRecord);
+  async runJob(job: BaseJob, prevRecord?: Document<JobRecord>) {
+    let record = await this.initRecord(job.name, prevRecord);
     this.logger.log(`job ${job.name} started`);
     try {
       const result = await job.run();
-      await this.closeRecord(
+      record = await this.closeRecord(
         record,
         JobStatus.FINISHED,
         JSON.stringify(result),
       );
       this.logger.log(`job ${job.name} finished`);
     } catch (e) {
-      await this.closeRecord(
+      record = await this.closeRecord(
         record,
         JobStatus.FINISHED,
         JSON.stringify(e.message),
       );
       this.logger.log(`job ${job.name} failed with error: ${e.message}`);
     }
+    return record;
   }
 
   private loadJobs() {
@@ -120,6 +125,11 @@ export class AppService implements OnApplicationBootstrap {
       }
       await this.runJob(job, prevRecord);
     }
+  }
+
+  getJob(name: string) {
+    const job = this.jobs.find((j) => j.name === name);
+    return job;
   }
 
   onApplicationBootstrap() {

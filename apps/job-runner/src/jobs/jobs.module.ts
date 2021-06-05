@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ModelModule } from '@kesci/model';
 
-import { JobsToken } from '../constants';
+import { JobsToken } from './constants';
+
+// import jobs here
 import { InitAdmin } from './initAdmin';
 
-export const Jobs = [InitAdmin];
+const Jobs = [InitAdmin];
 
 @Module({
   imports: [ModelModule],

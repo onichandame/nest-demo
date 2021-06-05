@@ -43,16 +43,17 @@
   ],
   "devDependencies": {
     "husky": "^6.0.0",
-    "tslib": "^2.2.0",
     "typescript": "^4.3.2"
   },
   "dependencies": {
-    "@kesci/constants": "^0",
+    "@apollo/gateway": "^0.28.2",
     "@kesci/model": "^0",
     "@nestjs/common": "^7.6.17",
-    "@nestjs/jwt": "^7.2.0",
+    "@nestjs/graphql": "^7.10.6",
     "@nestjs/mongoose": "^7.2.4",
-    "@nestjs/passport": "^7.1.5",
+    "@typegoose/typegoose": "^8.0.0-beta.2",
+    "jsonwebtoken": "^8.5.1",
+    "nestjs-typegoose": "^7.1.38",
     "yup": "^0.32.9"
   }
 }

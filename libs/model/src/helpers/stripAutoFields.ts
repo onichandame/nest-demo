@@ -1,3 +1,7 @@
-import { Persistent, Timestamp } from '../common';
+import { Persistent } from '../common';
+import { StripDocumentProperties } from './stripDocumentProperties';
 
-export type StripAutoFields<T> = Omit<T, keyof Persistent | keyof Timestamp>;
+export type StripAutoFields<T = any> = Omit<
+  StripDocumentProperties<T>,
+  keyof Persistent
+>;

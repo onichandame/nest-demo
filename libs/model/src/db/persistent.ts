@@ -1,9 +1,8 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { prop } from '@typegoose/typegoose';
 
 import { Timestamp } from './timestamp';
 
-@Schema()
 export class Persistent extends Timestamp {
-  @Prop({ default: false })
+  @prop({ default: false })
   Deleted!: boolean;
 }
