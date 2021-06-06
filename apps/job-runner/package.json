@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@kesci/constants": "^0",
+    "@kesci/dto": "^0",
     "@kesci/graphql": "^0",
     "@kesci/miscellaneous": "^0",
     "@kesci/model": "^0",

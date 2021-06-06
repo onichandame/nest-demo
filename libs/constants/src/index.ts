@@ -24,3 +24,9 @@ export enum JobStatus {
   FINISHED,
 }
 registerEnumType(JobStatus, { name: `JobStatus` });
+
+export enum JobType {
+  CRON = 0,
+  INTERVAL,
+}
+registerEnumType(JobType, { name: `JobType` });

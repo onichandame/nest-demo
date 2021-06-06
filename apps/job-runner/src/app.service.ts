@@ -4,28 +4,28 @@ import {
   Injectable,
   OnApplicationBootstrap,
 } from '@nestjs/common';
-import { JobStatus } from '@kesci/constants';
+import { JobStatus, JobType } from '@kesci/constants';
 import { InjectModel } from 'nestjs-typegoose';
 import { waitTil } from '@kesci/miscellaneous';
-import { Model, JobRecord, Document } from '@kesci/model';
+import { Model, Job, JobRecord, Document } from '@kesci/model';
 
 import { JobsToken, BaseJob, BaseCronJob, BaseIntervalJob } from './jobs';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
   private logger = new Logger(AppService.name);
-  private cronJobs = new Set<BaseCronJob>();
-  private intervalJobs = new Set<BaseIntervalJob>();
 
   constructor(
     @InjectModel(JobRecord)
-    private jobRecords: Model<JobRecord>,
+    private jobRecordCol: Model<JobRecord>,
+    @InjectModel(Job)
+    private jobCol: Model<Job>,
     @Inject(JobsToken) private jobs: BaseJob[],
   ) {}
 
-  private async initRecord(job: string, prev?: Document<JobRecord>) {
+  private async initRecord(job: Job, prev?: Document<JobRecord>) {
     try {
-      return await this.jobRecords.create({
+      return await this.jobRecordCol.create({
         job,
         prev,
         status: JobStatus.PENDING,
@@ -41,7 +41,7 @@ export class AppService implements OnApplicationBootstrap {
     status: JobStatus.ERROR | JobStatus.FINISHED,
     output: string,
   ) {
-    return await this.jobRecords
+    return await this.jobRecordCol
       .findOneAndUpdate(
         { _id: record.id, status: JobStatus.PENDING },
         { status, output },
@@ -50,13 +50,13 @@ export class AppService implements OnApplicationBootstrap {
       .exec();
   }
 
-  private getFilter(job: BaseJob) {
-    return { job: job.name };
-  }
-
   async getLastRecord(job: BaseJob) {
-    return this.jobRecords
-      .findOne(this.getFilter(job), {}, { sort: { CreatedAt: -1 } })
+    return this.jobRecordCol
+      .findOne(
+        { job: await this.getData(job) },
+        {},
+        { sort: { CreatedAt: -1 } },
+      )
       .exec();
   }
 
@@ -65,11 +65,20 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   private async countRecords(job: BaseJob) {
-    return this.jobRecords.count(this.getFilter(job)).exec();
+    return this.jobRecordCol
+      .countDocuments({ job: await this.getData(job) })
+      .exec();
+  }
+
+  private async getData(job: BaseJob) {
+    return this.jobCol
+      .findOne({ name: job.name })
+      .orFail(new Error(`job ${job.name} not loaded in database`))
+      .exec();
   }
 
   async runJob(job: BaseJob, prevRecord?: Document<JobRecord>) {
-    let record = await this.initRecord(job.name, prevRecord);
+    let record = await this.initRecord(await this.getData(job), prevRecord);
     this.logger.log(`job ${job.name} started`);
     try {
       const result = await job.run();
@@ -90,13 +99,47 @@ export class AppService implements OnApplicationBootstrap {
     return record;
   }
 
-  private loadJobs() {
-    this.cronJobs.clear();
-    this.intervalJobs.clear();
-    for (const job of Object.values(this.jobs)) {
-      if (job instanceof BaseCronJob) this.cronJobs.add(job);
-      else if (job instanceof BaseIntervalJob) this.intervalJobs.add(job);
+  private getJobClass(job: BaseJob) {
+    if (job instanceof BaseCronJob) return BaseCronJob;
+    else if (job instanceof BaseIntervalJob) return BaseIntervalJob;
+    else return BaseJob;
+  }
+
+  private getJobType(job: BaseJob) {
+    const cls = this.getJobClass(job);
+    switch (cls) {
+      case BaseCronJob:
+        return JobType.CRON;
+      case BaseIntervalJob:
+        return JobType.INTERVAL;
+      default:
+        throw new Error(`type of job ${job.name} not recognized!`);
     }
+  }
+
+  private async auditJobs() {
+    await Promise.all([
+      Promise.all(
+        this.jobs.map((job) =>
+          this.jobCol
+            .findOneAndUpdate(
+              { name: job.name },
+              {
+                name: job.name,
+                type: this.getJobType(job),
+                Deleted: false,
+              },
+              { upsert: true },
+            )
+            .exec(),
+        ),
+      ),
+      this.jobCol
+        .find()
+        .where({ name: { $nin: this.jobs.map((v) => v.name) } })
+        .updateMany({ Deleted: true })
+        .exec(),
+    ]);
   }
 
   private async bootstrapCronJob(job: BaseCronJob) {
@@ -132,9 +175,25 @@ export class AppService implements OnApplicationBootstrap {
     return job;
   }
 
-  onApplicationBootstrap() {
-    this.loadJobs();
-    this.cronJobs.forEach((job) => this.bootstrapCronJob(job));
-    this.intervalJobs.forEach((job) => this.bootstrapIntervalJob(job));
+  private getJobImpl(j: Job) {
+    const result = this.jobs.find((job) => job.name === j.name);
+    if (result) return result;
+    else throw new Error(`job ${j.name} not implemented`);
+  }
+
+  private async loadJobs() {
+    await this.auditJobs();
+
+    const jobs = await this.jobCol.find({ Deleted: false }).exec();
+    jobs.forEach((job) => {
+      const impl = this.getJobImpl(job);
+      if (impl instanceof BaseCronJob) this.bootstrapCronJob(impl);
+      else if (impl instanceof BaseIntervalJob) this.bootstrapIntervalJob(impl);
+      else throw new Error(`job type ${job.type} not supported!`);
+    });
+  }
+
+  async onApplicationBootstrap() {
+    await this.loadJobs();
   }
 }

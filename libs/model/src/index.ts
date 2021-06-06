@@ -1,7 +1,7 @@
-export * from './dbModel.module';
+export * from './model.module';
 
 // models
-export * from './db';
+export * from './model';
 
 // supplementary functions
 export * from './helpers';

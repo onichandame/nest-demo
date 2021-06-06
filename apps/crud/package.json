@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@kesci/constants": "^0",
+    "@kesci/dto": "^0",
     "@kesci/graphql": "^0",
     "@kesci/model": "^0.0.0",
     "@kesci/mongo-connection": "^0.0.0",

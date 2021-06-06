@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongoConnectionModule } from '@kesci/mongo-connection';
 import { TypegooseModule } from 'nestjs-typegoose';
 
-import * as Models from './db';
+import * as Models from './model';
 
 @Module({
   imports: [
@@ -11,4 +11,4 @@ import * as Models from './db';
   ],
   exports: [TypegooseModule],
 })
-export class DbModelModule {}
+export class ModelModule {}

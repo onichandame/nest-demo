@@ -12,11 +12,8 @@ import { TypegooseModule } from 'nestjs-typegoose';
           config.get<string>(`MONGO_URL`) || `mongodb://localhost:27017/test`;
         return {
           uri,
+          useFindAndModify: false,
           useUnifiedTopology: true,
-          autoLoadEntities: true,
-          synchronize: true,
-          type: `mongodb`,
-          keepConnectionAlive: true,
           useNewUrlParser: true,
         };
       },

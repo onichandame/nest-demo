@@ -1,4 +1,5 @@
 import { parseExpression } from 'cron-parser';
+import { JobType } from '@kesci/constants';
 import { JobRecord } from '@kesci/model';
 
 export abstract class BaseJob {
