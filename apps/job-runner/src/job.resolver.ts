@@ -1,13 +1,13 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { JobRecordDTO, JobDTO } from '@kesci/dto';
+import { ExternalJobRecord } from '@kesci/model';
 
 import { AppService } from './app.service';
 
-@Resolver(() => JobDTO)
+@Resolver()
 export class JobResolver {
   constructor(private svc: AppService) {}
 
-  @Mutation(() => JobRecordDTO)
+  @Mutation(() => ExternalJobRecord)
   async runAJob(@Args(`name`) name: string) {
     const job = this.svc.getJob(name);
     const prevRecord = await this.svc.getLastRecord(job);

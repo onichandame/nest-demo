@@ -17,7 +17,7 @@ export const createFederationGateway = () =>
         },
         gateway: {
           serviceList: [
-            { name: `user`, url: `http://localhost:3001/graphql` },
+            { name: `crud`, url: `http://localhost:3001/graphql` },
             { name: `jobRunner`, url: `http://localhost:3002/graphql` },
           ],
         },
