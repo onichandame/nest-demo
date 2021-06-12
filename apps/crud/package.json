@@ -10,7 +10,7 @@
     "build": "nest build",
     "format": "pretty-quick --staged",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "nest start --watch --preserveWatchOutput",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "test": "jest",
@@ -20,12 +20,6 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@kesci/constants": "^0",
-    "@kesci/dto": "^0",
-    "@kesci/graphql": "^0",
-    "@kesci/model": "^0.0.0",
-    "@kesci/mongo-connection": "^0.0.0",
-    "@kesci/nest": "^0.0.0",
     "@nestjs-query/query-graphql": "^0.27.0",
     "@nestjs-query/query-typegoose": "^0.27.0",
     "@nestjs/common": "^7.6.17",
@@ -36,8 +30,11 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "dataloader": "^2.0.0",
+    "graphql": "^15.5.0",
+    "graphql-subscriptions": "^1.2.1",
     "mongodb": "^3.6.7",
     "mongoose": "^5.12.10",
+    "nestjs-typegoose": "^7.1.38",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6"

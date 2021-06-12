@@ -1,31 +1,27 @@
 {
   "name": "kesci-nest-demo",
   "private": true,
-  "workspaces": [
-    "libs/*",
-    "apps/*"
-  ],
   "scripts": {
+    "build:libs": "lerna run --scope @kesci/* --include-dependencies build",
     "clean:mongo": "docker rm -f mongo",
     "clean:infra": "concurrently \"npm run clean:mongo\"",
     "dev:mongo": "docker run -d --name mongo --restart always -p 27017:27017 mongo",
     "dev:infra": "npm run dev:mongo",
-    "dev:gateway": "yarn workspace gateway nest start --watch",
-    "dev:crud": "yarn workspace crud nest start --watch",
-    "dev:jobRunner": "yarn workspace job-runner nest start --watch",
-    "dev:services": "concurrently \"cross-env PORT=3001 npm run dev:crud\" \"cross-env PORT=3002 npm run dev:jobRunner\"",
+    "dev:gateway": "lerna --scope gateway run start:dev --stream",
+    "dev:crud": "lerna --scope crud run start:dev --stream",
+    "dev:jobRunner": "lerna --scope job-runner run start:dev --stream",
+    "dev:services": "npm run build:libs && concurrently \"cross-env PORT=3001 npm run dev:crud\" \"cross-env PORT=3002 npm run dev:jobRunner\"",
     "dev:apps": "concurrently \"sleep 20 && cross-env PORT=3000 npm run dev:gateway\" \"npm run dev:services\"",
-    "dev": "npm run clean:infra && concurrently \"npm run dev:infra\" \"npm run dev:apps\""
+    "dev": "npm run clean:infra && npm run dev:infra && npm run dev:apps"
   },
-  "dependencies": {
-    "@nestjs/mapped-types": "*"
-  },
+  "dependencies": {},
   "husky": {
     "hooks": {
-      "pre-commit": "yarn workspaces run pretty-quick -- --staged"
+      "pre-commit": "pretty-quick --staged"
     }
   },
   "devDependencies": {
+    "lerna": "^4.0.0",
     "concurrently": "^6.1.0",
     "cross-env": "^7.0.3",
     "husky": "^6.0.0",

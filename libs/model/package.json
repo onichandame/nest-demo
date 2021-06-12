@@ -9,15 +9,9 @@
   "engines": {
     "node": ">=10"
   },
-  "scripts": {
-    "build": "tsc",
-    "test": "jest",
-    "format": "pretty-quick --staged"
-  },
   "peerDependencies": {
     "@nestjs/common": "^7.6.17",
-    "@nestjs/mongoose": "^7.2.4",
-    "mongoose": "^5.11.18"
+    "reflect-metadata": "^0.1.13"
   },
   "husky": {
     "hooks": {
@@ -30,29 +24,23 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@kesci/model",
+  "name": "@nest-libs/model",
   "author": "onichandame",
-  "module": "dist/model.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/model.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/model.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "husky": "^6.0.0",
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@kesci/constants": "^0",
-    "@kesci/mongo-connection": "^0",
-    "@nestjs/mongoose": "^7.2.4",
-    "@typegoose/typegoose": "^8.0.0-beta.2",
+    "@nestjs/common": "^7.6.17",
+    "@nestjs/core": "^7.6.17",
+    "@nestjs/typeorm": "^7.1.5",
     "bcryptjs": "^2.4.3",
-    "nestjs-typegoose": "^7.1.38"
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.1",
+    "dataloader": "^2.0.0",
+    "graphql": "^15.5.0",
+    "graphql-subscriptions": "^1.2.1",
+    "typeorm": "^0.2.34"
   }
 }

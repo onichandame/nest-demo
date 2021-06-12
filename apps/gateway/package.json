@@ -21,10 +21,6 @@
   },
   "dependencies": {
     "@apollo/gateway": "^0.28.1",
-    "@kesci/auth": "^0",
-    "@kesci/model": "^0",
-    "@kesci/mongo-connection": "^0.0.0",
-    "@kesci/nest": "^0.0.0",
     "@nestjs/common": "^7.6.15",
     "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.15",

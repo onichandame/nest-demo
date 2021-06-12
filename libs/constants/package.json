@@ -9,14 +9,6 @@
   "engines": {
     "node": ">=10"
   },
-  "scripts": {
-    "build": "tsc",
-    "test": "jest",
-    "format": "pretty-quick --staged"
-  },
-  "peerDependencies": {
-    "@nestjs/graphql": "^7.10.6"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run format"
@@ -28,7 +20,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@kesci/constants",
+  "name": "@nest-libs/constants",
   "author": "onichandame",
   "module": "dist/constants.esm.js",
   "size-limit": [
@@ -46,5 +38,11 @@
     "tslib": "^2.2.0",
     "typescript": "^4.2.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@nestjs/common": "^7.6.17",
+    "@nestjs/core": "^7.6.17",
+    "@nestjs/graphql": "^7.10.6",
+    "graphql": "^15.5.0",
+    "reflect-metadata": "^0.1.13"
+  }
 }

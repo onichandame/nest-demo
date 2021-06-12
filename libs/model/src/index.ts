@@ -1,13 +1,13 @@
 export * from './model.module';
 
 // models and dtos and services
-export * from './model';
-export * from './dto';
-export * from './service';
-export * from './external';
+export * from './models';
 
-// supplementary functions
-export * from './helpers';
-
+//// supplementary functions
+//export * from './helpers';
+//
 // centralized-managed types
 export * from './types';
+export * from './base';
+export * from './timestamp';
+export * from './persistent';
