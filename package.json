@@ -2,7 +2,7 @@
   "name": "kesci-nest-demo",
   "private": true,
   "scripts": {
-    "build:libs": "lerna run --scope @kesci/* --include-dependencies build",
+    "build:libs": "lerna run --scope @nest-libs/* --include-dependencies build",
     "clean:mongo": "docker rm -f mongo",
     "clean:infra": "concurrently \"npm run clean:mongo\"",
     "dev:mongo": "docker run -d --name mongo --restart always -p 27017:27017 mongo",

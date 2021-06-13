@@ -7,7 +7,4 @@ export * from './models';
 //export * from './helpers';
 //
 // centralized-managed types
-export * from './types';
 export * from './base';
-export * from './timestamp';
-export * from './persistent';

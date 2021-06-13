@@ -1,8 +1,6 @@
-import { Module, DynamicModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
 import { MockMongoService } from './mock.mongo.service';
 
-@Module({})
-export class MockMongoModule {
-  static forRoot() {}
-}
+@Module({ providers: [MockMongoService], exports: [MockMongoService] })
+export class MockMongoModule {}

@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "jest --runInBand",
+    "test": "jest",
     "format": "pretty-quick --staged"
   },
   "prettier": {
@@ -42,6 +42,7 @@
     "mongoose": "^5.12.13",
     "nestjs-typegoose": "^7.1.38",
     "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.1.0",
     "typeorm": "^0.2.34"
   }
 }

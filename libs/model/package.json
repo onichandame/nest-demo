@@ -3,6 +3,10 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --runInBand"
+  },
   "files": [
     "dist"
   ],
@@ -27,8 +31,15 @@
   "name": "@nest-libs/model",
   "author": "onichandame",
   "devDependencies": {
+    "@jest/types": "^27.0.2",
+    "@nest-libs/db-connection": "^0.0.0",
+    "@nestjs/testing": "^7.6.17",
     "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "^26.0.23",
     "husky": "^6.0.0",
+    "jest": "^27.0.4",
+    "ts-jest": "^27.0.3",
+    "ts-node": "^10.0.0",
     "typescript": "^4.2.4"
   },
   "dependencies": {

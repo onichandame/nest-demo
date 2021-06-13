@@ -1,26 +1,20 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-const startMockMongo = async (): Promise<{
-  close(): void;
-  url: string;
-}> => {
-  const replSet = new (require(`mongodb-memory-server`).MongoMemoryReplSet)({
-    replSet: { storageEngine: `wiredTiger` },
-  });
-  await replSet.waitUntilRunning();
-  const url = await replSet.getUri();
-  console.log(`ready`);
-  return { url, close: () => replSet.stop() };
-};
+import { MockMongoModule, MockMongoService } from './mock';
+
+const logger = new Logger(`MongoConnectionModule`);
 
 const MongoConnectionModule = TypeOrmModule.forRootAsync({
-  imports: [ConfigModule],
-  inject: [ConfigService],
-  useFactory: async (config: ConfigService) => {
+  imports: [ConfigModule, MockMongoModule],
+  inject: [ConfigService, MockMongoService],
+  useFactory: async (config: ConfigService, mock: MockMongoService) => {
     const isUnittest = () => config.get(`NODE_ENV`).includes(`test`);
+    logger.log(`bitch`);
+    if (isUnittest()) logger.log(`using mock mongo server`);
     const url = isUnittest()
-      ? (await startMockMongo()).url
+      ? await mock.getUri()
       : config.get<string>(`MONGO_URL`) || `mongodb://localhost:27017/test`;
     return {
       type: `mongodb`,

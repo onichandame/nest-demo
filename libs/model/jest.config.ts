@@ -1,8 +1,9 @@
 import { Config } from '@jest/types';
 
 export default {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  silent: false,
   verbose: true,
+  preset: `ts-jest`,
+  testEnvironment: `node`,
   maxWorkers: 4,
 } as Config.InitialOptions;
