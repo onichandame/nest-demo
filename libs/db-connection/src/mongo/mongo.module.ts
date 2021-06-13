@@ -5,13 +5,10 @@ const startMockMongo = async (): Promise<{
   close(): void;
   url: string;
 }> => {
-  console.log(`called`);
   const replSet = new (require(`mongodb-memory-server`).MongoMemoryReplSet)({
     replSet: { storageEngine: `wiredTiger` },
   });
-  console.log(`starting`);
   await replSet.waitUntilRunning();
-  console.log(`started`);
   const url = await replSet.getUri();
   console.log(`ready`);
   return { url, close: () => replSet.stop() };
