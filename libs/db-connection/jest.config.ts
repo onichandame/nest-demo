@@ -5,4 +5,5 @@ export default {
   testEnvironment: 'node',
   verbose: true,
   maxWorkers: 4,
+  testPathIgnorePatterns: [`dist`],
 } as Config.InitialOptions;

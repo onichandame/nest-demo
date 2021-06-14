@@ -1,29 +1,39 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
+import { Logger, Module, DynamicModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { MockMongoModule, MockMongoService } from './mock';
 
 const logger = new Logger(`MongoConnectionModule`);
 
-const MongoConnectionModule = TypeOrmModule.forRootAsync({
-  imports: [ConfigModule, MockMongoModule],
-  inject: [ConfigService, MockMongoService],
-  useFactory: async (config: ConfigService, mock: MockMongoService) => {
-    const isUnittest = () => config.get(`NODE_ENV`).includes(`test`);
-    logger.log(`bitch`);
-    if (isUnittest()) logger.log(`using mock mongo server`);
-    const url = isUnittest()
-      ? await mock.getUri()
-      : config.get<string>(`MONGO_URL`) || `mongodb://localhost:27017/test`;
+@Module({})
+export class MongoConnectionModule {
+  static forRoot(args: { entities: [Function, ...Function[]] }): DynamicModule {
     return {
-      type: `mongodb`,
-      synchronize: true,
-      url,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      module: MongoConnectionModule,
+      imports: [
+        TypeOrmModule.forRootAsync({
+          imports: [ConfigModule, MockMongoModule],
+          inject: [ConfigService, MockMongoService],
+          useFactory: async (config: ConfigService, mock: MockMongoService) => {
+            const isUnittest = () => config.get(`NODE_ENV`).includes(`test`);
+            if (isUnittest()) logger.log(`using mock mongo server`);
+            let url = config.get<string>(`MONGO_URL`);
+            if (!url)
+              if (isUnittest()) url = await mock.getUri();
+              else throw new Error(`mongo url not specified!`);
+            return {
+              entities: args.entities,
+              autoLoadEntities: true,
+              type: `mongodb`,
+              synchronize: true,
+              url,
+              useNewUrlParser: true,
+              useUnifiedTopology: true,
+            };
+          },
+        }),
+      ],
     };
-  },
-});
-
-export { MongoConnectionModule };
+  }
+}

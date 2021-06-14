@@ -1,7 +1,7 @@
 import {
+  DeleteDateColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Column,
   ObjectIdColumn,
   ObjectID,
 } from 'typeorm';
@@ -20,6 +20,6 @@ export abstract class Timestamp extends Base {
 }
 
 export abstract class Persistent extends Timestamp {
-  @Column({ default: false })
-  Deleted!: boolean;
+  @DeleteDateColumn()
+  DeletedAt!: Date;
 }
