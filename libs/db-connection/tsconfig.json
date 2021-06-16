@@ -3,9 +3,9 @@
   "include": ["src", "types"],
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "ESNext",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "target": "ESNext",
     "module": "CommonJS",
     "lib": ["dom", "esnext"],
     "importHelpers": true,

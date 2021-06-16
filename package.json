@@ -2,6 +2,7 @@
   "name": "kesci-nest-demo",
   "private": true,
   "scripts": {
+    "format": "pretty-quick --staged",
     "build:libs": "lerna run --scope @nest-libs/* --include-dependencies build",
     "clean:mongo": "docker rm -f mongo",
     "clean:infra": "concurrently \"npm run clean:mongo\"",
@@ -12,14 +13,10 @@
     "dev:jobRunner": "lerna --scope job-runner run start:dev --stream",
     "dev:services": "npm run build:libs && concurrently \"cross-env PORT=3001 npm run dev:crud\" \"cross-env PORT=3002 npm run dev:jobRunner\"",
     "dev:apps": "concurrently \"sleep 20 && cross-env PORT=3000 npm run dev:gateway\" \"npm run dev:services\"",
-    "dev": "npm run clean:infra && npm run dev:infra && npm run dev:apps"
+    "dev": "npm run clean:infra && npm run dev:infra && npm run dev:apps",
+    "prepare": "husky install"
   },
   "dependencies": {},
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "devDependencies": {
     "lerna": "^4.0.0",
     "concurrently": "^6.1.0",

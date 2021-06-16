@@ -1,27 +1,26 @@
 import { Injectable, Module, INestApplication } from '@nestjs/common';
-import { TypeOrmModule, InjectRepository } from '@nestjs/typeorm';
+import { InjectModel, TypegooseModule } from 'nestjs-typegoose';
 import { Test } from '@nestjs/testing';
-import { Repository, Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
+import { ReturnModelType, prop, defaultClasses } from '@typegoose/typegoose';
+import { Types } from 'mongoose';
 
 import { MongoConnectionModule } from './mongo.module';
 
-@Entity()
-class TestEntity {
-  @ObjectIdColumn()
-  id!: ObjectID;
-  @Column()
+class TestEntity implements defaultClasses.Base {
+  _id!: Types.ObjectId;
+  id!: string;
+  @prop()
   random!: number;
 }
 
 @Injectable()
 class TestService {
   constructor(
-    @InjectRepository(TestEntity) private col: Repository<TestEntity>
+    @InjectModel(TestEntity) private col: ReturnModelType<typeof TestEntity>
   ) {}
 
-  async create(args: Omit<TestEntity, 'id'>) {
-    const doc = this.col.create(args);
-    return this.col.save(doc);
+  async create(args: Omit<TestEntity, keyof defaultClasses.Base>) {
+    return this.col.create(args);
   }
 
   async find(filter: Partial<TestEntity>) {
@@ -30,7 +29,7 @@ class TestService {
 }
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TestEntity])],
+  imports: [TypegooseModule.forFeature([TestEntity])],
   providers: [TestService],
   exports: [TestService],
 })
@@ -43,10 +42,7 @@ describe(MongoConnectionModule.name, () => {
     `can create connection to database in unittest environment`,
     async () => {
       const moduleRef = await Test.createTestingModule({
-        imports: [
-          MongoConnectionModule.forRoot({ entities: [TestEntity] }),
-          TestModule,
-        ],
+        imports: [MongoConnectionModule.forRoot(), TestModule],
       }).compile();
       app = moduleRef.createNestApplication();
       await app.init();
