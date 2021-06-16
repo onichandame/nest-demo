@@ -1,7 +1,7 @@
 import { prop, index } from '@typegoose/typegoose';
-import { ROLE } from '@kesci/constants';
+import { ROLE } from '@nest-libs/constants';
 
-import { Persistent } from './persistent';
+import { Persistent } from './base';
 import { Credential } from './credential';
 
 @index(

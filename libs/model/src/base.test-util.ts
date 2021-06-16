@@ -44,3 +44,5 @@ export class TestModule {
     return this.module?.close();
   }
 }
+
+export const createRandomStr = () => Math.random().toString(36).substr(4, 5);
