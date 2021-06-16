@@ -1,7 +1,7 @@
 import { prop, Ref, pre } from '@typegoose/typegoose';
 import { hashSync, compareSync } from 'bcryptjs';
 
-import { Timestamp } from './timestamp';
+import { Persistent } from './base';
 
 import { User } from './user';
 
@@ -15,23 +15,19 @@ const hashPass = (raw: string) => hashSync(raw, 4);
   [`update`, `updateMany`, `updateOne`, `findOneAndUpdate`],
   function (next) {
     const update = this.getUpdate();
-    type UpdateBodyWithPass = Extract<typeof update, { password?: string }>;
-    const isUpdateBodyWithPass = (raw: any): raw is UpdateBodyWithPass =>
-      !!raw.password && typeof raw.password === `string`;
-    if (isUpdateBodyWithPass(update) && update.password) {
-      this.setUpdate({ ...update, password: hashPass(update.password) });
-    }
+    if (update && !Array.isArray(update) && update.password)
+      this.update({ password: hashPass(update.password) });
     next();
   }
 )
-export class Credential extends Timestamp {
+export class Credential extends Persistent {
   @prop({ required: true, ref: () => User })
   user!: Ref<User>;
 
   @prop()
   password!: string;
 
-  public validatePass(this: Credential, raw: string) {
+  public validatePass(raw: string) {
     return compareSync(raw, this.password);
   }
 }

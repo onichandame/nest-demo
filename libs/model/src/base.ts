@@ -1,25 +1,25 @@
-import {
-  DeleteDateColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ObjectIdColumn,
-  ObjectID,
-} from 'typeorm';
+import { defaultClasses, prop, modelOptions } from '@typegoose/typegoose';
+import { Types } from 'mongoose';
 
-export abstract class Base {
-  @ObjectIdColumn()
-  _id!: ObjectID;
+export abstract class Base implements defaultClasses.Base {
+  _id!: Types.ObjectId;
+  id!: string;
 }
 
+@modelOptions({
+  schemaOptions: {
+    timestamps: { createdAt: `CreatedAt`, updatedAt: `UpdatedAt` },
+  },
+})
 export abstract class Timestamp extends Base {
-  @CreateDateColumn()
-  CreatedAt!: Date;
+  @prop()
+  CreatedAt?: Date;
 
-  @UpdateDateColumn()
-  UpdatedAt!: Date;
+  @prop()
+  UpdatedAt?: Date;
 }
 
 export abstract class Persistent extends Timestamp {
-  @DeleteDateColumn()
-  DeletedAt!: Date;
+  @prop()
+  DeletedAt?: Date;
 }
