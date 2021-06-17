@@ -26,8 +26,8 @@ export class User extends Persistent {
     localField: `_id`,
     foreignField: `user`,
     ref: () => Credential,
-    get: (doc) => !!doc,
+    match: { Deleted: false },
     justOne: true,
   })
-  activated?: boolean;
+  credentials?: Credential[];
 }
