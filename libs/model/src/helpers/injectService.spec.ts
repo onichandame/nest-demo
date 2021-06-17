@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { prop } from '@typegoose/typegoose';
 
-import { Service } from '../types';
+import { Collection } from '../types';
 import { Base } from '../base';
 import { TestModule } from '../base.test-util';
 import { InjectCollection } from './injectCollection';
@@ -13,7 +13,9 @@ class TestEntity extends Base {
 
 @Injectable()
 class TestService {
-  constructor(@InjectCollection(TestEntity) public col: Service<TestEntity>) {}
+  constructor(
+    @InjectCollection(TestEntity) public col: Collection<TestEntity>
+  ) {}
 }
 
 describe(__filename, () => {
