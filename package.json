@@ -1,6 +1,10 @@
 {
   "name": "kesci-nest-demo",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
   "scripts": {
     "format": "pretty-quick --staged",
     "build:libs": "lerna run --scope @nest-libs/* --include-dependencies build",

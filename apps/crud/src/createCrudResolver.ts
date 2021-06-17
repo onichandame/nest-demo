@@ -1,11 +1,12 @@
 import { DynamicModule } from '@nestjs/common';
+import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 
 type Class<T = any> = { new (..._: any[]): T };
 const isClass = (raw: any): raw is Class => typeof raw === `function`;
 
 export const createCrudResolver = (args: {
   EntityClass: Class;
-  DTOClass: Class;
+  DTOClass?: Class;
   delete?: boolean;
   update?: boolean | Class;
   create?: boolean | Class;
@@ -27,5 +28,7 @@ export const createCrudResolver = (args: {
     referenceBy: { key: args.primaryKey || `_id` },
     enableAggregate: true,
     enableTotalCount: true,
-  };
+  } as Parameters<
+    typeof NestjsQueryGraphQLModule['forFeature']
+  >[0]['resolvers'][number];
 };

@@ -46,6 +46,4 @@ export const getBootstrapper = (args: {
     await app.listen(port);
   };
 };
-
-export * from './decorators';
 export * from './factories';

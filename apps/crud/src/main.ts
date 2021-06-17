@@ -1,4 +1,4 @@
-import { getBootstrapper } from '@kesci/nest';
+import { getBootstrapper } from '@nest-libs/nest';
 
 import { AppModule } from './app.module';
 

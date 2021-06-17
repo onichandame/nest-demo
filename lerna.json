@@ -1,4 +1,6 @@
 {
-  "packages": ["apps/*", "libs/*"],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "command": { "run": { "stream": true } },
   "version": "0.0.0"
 }

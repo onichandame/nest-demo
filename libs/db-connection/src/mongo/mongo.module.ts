@@ -16,7 +16,7 @@ export class MongoConnectionModule {
           imports: [ConfigModule, MockMongoModule],
           inject: [ConfigService, MockMongoService],
           useFactory: async (config: ConfigService, mock: MockMongoService) => {
-            const isUnittest = () => config.get(`NODE_ENV`).includes(`test`);
+            const isUnittest = () => config.get(`NODE_ENV`)?.includes(`test`);
             let uri = config.get<string>(`MONGO_URL`);
             if (!uri)
               if (isUnittest()) uri = await mock.getUri();

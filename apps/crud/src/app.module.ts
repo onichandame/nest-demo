@@ -1,14 +1,12 @@
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
-import { ModelModule, User } from '@kesci/model';
-import { MongoConnectionModule } from '@kesci/mongo-connection';
+import { ModelModule, User } from '@nest-libs/model';
 import { Module } from '@nestjs/common';
 
-import { UserDTO } from './user';
+import { UserDTO, UserUpdateDTO, UserCreateDTO } from './dto';
 import { createCrudResolver } from './createCrudResolver';
 
 @Module({
   imports: [
-    MongoConnectionModule,
     NestjsQueryGraphQLModule.forFeature({
       imports: [ModelModule],
       resolvers: [
@@ -16,6 +14,8 @@ import { createCrudResolver } from './createCrudResolver';
           EntityClass: User,
           DTOClass: UserDTO,
           read: true,
+          create: UserCreateDTO,
+          update: UserUpdateDTO,
           primaryKey: `_id`,
         }),
       ],
