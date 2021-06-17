@@ -32,7 +32,6 @@
   "author": "onichandame",
   "devDependencies": {
     "@jest/types": "^27.0.2",
-    "@nest-libs/db-connection": "^0.0.0",
     "@nestjs/testing": "^7.6.17",
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^26.0.23",
@@ -47,6 +46,7 @@
     "@nestjs-query/core": "^0.27.0",
     "@nestjs-query/query-typegoose": "^0.27.0",
     "@nestjs/common": "^7.6.17",
+    "@nest-libs/db-connection": "^0.0.0",
     "@nestjs/core": "^7.6.17",
     "@nestjs/typeorm": "^7.1.5",
     "@typegoose/typegoose": "^8.0.0-beta.14",
