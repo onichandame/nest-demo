@@ -11,7 +11,7 @@ describe(__filename, () => {
     testMod = await TestModule.create({ entities: [JobRecord, Job] });
     const svc = testMod.getQueryService(Job);
     job = await svc.createOne({ name: createRandomStr(), type: JobType.CRON });
-  });
+  }, 1000 * 60);
   afterAll(() => TestModule.close(testMod));
 
   it(`can create records with default status`, async () => {

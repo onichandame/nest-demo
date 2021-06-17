@@ -10,7 +10,7 @@ describe(__filename, () => {
     testMod = await TestModule.create({ entities: [Credential, User] });
     const svc = testMod.getQueryService(User);
     user = await svc.createOne({ name: createRandomStr() });
-  });
+  }, 1000 * 60);
   afterAll(() => TestModule.close(testMod));
 
   it(`can hash password on creation or update`, async () => {

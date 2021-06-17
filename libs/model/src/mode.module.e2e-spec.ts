@@ -38,7 +38,7 @@ describe(__filename, () => {
       providers: [TestRootService],
     }).compile();
     testApp = mod.createNestApplication();
-  });
+  }, 1000 * 60);
   afterAll(async () => testApp?.close());
 
   it(`can manipulate models in providers`, async () => {

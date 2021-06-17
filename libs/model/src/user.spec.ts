@@ -5,7 +5,7 @@ describe(__filename, () => {
   let testModule: TestModule;
   beforeAll(async () => {
     testModule = await TestModule.create({ entities: [User] });
-  });
+  }, 1000 * 60);
   afterAll(() => TestModule.close(testModule));
 
   it(`can create user with default roles`, async () => {

@@ -25,7 +25,7 @@ describe(__filename, () => {
       entities: [TestEntity],
       providers: [TestService],
     });
-  });
+  }, 1000 * 60);
   afterAll(() => TestModule.close(testMod));
 
   it(`can use injected collection`, async () => {
