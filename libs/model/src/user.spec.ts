@@ -9,8 +9,8 @@ describe(__filename, () => {
   afterAll(() => TestModule.close(testModule));
 
   it(`can create user with default roles`, async () => {
-    const svc = testModule.getQueryService(User);
-    const doc = await svc.createOne({ name: createRandomStr() });
-    expect(doc?.roles?.length).toBeTruthy();
+    const model = testModule.getModel(User);
+    const doc = await model.create({ name: createRandomStr() });
+    expect(doc.roles.length).toBeGreaterThan(0);
   });
 });

@@ -25,6 +25,8 @@ export class MongoConnectionModule {
               uri,
               useNewUrlParser: true,
               useUnifiedTopology: true,
+              useCreateIndex: true,
+              useFindAndModify: false,
             };
           },
         }),

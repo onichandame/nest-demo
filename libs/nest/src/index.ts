@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 //import { GqlExecutionContext } from '@nestjs/graphql';
 import { ConfigService, ConfigModule } from '@nestjs/config';
+import { ModelModule } from '@nest-libs/model';
 import {
   //ExecutionContext,
   //Injectable,
@@ -24,7 +25,7 @@ const defaultPort = 80;
 @Module({})
 class Base {
   static forRoot(mod: any[]): DynamicModule {
-    const modules = [ConfigModule, ...mod];
+    const modules = [ModelModule, ConfigModule, ...mod];
     return { module: Base, imports: modules };
   }
 }

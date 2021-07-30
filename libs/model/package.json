@@ -43,21 +43,16 @@
   },
   "dependencies": {
     "@nest-libs/constants": "^0.0.0",
-    "@nestjs-query/core": "^0.27.0",
-    "@nestjs-query/query-typegoose": "^0.27.0",
-    "@nestjs/common": "^7.6.17",
     "@nest-libs/db-connection": "^0.0.0",
+    "@nestjs/common": "^7.6.17",
     "@nestjs/core": "^7.6.17",
-    "@nestjs/typeorm": "^7.1.5",
-    "@typegoose/typegoose": "^8.0.0-beta.14",
+    "@typegoose/typegoose": "^8.0.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "dataloader": "^2.0.0",
-    "graphql": "^15.5.0",
-    "graphql-subscriptions": "^1.2.1",
-    "mongoose": "^5.12.14",
-    "nestjs-typegoose": "^7.1.38",
-    "typeorm": "^0.2.34"
+    "mongodb": "^4.0.1",
+    "mongoose": "^5.13.3",
+    "nestjs-typegoose": "^7.1.38"
   }
 }

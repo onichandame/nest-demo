@@ -1,10 +1,9 @@
 import { Test } from '@nestjs/testing';
-import { prop } from '@typegoose/typegoose';
+import { prop, ReturnModelType } from '@typegoose/typegoose';
+import { InjectModel } from 'nestjs-typegoose';
 import { INestApplication, Injectable, Module } from '@nestjs/common';
 
 import { Base } from './base';
-import { InjectCollection } from './helpers';
-import { Collection } from './types';
 import { ModelModule } from './model.module';
 
 class TestEntity extends Base {
@@ -15,14 +14,14 @@ class TestEntity extends Base {
 @Injectable()
 class TestRootService {
   constructor(
-    @InjectCollection(TestEntity) public col: Collection<TestEntity>
+    @InjectModel(TestEntity) public col: ReturnModelType<typeof TestEntity>
   ) {}
 }
 
 @Injectable()
 class TestSecondaryService {
   constructor(
-    @InjectCollection(TestEntity) public col: Collection<TestEntity>
+    @InjectModel(TestEntity) public col: ReturnModelType<typeof TestEntity>
   ) {}
 }
 
@@ -44,14 +43,14 @@ describe(__filename, () => {
   it(`can manipulate models in providers`, async () => {
     const svc = testApp.get(TestRootService);
     expect(svc);
-    const doc = await svc.col.createOne({ random: Math.random() });
+    const doc = await svc.col.create({ random: Math.random() });
     expect(doc);
   });
 
   it(`can manipulate models in children modules`, async () => {
     const svc = testApp.get(TestSecondaryService);
     expect(svc);
-    const doc = await svc.col.createOne({ random: Math.random() });
+    const doc = await svc.col.create({ random: Math.random() });
     expect(doc);
   });
 });

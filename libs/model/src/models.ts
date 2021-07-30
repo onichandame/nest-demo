@@ -1,3 +1,3 @@
-export { Job } from './job';
+export { JobRecord } from './job';
 export { User } from './user';
 export { Credential } from './credential';

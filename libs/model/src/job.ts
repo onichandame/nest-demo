@@ -1,22 +1,12 @@
-import { Ref, prop } from '@typegoose/typegoose';
-import { JobType, JobStatus } from '@nest-libs/constants';
+import { index, Ref, prop } from '@typegoose/typegoose';
+import { JobStatus } from '@nest-libs/constants';
 
 import { Persistent } from './base';
 
-export class Job extends Persistent {
-  @prop({ required: true, unique: true })
-  name!: string;
-
-  @prop({ required: true, enum: JobType })
-  type!: JobType;
-
-  @prop({ ref: () => JobRecord, foreignField: `job`, localField: `_id` })
-  records?: Ref<JobRecord>[];
-}
-
+@index<JobRecord>({ job: 1 })
 export class JobRecord extends Persistent {
-  @prop({ required: true, ref: () => Job })
-  job!: Ref<Job>;
+  @prop({ required: true })
+  job!: string;
 
   @prop({ required: true, enum: JobStatus, default: () => JobStatus.PENDING })
   status!: JobStatus;

@@ -8,18 +8,18 @@ export abstract class Base implements defaultClasses.Base {
 
 @modelOptions({
   schemaOptions: {
-    timestamps: { createdAt: `CreatedAt`, updatedAt: `UpdatedAt` },
+    timestamps: { createdAt: `createdAt`, updatedAt: `updatedAt` },
   },
 })
 export abstract class Timestamp extends Base {
   @prop()
-  CreatedAt?: Date;
+  createdAt!: Date;
 
   @prop()
-  UpdatedAt?: Date;
+  updatedAt!: Date;
 }
 
 export abstract class Persistent extends Timestamp {
   @prop()
-  DeletedAt?: Date;
+  deletedAt?: Date;
 }

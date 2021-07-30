@@ -1,15 +1,20 @@
 import { Module } from '@nestjs/common';
-import { ModelModule } from '@kesci/model';
-
-import { JobsToken } from './constants';
+import {
+  User,
+  Credential,
+  ModelModule,
+  TypegooseModule,
+} from '@nest-libs/model';
 
 // import jobs here
 import { InitAdmin } from './initAdmin';
 
+export const JobsToken = Symbol(`jobs`);
+
 const Jobs = [InitAdmin];
 
 @Module({
-  imports: [ModelModule],
+  imports: [ModelModule, TypegooseModule.forFeature([User, Credential])],
   exports: [JobsToken],
   providers: [
     ...Jobs,

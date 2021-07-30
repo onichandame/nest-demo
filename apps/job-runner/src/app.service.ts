@@ -4,12 +4,17 @@ import {
   Injectable,
   OnApplicationBootstrap,
 } from '@nestjs/common';
-import { JobStatus, JobType } from '@kesci/constants';
-import { InjectModel } from 'nestjs-typegoose';
-import { waitTil } from '@kesci/miscellaneous';
-import { Model, Job, JobRecord, Document } from '@kesci/model';
+import { Interval } from '@nestjs/schedule';
+import { JobStatus } from '@nest-libs/constants';
+import { parseExpression } from 'cron-parser';
+import {
+  JobRecord,
+  InjectModel,
+  ReturnModelType,
+  DocumentType,
+} from '@nest-libs/model';
 
-import { JobsToken, BaseJob, BaseCronJob, BaseIntervalJob } from './jobs';
+import { JobsToken, BaseJob } from './jobs';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
@@ -17,16 +22,14 @@ export class AppService implements OnApplicationBootstrap {
 
   constructor(
     @InjectModel(JobRecord)
-    private jobRecordCol: Model<JobRecord>,
-    @InjectModel(Job)
-    private jobCol: Model<Job>,
+    private jobRecordCol: ReturnModelType<typeof JobRecord>,
     @Inject(JobsToken) private jobs: BaseJob[],
   ) {}
 
-  private async initRecord(job: Job, prev?: Document<JobRecord>) {
+  private async initRecord(job: BaseJob, prev?: DocumentType<JobRecord>) {
     try {
       return await this.jobRecordCol.create({
-        job,
+        job: job.name,
         prev,
         status: JobStatus.PENDING,
       });
@@ -37,26 +40,25 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   private async closeRecord(
-    record: Document<JobRecord>,
+    record: DocumentType<JobRecord>,
     status: JobStatus.ERROR | JobStatus.FINISHED,
     output: string,
   ) {
     return await this.jobRecordCol
-      .findOneAndUpdate(
-        { _id: record.id, status: JobStatus.PENDING },
-        { status, output },
-        { new: true },
-      )
+      .findByIdAndUpdate(record.id, { status, output }, { new: true })
       .exec();
   }
 
+  getJobByName(name: string) {
+    for (const job of this.currentJobs) {
+      if (job.name === name) return job;
+    }
+    throw new Error(`cannot find job ${name}!`);
+  }
+
   async getLastRecord(job: BaseJob) {
-    return this.jobRecordCol
-      .findOne(
-        { job: await this.getData(job) },
-        {},
-        { sort: { CreatedAt: -1 } },
-      )
+    return await this.jobRecordCol
+      .findOne({ job: job.name }, {}, { sort: `-createdAt` })
       .exec();
   }
 
@@ -64,136 +66,98 @@ export class AppService implements OnApplicationBootstrap {
     return this.jobs;
   }
 
-  private async countRecords(job: BaseJob) {
-    return this.jobRecordCol
-      .countDocuments({ job: await this.getData(job) })
-      .exec();
+  async getRunJobs() {
+    return (await this.jobRecordCol.distinct(`job`).exec()) as string[];
   }
 
-  private async getData(job: BaseJob) {
-    return this.jobCol
-      .findOne({ name: job.name })
-      .orFail(new Error(`job ${job.name} not loaded in database`))
-      .exec();
-  }
-
-  async runJob(job: BaseJob, prevRecord?: Document<JobRecord>) {
-    let record = await this.initRecord(await this.getData(job), prevRecord);
-    this.logger.log(`job ${job.name} started`);
-    try {
-      const result = await job.run();
-      record = await this.closeRecord(
-        record,
-        JobStatus.FINISHED,
-        JSON.stringify(result),
-      );
-      this.logger.log(`job ${job.name} finished`);
-    } catch (e) {
-      record = await this.closeRecord(
-        record,
-        JobStatus.FINISHED,
-        JSON.stringify(e.message),
-      );
-      this.logger.log(`job ${job.name} failed with error: ${e.message}`);
+  async runJob(job: BaseJob, prevRecord?: DocumentType<JobRecord>) {
+    if (job.totalRuns >= 0) {
+      const totalRuns = await this.jobRecordCol
+        .countDocuments({ job: job.name })
+        .exec();
+      if (totalRuns >= job.totalRuns) return;
     }
+    if (job.successfulRuns >= 0) {
+      const successfulRuns = await this.jobRecordCol
+        .countDocuments({
+          job: job.name,
+          status: { $in: [JobStatus.FINISHED, JobStatus.PENDING] },
+        })
+        .exec();
+      if (successfulRuns >= job.successfulRuns) return;
+    }
+    let record = await this.initRecord(job, prevRecord);
+    if (!record) return;
+    this.logger.log(`job ${job.name} started! recorded as ${record.id}`);
+    let result: string;
+    let success: boolean;
+    try {
+      result = JSON.stringify(await job.run());
+      success = true;
+    } catch (e) {
+      this.logger.warn(e);
+      result = e.message;
+      success = false;
+    }
+    record = await this.closeRecord(
+      record,
+      JobStatus[success ? `FINISHED` : `ERROR`],
+      result,
+    );
+    this.logger.log(
+      `job ${job.name} ${success ? `finished` : `failed`} in run ${record.id}`,
+    );
+    if (job.fatal && !success)
+      throw new Error(`job ${job.name} failed fatally!`);
     return record;
   }
 
-  private getJobClass(job: BaseJob) {
-    if (job instanceof BaseCronJob) return BaseCronJob;
-    else if (job instanceof BaseIntervalJob) return BaseIntervalJob;
-    else return BaseJob;
-  }
-
-  private getJobType(job: BaseJob) {
-    const cls = this.getJobClass(job);
-    switch (cls) {
-      case BaseCronJob:
-        return JobType.CRON;
-      case BaseIntervalJob:
-        return JobType.INTERVAL;
-      default:
-        throw new Error(`type of job ${job.name} not recognized!`);
-    }
-  }
-
-  private async auditJobs() {
-    await Promise.all([
-      Promise.all(
-        this.jobs.map((job) =>
-          this.jobCol
-            .findOneAndUpdate(
-              { name: job.name },
-              {
-                name: job.name,
-                type: this.getJobType(job),
-                Deleted: false,
-              },
-              { upsert: true },
-            )
-            .exec(),
-        ),
-      ),
-      this.jobCol
-        .find()
-        .where({ name: { $nin: this.jobs.map((v) => v.name) } })
-        .updateMany({ Deleted: true })
-        .exec(),
-    ]);
-  }
-
-  private async bootstrapCronJob(job: BaseCronJob) {
-    while (job.interval.hasNext()) {
-      const date = job.interval.next().toDate();
-      const prevRecord = await this.getLastRecord(job);
-      const count = await this.countRecords(job);
-      if (job.isOverLimit(count)) break;
-      if (!job.hasBeenRun(date, prevRecord)) {
-        await waitTil(date);
-        await this.runJob(job, prevRecord);
-      }
-    }
-  }
-
-  private async bootstrapIntervalJob(job: BaseIntervalJob) {
-    while (true) {
-      const count = await this.countRecords(job);
-      if (job.isOverLimit(count)) break;
-      const prevRecord = await this.getLastRecord(job);
-      if (prevRecord) {
-        const nextTick = new Date(
-          prevRecord.CreatedAt.getTime() + job.interval,
-        );
-        await waitTil(nextTick);
-      }
-      await this.runJob(job, prevRecord);
-    }
-  }
-
-  getJob(name: string) {
-    const job = this.jobs.find((j) => j.name === name);
-    return job;
-  }
-
-  private getJobImpl(j: Job) {
-    const result = this.jobs.find((job) => job.name === j.name);
-    if (result) return result;
-    else throw new Error(`job ${j.name} not implemented`);
-  }
-
-  private async loadJobs() {
-    await this.auditJobs();
-
-    const jobs = await this.jobCol.find({ Deleted: false }).exec();
-    jobs.forEach((job) => {
-      const impl = this.getJobImpl(job);
-      if (impl instanceof BaseCronJob) this.bootstrapCronJob(impl);
-      else if (impl instanceof BaseIntervalJob) this.bootstrapIntervalJob(impl);
-      else throw new Error(`job type ${job.type} not supported!`);
-    });
-  }
-
   async onApplicationBootstrap() {
-    await this.loadJobs();
+    const loadAJob = async (job: BaseJob) => {
+      if (job.immediate) {
+        this.runJob(job, await this.getLastRecord(job));
+      }
+      if (job.interval) {
+        setInterval(async () => {
+          const prev = await this.getLastRecord(job);
+          if (
+            prev &&
+            Date.now() - prev.createdAt.getTime() > job.interval - 1000
+          )
+            this.runJob(job, prev);
+        }, job.interval);
+      }
+      if (job.cron) {
+        const cron = parseExpression(job.cron);
+        const runNext = () => {
+          setTimeout(async () => {
+            const prev = await this.getLastRecord(job);
+            if (
+              prev &&
+              prev.createdAt.getTime() - 1000 < cron.prev().toDate().getTime()
+            )
+              this.runJob(job, prev);
+            runNext();
+          }, cron.next().toDate().getTime() - Date.now());
+        };
+        runNext();
+      }
+    };
+    await Promise.all(this.currentJobs.map((v) => loadAJob(v)));
+  }
+
+  @Interval(1000 * 60 * 5)
+  async audit() {
+    const cursor = this.jobRecordCol
+      .find({ status: JobStatus.PENDING })
+      .cursor();
+    for await (const record of cursor) {
+      const job = this.getJobByName(record.job);
+      if (Date.now() - record.createdAt.getTime() >= job.timeout) {
+        record
+          .updateOne({ status: JobStatus.ERROR, output: `timed out` })
+          .exec();
+      }
+    }
   }
 }

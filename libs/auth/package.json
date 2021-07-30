@@ -1,0 +1,14 @@
+{
+  "name": "@nest-libs/auth",
+  "version": "0.0.0",
+  "description": "auth related utils",
+  "main": "dist/index",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "auth"
+  ],
+  "author": "onichandame",
+  "license": "MIT"
+}

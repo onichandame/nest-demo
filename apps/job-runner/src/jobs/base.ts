@@ -1,38 +1,31 @@
-import { parseExpression } from 'cron-parser';
-import { JobType } from '@kesci/constants';
-import { JobRecord } from '@kesci/model';
-
 export abstract class BaseJob {
   abstract run(): any;
+  abstract timeout: number;
 
-  limit = -1;
+  interval: number;
+  cron: string;
+  immediate = false;
+
+  totalRuns = -1;
+  successfulRuns = -1;
+  fatal = false;
 
   get name() {
     return this.constructor.name;
   }
-
-  isOverLimit(count: number) {
-    return this.limit < 0 || count >= this.limit;
-  }
 }
 
-export abstract class BaseCronJob extends BaseJob {
+export abstract class CronJob extends BaseJob {
   abstract cron: string;
-
-  get interval() {
-    return parseExpression(this.cron);
-  }
-
-  hasBeenRun(date: Date, lastRecord: JobRecord) {
-    return date.getTime() < lastRecord.CreatedAt.getTime();
-  }
 }
 
-export abstract class BaseIntervalJob extends BaseJob {
+export abstract class IntervalJob extends BaseJob {
   // ms
   abstract interval: number;
 }
 
-export abstract class BaseNceJob extends BaseIntervalJob {
-  abstract limit: number;
+export abstract class ImmediateJob extends BaseJob {
+  abstract totalRuns: number;
+  abstract successfulRuns: number;
+  readonly immediate = true;
 }

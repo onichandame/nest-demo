@@ -16,7 +16,7 @@ export class User extends Persistent {
   @prop({ required: true, unique: true })
   name!: string;
 
-  @prop({ type: () => [Number], enum: ROLE, default: [ROLE.DALIT] })
+  @prop({ type: () => [Number], enum: ROLE, default: () => [ROLE.DALIT] })
   roles!: ROLE[];
 
   @prop({ required: false })

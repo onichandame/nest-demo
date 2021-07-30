@@ -1,25 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { ROLE } from '@kesci/constants';
-import { InjectModel } from 'nestjs-typegoose';
-import { Model, Credential, User } from '@kesci/model';
+import { ROLE } from '@nest-libs/constants';
+import {
+  Credential,
+  User,
+  InjectModel,
+  ReturnModelType,
+} from '@nest-libs/model';
 
-import { BaseNceJob } from './base';
+import { ImmediateJob } from './base';
 
 @Injectable()
-export class InitAdmin extends BaseNceJob {
-  interval = 0;
-  limit = 1;
+export class InitAdmin extends ImmediateJob {
+  successfulRuns = 1;
+  totalRuns = -1;
+  fatal = true;
+  timeout = 1000 * 60;
 
   constructor(
-    @InjectModel(User) private users: Model<typeof User>,
+    @InjectModel(User) private users: ReturnModelType<typeof User>,
     @InjectModel(Credential)
-    private creds: Model<typeof Credential>,
+    private creds: ReturnModelType<typeof Credential>,
   ) {
     super();
   }
+
   async run() {
-    const admins = await this.users.find({ roles: ROLE.BRAHMIN }).exec();
-    if (!admins.length) {
+    const adminCount = await this.users.countDocuments({ roles: ROLE.BRAHMIN });
+    if (!adminCount) {
       const user = await this.users.create({
         roles: [ROLE.BRAHMIN],
         name: `admin`,
