@@ -6,6 +6,8 @@ import {
   ObjectType,
   Field,
 } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
+import { AdminRequired } from '@nest-libs/auth';
 import { JobStatus } from '@nest-libs/constants';
 import { JobRecord } from '@nest-libs/model';
 
@@ -25,6 +27,7 @@ class Record implements Partial<JobRecord> {
 export class JobResolver {
   constructor(private svc: AppService) {}
 
+  @UseGuards(AdminRequired)
   @Mutation(() => Record)
   async runAJob(@Args(`name`) name: string) {
     const job = this.svc.getJobByName(name);

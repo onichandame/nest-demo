@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import { ReturnModelType, prop, defaultClasses } from '@typegoose/typegoose';
 import { Types } from 'mongoose';
 
-import { MongoConnectionModule } from './mongo.module';
+import { ConnectionModule } from './connection.module';
 
 class TestEntity implements defaultClasses.Base {
   _id!: Types.ObjectId;
@@ -35,14 +35,14 @@ class TestService {
 })
 class TestModule {}
 
-describe(MongoConnectionModule.name, () => {
+describe(ConnectionModule.name, () => {
   let app: INestApplication;
 
   test(
     `can create connection to database in unittest environment`,
     async () => {
       const moduleRef = await Test.createTestingModule({
-        imports: [MongoConnectionModule.forRoot(), TestModule],
+        imports: [ConnectionModule.forRoot(), TestModule],
       }).compile();
       app = moduleRef.createNestApplication();
       await app.init();

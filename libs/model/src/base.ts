@@ -1,4 +1,9 @@
-import { defaultClasses, prop, modelOptions } from '@typegoose/typegoose';
+import {
+  ReturnModelType,
+  defaultClasses,
+  prop,
+  modelOptions,
+} from '@typegoose/typegoose';
 import { Types } from 'mongoose';
 
 export abstract class Base implements defaultClasses.Base {
@@ -19,7 +24,11 @@ export abstract class Timestamp extends Base {
   updatedAt!: Date;
 }
 
-export abstract class Persistent extends Timestamp {
+export class Persistent extends Timestamp {
   @prop()
   deletedAt?: Date;
+
+  static softDelete(this: ReturnModelType<typeof Persistent>, id: string) {
+    return this.findByIdAndUpdate(id, { deletedAt: new Date() });
+  }
 }

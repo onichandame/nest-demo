@@ -7,20 +7,20 @@ import {
 } from '@onichandame/nestjs-mongodb-in-memory';
 
 @Module({})
-export class MongoConnectionModule {
+export class ConnectionModule {
   static forRoot(): DynamicModule {
     return {
-      module: MongoConnectionModule,
+      module: ConnectionModule,
       imports: [
         TypegooseModule.forRootAsync({
           imports: [ConfigModule, MockMongoModule],
           inject: [ConfigService, MockMongoService],
           useFactory: async (config: ConfigService, mock: MockMongoService) => {
             const isUnittest = () => config.get(`NODE_ENV`)?.includes(`test`);
-            let uri = config.get<string>(`MONGO_URL`);
-            if (!uri)
-              if (isUnittest()) uri = await mock.getUri();
-              else throw new Error(`mongo url not specified!`);
+            let uri: string;
+            if (isUnittest()) uri = await mock.getUri();
+            else uri = config.get<string>(`MONGO_URL`) || ``;
+            if (!uri) throw new Error(`mongo url not specified!`);
             return {
               uri,
               useNewUrlParser: true,

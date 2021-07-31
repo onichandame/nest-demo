@@ -1,26 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-//import { GqlExecutionContext } from '@nestjs/graphql';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { ModelModule } from '@nest-libs/model';
-import {
-  //ExecutionContext,
-  //Injectable,
-  Module,
-  DynamicModule,
-} from '@nestjs/common';
-//import { AuthGuard } from '@nestjs/passport';
+import { Module, DynamicModule } from '@nestjs/common';
 
-//import { AuthModule } from '@kesci/auth';
 import { createFederationModule, createFederationGateway } from './factories';
 
 const defaultPort = 80;
-
-//@Injectable()
-//class GqlSessionGuard extends AuthGuard(`jwt`) {
-//  getRequest(ctx: ExecutionContext) {
-//    return GqlExecutionContext.create(ctx).getContext().req;
-//  }
-//}
 
 @Module({})
 class Base {
@@ -41,7 +26,6 @@ export const getBootstrapper = (args: {
     if (args.gateway) modules.push(createFederationGateway());
     else modules.push(createFederationModule());
     const app = await NestFactory.create(Base.forRoot(modules));
-    //if (args.gateway) app.useGlobalGuards(new GqlSessionGuard());
     const config = app.get(ConfigService);
     const port = config.get<string>(`PORT`) || args.port || defaultPort;
     await app.listen(port);

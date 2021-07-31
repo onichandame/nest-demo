@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { MongoConnectionModule } from '@nest-libs/db-connection';
+import { ConnectionModule } from './connection';
 import { TypegooseModule, getModelToken } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { AnyParamConstructor } from '@typegoose/typegoose/lib/types';
@@ -17,7 +17,7 @@ export class TestModule {
     const instance = new this();
     instance.module = await Test.createTestingModule({
       imports: [
-        MongoConnectionModule.forRoot(),
+        ConnectionModule.forRoot(),
         TypegooseModule.forFeature(args.entities),
         ...(args.imports || []),
       ],

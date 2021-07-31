@@ -1,17 +1,26 @@
 import { GraphQLFederationModule } from '@nestjs/graphql';
-//import { AuthModule, AuthService } from '@kesci/auth';
+import { Request, Response } from 'express';
+import { Context, AuthModule, AuthService } from '@nest-libs/auth';
+import { XUserHeader } from '@nest-libs/constants';
 
 export const createFederationModule = () =>
   GraphQLFederationModule.forRootAsync({
-    //imports: [AuthModule],
-    //inject: [AuthService],
-    useFactory: (/*auth: AuthService*/) => {
+    imports: [AuthModule],
+    inject: [AuthService],
+    useFactory: (auth: AuthService) => {
       return {
         autoSchemaFile: true,
-        //context: async ({ req }) => {
-        //  const user = await auth.parseUserAtService(req);
-        //  return { user, req };
-        //},
+        context: async (raw: {
+          req: Request;
+          res: Response;
+        }): Promise<Context> => {
+          const id = raw.req.headers[XUserHeader];
+          if (!!id && typeof id === `string`) {
+            const user = await auth.findUser(id);
+            return { ...raw, user };
+          }
+          return { user: undefined, ...raw };
+        },
       };
     },
   });
