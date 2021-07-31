@@ -1,5 +1,4 @@
-import { DynamicModule } from '@nestjs/common';
-import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryQueryGraphql, NestjsCommon } from '@nest-libs/deps';
 
 type Class<T = any> = { new (..._: any[]): T };
 const isClass = (raw: any): raw is Class => typeof raw === `function`;
@@ -11,7 +10,7 @@ export const createCrudResolver = (args: {
   update?: boolean | Class;
   create?: boolean | Class;
   read?: boolean;
-  imports?: (Class | DynamicModule)[];
+  imports?: (Class | NestjsCommon.DynamicModule)[];
   service?: Class;
   primaryKey?: string;
 }) => {
@@ -29,6 +28,6 @@ export const createCrudResolver = (args: {
     enableAggregate: true,
     enableTotalCount: true,
   } as Parameters<
-    typeof NestjsQueryGraphQLModule['forFeature']
+    typeof NestjsQueryQueryGraphql.NestjsQueryGraphQLModule['forFeature']
   >[0]['resolvers'][number];
 };

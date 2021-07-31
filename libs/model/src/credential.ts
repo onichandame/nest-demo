@@ -1,17 +1,16 @@
-import { prop, Ref, pre } from '@typegoose/typegoose';
-import { hashSync, compareSync } from 'bcryptjs';
+import { Typegoose, bcryptjs } from '@nest-libs/deps';
 
 import { Persistent } from './base';
 
 import { User } from './user';
 
-const hashPass = (raw: string) => hashSync(raw, 4);
+const hashPass = (raw: string) => bcryptjs.hashSync(raw, 4);
 
-@pre<Credential>(`save`, function (next) {
+@Typegoose.pre<Credential>(`save`, function (next) {
   this.password = hashPass(this.password);
   next();
 })
-@pre<Credential>(
+@Typegoose.pre<Credential>(
   [`update`, `updateMany`, `updateOne`, `findOneAndUpdate`],
   function (next) {
     const update = this.getUpdate();
@@ -21,13 +20,13 @@ const hashPass = (raw: string) => hashSync(raw, 4);
   }
 )
 export class Credential extends Persistent {
-  @prop({ required: true, ref: () => User })
-  user!: Ref<User>;
+  @Typegoose.prop({ required: true, ref: () => User })
+  user!: Typegoose.Ref<User>;
 
-  @prop()
+  @Typegoose.prop()
   password!: string;
 
   public validatePass(raw: string) {
-    return compareSync(raw, this.password);
+    return bcryptjs.compareSync(raw, this.password);
   }
 }

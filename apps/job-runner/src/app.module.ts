@@ -1,17 +1,16 @@
-import { Module } from '@nestjs/common';
-import { ScheduleModule } from '@nestjs/schedule';
-import { JobRecord, ModelModule, TypegooseModule } from '@nest-libs/model';
+import { NestjsCommon, NestjsTypegoose, NestjsSchedule } from '@nest-libs/deps';
+import { JobRecord, ModelModule } from '@nest-libs/model';
 
 import { AppService } from './app.service';
 import { JobResolver } from './job.resolver';
 import { JobsModule } from './jobs';
 
-@Module({
+@NestjsCommon.Module({
   imports: [
-    ScheduleModule.forRoot(),
+    NestjsSchedule.ScheduleModule.forRoot(),
     ModelModule,
     JobsModule,
-    TypegooseModule.forFeature([JobRecord]),
+    NestjsTypegoose.TypegooseModule.forFeature([JobRecord]),
   ],
   providers: [AppService, JobResolver],
 })

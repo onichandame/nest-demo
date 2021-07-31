@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common";
-import { ModelModule, TypegooseModule, User } from "@nest-libs/model";
+import { ModelModule, User } from "@nest-libs/model";
+import { NestjsCommon, NestjsTypegoose } from "@nest-libs/deps";
 
 import { AuthService } from "./auth.service";
 import { SessionService } from "./session.service";
 
-@Module({
-  imports: [ModelModule, TypegooseModule.forFeature([User])],
+@NestjsCommon.Module({
+  imports: [ModelModule, NestjsTypegoose.TypegooseModule.forFeature([User])],
   providers: [AuthService, SessionService],
   exports: [AuthService, SessionService],
 })

@@ -1,8 +1,8 @@
-import { Config } from '@jest/types';
+import { JestTypes } from '@nest-libs/deps';
 
 export default {
   verbose: true,
   preset: `ts-jest`,
   testEnvironment: `node`,
   maxWorkers: 4,
-} as Config.InitialOptions;
+} as JestTypes.Config.InitialOptions;

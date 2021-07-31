@@ -1,38 +1,42 @@
-import { Test } from '@nestjs/testing';
-import { prop, ReturnModelType } from '@typegoose/typegoose';
-import { InjectModel } from 'nestjs-typegoose';
-import { INestApplication, Injectable, Module } from '@nestjs/common';
+import {
+  NestjsCommon,
+  NestjsTypegoose,
+  Typegoose,
+  NestjsTesting,
+} from '@nest-libs/deps';
 
 import { Base } from './base';
 import { ModelModule } from './model.module';
 
 class TestEntity extends Base {
-  @prop()
+  @Typegoose.prop()
   random!: number;
 }
 
-@Injectable()
+@NestjsCommon.Injectable()
 class TestRootService {
   constructor(
-    @InjectModel(TestEntity) public col: ReturnModelType<typeof TestEntity>
+    @NestjsTypegoose.InjectModel(TestEntity)
+    public col: Typegoose.ReturnModelType<typeof TestEntity>
   ) {}
 }
 
-@Injectable()
+@NestjsCommon.Injectable()
 class TestSecondaryService {
   constructor(
-    @InjectModel(TestEntity) public col: ReturnModelType<typeof TestEntity>
+    @NestjsTypegoose.InjectModel(TestEntity)
+    public col: Typegoose.ReturnModelType<typeof TestEntity>
   ) {}
 }
 
-@Module({ providers: [TestSecondaryService] })
+@NestjsCommon.Module({ providers: [TestSecondaryService] })
 class TestModule {}
 
 describe(__filename, () => {
-  let testApp: INestApplication;
+  let testApp: NestjsCommon.INestApplication;
 
   beforeAll(async () => {
-    const mod = await Test.createTestingModule({
+    const mod = await NestjsTesting.Test.createTestingModule({
       imports: [ModelModule, TestModule],
       providers: [TestRootService],
     }).compile();

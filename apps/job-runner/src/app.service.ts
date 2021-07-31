@@ -1,32 +1,29 @@
 import {
-  Inject,
-  Logger,
-  Injectable,
-  OnApplicationBootstrap,
-} from '@nestjs/common';
-import { Interval } from '@nestjs/schedule';
+  CronParser,
+  NestjsTypegoose,
+  Typegoose,
+  NestjsCommon,
+  NestjsSchedule,
+} from '@nest-libs/deps';
 import { JobStatus } from '@nest-libs/constants';
-import { parseExpression } from 'cron-parser';
-import {
-  JobRecord,
-  InjectModel,
-  ReturnModelType,
-  DocumentType,
-} from '@nest-libs/model';
+import { JobRecord } from '@nest-libs/model';
 
 import { JobsToken, BaseJob } from './jobs';
 
-@Injectable()
-export class AppService implements OnApplicationBootstrap {
-  private logger = new Logger(AppService.name);
+@NestjsCommon.Injectable()
+export class AppService implements NestjsCommon.OnApplicationBootstrap {
+  private logger = new NestjsCommon.Logger(AppService.name);
 
   constructor(
-    @InjectModel(JobRecord)
-    private jobRecordCol: ReturnModelType<typeof JobRecord>,
-    @Inject(JobsToken) private jobs: BaseJob[],
+    @NestjsTypegoose.InjectModel(JobRecord)
+    private jobRecordCol: Typegoose.ReturnModelType<typeof JobRecord>,
+    @NestjsCommon.Inject(JobsToken) private jobs: BaseJob[],
   ) {}
 
-  private async initRecord(job: BaseJob, prev?: DocumentType<JobRecord>) {
+  private async initRecord(
+    job: BaseJob,
+    prev?: Typegoose.DocumentType<JobRecord>,
+  ) {
     try {
       return await this.jobRecordCol.create({
         job: job.name,
@@ -40,7 +37,7 @@ export class AppService implements OnApplicationBootstrap {
   }
 
   private async closeRecord(
-    record: DocumentType<JobRecord>,
+    record: Typegoose.DocumentType<JobRecord>,
     status: JobStatus.ERROR | JobStatus.FINISHED,
     output: string,
   ) {
@@ -70,7 +67,7 @@ export class AppService implements OnApplicationBootstrap {
     return (await this.jobRecordCol.distinct(`job`).exec()) as string[];
   }
 
-  async runJob(job: BaseJob, prevRecord?: DocumentType<JobRecord>) {
+  async runJob(job: BaseJob, prevRecord?: Typegoose.DocumentType<JobRecord>) {
     if (job.totalRuns >= 0) {
       const totalRuns = await this.jobRecordCol
         .countDocuments({ job: job.name })
@@ -128,7 +125,7 @@ export class AppService implements OnApplicationBootstrap {
         }, job.interval);
       }
       if (job.cron) {
-        const cron = parseExpression(job.cron);
+        const cron = CronParser.parseExpression(job.cron);
         const runNext = () => {
           setTimeout(async () => {
             const prev = await this.getLastRecord(job);
@@ -146,7 +143,7 @@ export class AppService implements OnApplicationBootstrap {
     await Promise.all(this.currentJobs.map((v) => loadAJob(v)));
   }
 
-  @Interval(1000 * 60 * 5)
+  @NestjsSchedule.Interval(1000 * 60 * 5)
   async audit() {
     const cursor = this.jobRecordCol
       .find({ status: JobStatus.PENDING })

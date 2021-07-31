@@ -1,31 +1,30 @@
-import { Injectable, CanActivate } from "@nestjs/common";
 import { ROLE } from "@nest-libs/constants";
-import { GqlExecutionContext } from "@nestjs/graphql";
+import { NestjsGraphql, NestjsCommon } from "@nest-libs/deps";
 
 import { Context } from "./context";
 
-@Injectable()
-export class LoginRequired implements CanActivate {
-  canActivate(context: Parameters<CanActivate["canActivate"]>[0]) {
-    const ctx = GqlExecutionContext.create(context);
+@NestjsCommon.Injectable()
+export class LoginRequired implements NestjsCommon.CanActivate {
+  canActivate(context: Parameters<NestjsCommon.CanActivate["canActivate"]>[0]) {
+    const ctx = NestjsGraphql.GqlExecutionContext.create(context);
     return !!ctx.getContext<Context>().user;
   }
 }
 
-@Injectable()
-export class AdminRequired implements CanActivate {
-  canActivate(context: Parameters<CanActivate["canActivate"]>[0]) {
-    const ctx = GqlExecutionContext.create(context);
+@NestjsCommon.Injectable()
+export class AdminRequired implements NestjsCommon.CanActivate {
+  canActivate(context: Parameters<NestjsCommon.CanActivate["canActivate"]>[0]) {
+    const ctx = NestjsGraphql.GqlExecutionContext.create(context);
     return !!ctx
       .getContext<Context>()
       .user?.roles.some((v) => [ROLE.BRAHMIN, ROLE.KSHATRIYA].includes(v));
   }
 }
 
-@Injectable()
-export class SuperAdminRequired implements CanActivate {
-  canActivate(context: Parameters<CanActivate["canActivate"]>[0]) {
-    const ctx = GqlExecutionContext.create(context);
+@NestjsCommon.Injectable()
+export class SuperAdminRequired implements NestjsCommon.CanActivate {
+  canActivate(context: Parameters<NestjsCommon.CanActivate["canActivate"]>[0]) {
+    const ctx = NestjsGraphql.GqlExecutionContext.create(context);
     return !!ctx.getContext<Context>().user?.roles.includes(ROLE.BRAHMIN);
   }
 }

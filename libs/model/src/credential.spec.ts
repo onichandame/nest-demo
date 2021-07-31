@@ -1,4 +1,4 @@
-import { DocumentType } from '@typegoose/typegoose';
+import { Typegoose } from '@nest-libs/deps';
 
 import { TestModule, createRandomStr } from './base.test-util';
 import { User } from './user';
@@ -6,7 +6,7 @@ import { Credential } from './credential';
 
 describe(__filename, () => {
   let testMod: TestModule;
-  let user: DocumentType<User>;
+  let user: Typegoose.DocumentType<User>;
   beforeAll(async () => {
     testMod = await TestModule.create({ entities: [Credential, User] });
     const model = testMod.getModel(User);
@@ -21,7 +21,7 @@ describe(__filename, () => {
     // check if password is not stored in plain text
     expect(doc.password).not.toEqual(password);
     const checkCredential = (
-      doc: DocumentType<Credential>,
+      doc: Typegoose.DocumentType<Credential>,
       password: string
     ) => {
       expect(doc.validatePass(password)).toBeTruthy();

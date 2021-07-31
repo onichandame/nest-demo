@@ -1,13 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ConnectionModule } from './connection';
-import { TypegooseModule, getModelToken } from 'nestjs-typegoose';
-import { ReturnModelType } from '@typegoose/typegoose';
-import { AnyParamConstructor } from '@typegoose/typegoose/lib/types';
+import { Typegoose, NestjsTesting, NestjsTypegoose } from '@nest-libs/deps';
 
+import { ConnectionModule } from './connection';
 import { Base } from './base';
 
 export class TestModule {
-  public module?: TestingModule;
+  public module?: NestjsTesting.TestingModule;
 
   static async create(args: {
     entities: any[];
@@ -15,10 +12,10 @@ export class TestModule {
     providers?: any[];
   }) {
     const instance = new this();
-    instance.module = await Test.createTestingModule({
+    instance.module = await NestjsTesting.Test.createTestingModule({
       imports: [
         ConnectionModule.forRoot(),
-        TypegooseModule.forFeature(args.entities),
+        NestjsTypegoose.TypegooseModule.forFeature(args.entities),
         ...(args.imports || []),
       ],
       providers: args.providers || [],
@@ -31,9 +28,9 @@ export class TestModule {
   }
 
   public getModel<T extends Base>(entity: { new (..._: any[]): T }) {
-    const svc = this.module?.get<ReturnModelType<AnyParamConstructor<T>>>(
-      getModelToken(entity.name)
-    );
+    const svc = this.module?.get<
+      Typegoose.ReturnModelType<Typegoose.types.AnyParamConstructor<T>>
+    >(NestjsTypegoose.getModelToken(entity.name));
     if (svc) return svc;
     else throw new Error(`test module not initated with the given entity!`);
   }

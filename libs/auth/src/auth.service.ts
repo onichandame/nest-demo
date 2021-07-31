@@ -1,9 +1,12 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel, ReturnModelType, User } from "@nest-libs/model";
+import { User } from "@nest-libs/model";
+import { NestjsCommon, NestjsTypegoose, Typegoose } from "@nest-libs/deps";
 
-@Injectable()
+@NestjsCommon.Injectable()
 export class AuthService {
-  constructor(@InjectModel(User) private users: ReturnModelType<typeof User>) {}
+  constructor(
+    @NestjsTypegoose.InjectModel(User)
+    private users: Typegoose.ReturnModelType<typeof User>
+  ) {}
 
   async findUser(id: string) {
     return this.users

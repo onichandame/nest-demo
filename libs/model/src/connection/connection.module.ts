@@ -1,21 +1,29 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Module, DynamicModule } from '@nestjs/common';
-import { TypegooseModule } from 'nestjs-typegoose';
 import {
-  MockMongoModule,
-  MockMongoService,
-} from '@onichandame/nestjs-mongodb-in-memory';
+  OnichandameNestjsMongodbInMemory,
+  NestjsConfig,
+  NestjsCommon,
+  NestjsTypegoose,
+} from '@nest-libs/deps';
 
-@Module({})
+@NestjsCommon.Module({})
 export class ConnectionModule {
-  static forRoot(): DynamicModule {
+  static forRoot(): NestjsCommon.DynamicModule {
     return {
       module: ConnectionModule,
       imports: [
-        TypegooseModule.forRootAsync({
-          imports: [ConfigModule, MockMongoModule],
-          inject: [ConfigService, MockMongoService],
-          useFactory: async (config: ConfigService, mock: MockMongoService) => {
+        NestjsTypegoose.TypegooseModule.forRootAsync({
+          imports: [
+            NestjsConfig.ConfigModule,
+            OnichandameNestjsMongodbInMemory.MockMongoModule,
+          ],
+          inject: [
+            NestjsConfig.ConfigService,
+            OnichandameNestjsMongodbInMemory.MockMongoService,
+          ],
+          useFactory: async (
+            config: NestjsConfig.ConfigService,
+            mock: OnichandameNestjsMongodbInMemory.MockMongoService
+          ) => {
             const isUnittest = () => config.get(`NODE_ENV`)?.includes(`test`);
             let uri: string;
             if (isUnittest()) uri = await mock.getUri();

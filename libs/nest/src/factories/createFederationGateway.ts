@@ -1,7 +1,9 @@
-import { GraphQLGatewayModule, GATEWAY_BUILD_SERVICE } from '@nestjs/graphql';
-import { Module } from '@nestjs/common';
-import { RemoteGraphQLDataSource } from '@apollo/gateway';
-import { Request, Response } from 'express';
+import {
+  express,
+  ApolloGateway,
+  NestjsGraphql,
+  NestjsCommon,
+} from '@nest-libs/deps';
 import { XUserHeader } from '@nest-libs/constants';
 import {
   AuthModule,
@@ -10,12 +12,14 @@ import {
   Context,
 } from '@nest-libs/auth';
 
-class BeforeServiceCall extends RemoteGraphQLDataSource<Context> {
+class BeforeServiceCall extends ApolloGateway.RemoteGraphQLDataSource<Context> {
   async willSendRequest({
     request,
     context,
   }: Parameters<
-    NonNullable<RemoteGraphQLDataSource<Context>['willSendRequest']>
+    NonNullable<
+      ApolloGateway.RemoteGraphQLDataSource<Context>['willSendRequest']
+    >
   >[0]) {
     if (context.user) {
       request.http?.headers.set(XUserHeader, context.user.id);
@@ -23,11 +27,11 @@ class BeforeServiceCall extends RemoteGraphQLDataSource<Context> {
   }
 }
 
-@Module({
+@NestjsCommon.Module({
   providers: [
     { provide: BeforeServiceCall, useValue: BeforeServiceCall },
     {
-      provide: GATEWAY_BUILD_SERVICE,
+      provide: NestjsGraphql.GATEWAY_BUILD_SERVICE,
       inject: [BeforeServiceCall],
       useFactory:
         (BeforeServiceCall) =>
@@ -35,21 +39,21 @@ class BeforeServiceCall extends RemoteGraphQLDataSource<Context> {
           new BeforeServiceCall({ url }),
     },
   ],
-  exports: [GATEWAY_BUILD_SERVICE],
+  exports: [NestjsGraphql.GATEWAY_BUILD_SERVICE],
 })
 class BuildServiceModule {}
 
 export const createFederationGateway = () =>
-  GraphQLGatewayModule.forRootAsync({
+  NestjsGraphql.GraphQLGatewayModule.forRootAsync({
     imports: [AuthModule, BuildServiceModule],
-    inject: [SessionService, AuthService, GATEWAY_BUILD_SERVICE],
+    inject: [SessionService, AuthService, NestjsGraphql.GATEWAY_BUILD_SERVICE],
     useFactory: async (session: SessionService, auth: AuthService) => {
       return {
         server: {
           path: `/graphql`,
           context: async (raw: {
-            req: Request;
-            res: Response;
+            req: express.Request;
+            res: express.Response;
           }): Promise<Context> => {
             if (raw.req.headers.authorization) {
               const jwt = raw.req.headers.authorization.split(`Bearer `)[1];

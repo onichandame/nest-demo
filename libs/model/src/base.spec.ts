@@ -1,10 +1,10 @@
-import { prop } from '@typegoose/typegoose';
+import { Typegoose } from '@nest-libs/deps';
 
 import { TestModule } from './base.test-util';
 import { Persistent } from './base';
 
 class TestEntity extends Persistent {
-  @prop()
+  @Typegoose.prop()
   random!: number;
 }
 

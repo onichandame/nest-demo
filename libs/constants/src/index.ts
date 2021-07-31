@@ -1,4 +1,4 @@
-import { registerEnumType } from '@nestjs/graphql';
+import { NestjsGraphql } from '@nest-libs/deps';
 
 export const XUserHeader = `x-user-id`;
 
@@ -18,17 +18,17 @@ export enum ROLE {
   // 超管
   BRAHMIN,
 }
-registerEnumType(ROLE, { name: `ROLE` });
+NestjsGraphql.registerEnumType(ROLE, { name: `ROLE` });
 
 export enum JobStatus {
   ERROR = -1,
   PENDING = 0,
   FINISHED,
 }
-registerEnumType(JobStatus, { name: `JobStatus` });
+NestjsGraphql.registerEnumType(JobStatus, { name: `JobStatus` });
 
 export enum JobType {
   CRON = 0,
   INTERVAL,
 }
-registerEnumType(JobType, { name: `JobType` });
+NestjsGraphql.registerEnumType(JobType, { name: `JobType` });

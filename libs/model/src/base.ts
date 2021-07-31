@@ -1,34 +1,31 @@
-import {
-  ReturnModelType,
-  defaultClasses,
-  prop,
-  modelOptions,
-} from '@typegoose/typegoose';
-import { Types } from 'mongoose';
+import { Typegoose, mongoose } from '@nest-libs/deps';
 
-export abstract class Base implements defaultClasses.Base {
-  _id!: Types.ObjectId;
+export abstract class Base implements Typegoose.defaultClasses.Base {
+  _id!: mongoose.Types.ObjectId;
   id!: string;
 }
 
-@modelOptions({
+@Typegoose.modelOptions({
   schemaOptions: {
     timestamps: { createdAt: `createdAt`, updatedAt: `updatedAt` },
   },
 })
 export abstract class Timestamp extends Base {
-  @prop()
+  @Typegoose.prop()
   createdAt!: Date;
 
-  @prop()
+  @Typegoose.prop()
   updatedAt!: Date;
 }
 
 export class Persistent extends Timestamp {
-  @prop()
+  @Typegoose.prop()
   deletedAt?: Date;
 
-  static softDelete(this: ReturnModelType<typeof Persistent>, id: string) {
+  static softDelete(
+    this: Typegoose.ReturnModelType<typeof Persistent>,
+    id: string
+  ) {
     return this.findByIdAndUpdate(id, { deletedAt: new Date() });
   }
 }

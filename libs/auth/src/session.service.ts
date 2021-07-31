@@ -1,19 +1,24 @@
-import { Injectable } from "@nestjs/common";
-import { plainToClass } from "class-transformer";
-import { IsString, validateOrReject } from "class-validator";
 import { jwtToken } from "@nest-libs/constants";
-import { verify } from "jsonwebtoken";
+import {
+  jsonwebtoken,
+  NestjsCommon,
+  ClassValidator,
+  ClassTransformer,
+} from "@nest-libs/deps";
 
 class Session {
-  @IsString()
+  @ClassValidator.IsString()
   user!: string;
 }
 
-@Injectable()
+@NestjsCommon.Injectable()
 export class SessionService {
   async deserialize(jwt: string) {
-    const session = plainToClass(Session, verify(jwt, jwtToken));
-    validateOrReject(session);
+    const session = ClassTransformer.plainToClass(
+      Session,
+      jsonwebtoken.verify(jwt, jwtToken)
+    );
+    await ClassValidator.validateOrReject(session);
     return session;
   }
 }

@@ -1,28 +1,32 @@
-import { prop, index } from '@typegoose/typegoose';
+import { Typegoose } from '@nest-libs/deps';
 import { ROLE } from '@nest-libs/constants';
 
 import { Persistent } from './base';
 import { Credential } from './credential';
 
-@index(
+@Typegoose.index(
   { name: 1 },
   { partialFilterExpression: { Deleted: false }, unique: true }
 )
-@index(
+@Typegoose.index(
   { email: 1 },
   { partialFilterExpression: { Deleted: false }, unique: true }
 )
 export class User extends Persistent {
-  @prop({ required: true, unique: true })
+  @Typegoose.prop({ required: true, unique: true })
   name!: string;
 
-  @prop({ type: () => [Number], enum: ROLE, default: () => [ROLE.DALIT] })
+  @Typegoose.prop({
+    type: () => [Number],
+    enum: ROLE,
+    default: () => [ROLE.DALIT],
+  })
   roles!: ROLE[];
 
-  @prop({ required: false })
+  @Typegoose.prop({ required: false })
   email?: string;
 
-  @prop({
+  @Typegoose.prop({
     localField: `_id`,
     foreignField: `user`,
     ref: () => Credential,

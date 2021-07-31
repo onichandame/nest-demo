@@ -1,35 +1,27 @@
-import {
-  ID,
-  Args,
-  Mutation,
-  Resolver,
-  ObjectType,
-  Field,
-} from '@nestjs/graphql';
-import { UseGuards } from '@nestjs/common';
+import { NestjsGraphql, NestjsCommon } from '@nest-libs/deps';
 import { AdminRequired } from '@nest-libs/auth';
 import { JobStatus } from '@nest-libs/constants';
 import { JobRecord } from '@nest-libs/model';
 
 import { AppService } from './app.service';
 
-@ObjectType()
+@NestjsGraphql.ObjectType()
 class Record implements Partial<JobRecord> {
-  @Field(() => ID)
+  @NestjsGraphql.Field(() => NestjsGraphql.ID)
   id: string;
-  @Field()
+  @NestjsGraphql.Field()
   job: string;
-  @Field()
+  @NestjsGraphql.Field()
   status: JobStatus;
 }
 
-@Resolver()
+@NestjsGraphql.Resolver()
 export class JobResolver {
   constructor(private svc: AppService) {}
 
-  @UseGuards(AdminRequired)
-  @Mutation(() => Record)
-  async runAJob(@Args(`name`) name: string) {
+  @NestjsCommon.UseGuards(AdminRequired)
+  @NestjsGraphql.Mutation(() => Record)
+  async runAJob(@NestjsGraphql.Args(`name`) name: string) {
     const job = this.svc.getJobByName(name);
     const prevRecord = await this.svc.getLastRecord(job);
     return this.svc.runJob(job, prevRecord);

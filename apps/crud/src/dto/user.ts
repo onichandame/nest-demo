@@ -1,47 +1,43 @@
-import { Field, ID, InputType, ObjectType, Directive } from '@nestjs/graphql';
 import {
-  IsString,
-  IsEmail,
-  IsOptional,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+  ClassValidator,
+  NestjsGraphql,
+  NestjsQueryQueryGraphql,
+} from '@nest-libs/deps';
 import { ROLE } from '@nest-libs/constants';
-import { FilterableField } from '@nestjs-query/query-graphql';
 import { User } from '@nest-libs/model';
 
-@ObjectType(User.name)
-@Directive(`@key(fields: "_id")`)
+@NestjsGraphql.ObjectType(User.name)
+@NestjsGraphql.Directive(`@key(fields: "_id")`)
 export class UserDTO implements Partial<User> {
-  @FilterableField(() => ID)
+  @NestjsQueryQueryGraphql.FilterableField(() => NestjsGraphql.ID)
   _id: any;
-  @FilterableField()
+  @NestjsQueryQueryGraphql.FilterableField()
   name: string;
-  @FilterableField(() => [ROLE], {
+  @NestjsQueryQueryGraphql.FilterableField(() => [ROLE], {
     allowedComparisons: [`eq`, `neq`, `in`, `notIn`],
   })
   roles: ROLE[];
-  @FilterableField({ nullable: true })
+  @NestjsQueryQueryGraphql.FilterableField({ nullable: true })
   email?: string;
 }
 
-@InputType(`${User.name}Update`)
+@NestjsGraphql.InputType(`${User.name}Update`)
 export class UserUpdateDTO implements Partial<User> {
-  @IsString()
-  @MaxLength(50)
-  @MinLength(5)
-  @IsOptional()
-  @Field({ nullable: true })
+  @ClassValidator.IsString()
+  @ClassValidator.MaxLength(50)
+  @ClassValidator.MinLength(5)
+  @ClassValidator.IsOptional()
+  @NestjsGraphql.Field({ nullable: true })
   name?: string;
-  @IsEmail()
-  @IsOptional()
-  @Field({ nullable: true })
+  @ClassValidator.IsEmail()
+  @ClassValidator.IsOptional()
+  @NestjsGraphql.Field({ nullable: true })
   email?: string;
 }
 
-@InputType(`${User.name}Create`)
+@NestjsGraphql.InputType(`${User.name}Create`)
 export class UserCreateDTO {
-  @IsString()
-  @Field()
+  @ClassValidator.IsString()
+  @NestjsGraphql.Field()
   name!: string;
 }

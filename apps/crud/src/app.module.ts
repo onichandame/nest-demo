@@ -1,13 +1,12 @@
-import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
+import { NestjsQueryQueryGraphql, NestjsCommon } from '@nest-libs/deps';
 import { ModelModule, User } from '@nest-libs/model';
-import { Module } from '@nestjs/common';
 
 import { UserDTO, UserUpdateDTO, UserCreateDTO } from './dto';
 import { createCrudResolver } from './createCrudResolver';
 
-@Module({
+@NestjsCommon.Module({
   imports: [
-    NestjsQueryGraphQLModule.forFeature({
+    NestjsQueryQueryGraphql.NestjsQueryGraphQLModule.forFeature({
       imports: [ModelModule],
       resolvers: [
         createCrudResolver({

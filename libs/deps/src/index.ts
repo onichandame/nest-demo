@@ -1,0 +1,21 @@
+// All external deps are maintained here to ensure that all libs and apps are using consistent deps
+export * as jsonwebtoken from "jsonwebtoken";
+import express from "express";
+export { express };
+export * as NestjsGraphql from "@nestjs/graphql";
+export * as NestjsCommon from "@nestjs/common";
+export * as ClassTransformer from "class-transformer";
+export * as ClassValidator from "class-validator";
+export * as NestjsTypegoose from "nestjs-typegoose";
+export * as NestjsTesting from "@nestjs/testing";
+export * as Typegoose from "@typegoose/typegoose";
+export * as mongoose from "mongoose";
+export * as NestjsConfig from "@nestjs/config";
+export * as OnichandameNestjsMongodbInMemory from "@onichandame/nestjs-mongodb-in-memory";
+export * as bcryptjs from "bcryptjs";
+export * as JestTypes from "@jest/types";
+export * as ApolloGateway from "@apollo/gateway";
+export * as NestjsCore from "@nestjs/core";
+export * as NestjsSchedule from "@nestjs/schedule";
+export * as CronParser from "cron-parser";
+export * as NestjsQueryQueryGraphql from "@nestjs-query/query-graphql";
