@@ -20,12 +20,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nest-libs/auth": "^0.0.0",
     "@nest-libs/constants": "^0.0.0",
     "@nest-libs/deps": "^0.0.0",
     "@nest-libs/model": "^0.0.0",
     "@nest-libs/nest": "^0.0.0"
   },
-  "devDependencies": {},
   "jest": {
     "moduleFileExtensions": [
       "js",

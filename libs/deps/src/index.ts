@@ -19,3 +19,5 @@ export * as NestjsCore from "@nestjs/core";
 export * as NestjsSchedule from "@nestjs/schedule";
 export * as CronParser from "cron-parser";
 export * as NestjsQueryQueryGraphql from "@nestjs-query/query-graphql";
+export * as NestjsQueryQueryTypegoose from "@nestjs-query/query-typegoose";
+export * as graphql from "graphql";

@@ -30,8 +30,7 @@ export class User extends Persistent {
     localField: `_id`,
     foreignField: `user`,
     ref: () => Credential,
-    match: { Deleted: false },
-    justOne: true,
+    match: { deletedAt: null },
   })
   credentials?: Credential[];
 }

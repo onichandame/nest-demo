@@ -15,8 +15,8 @@
     "dev:gateway": "lerna --scope gateway run start:dev --stream",
     "dev:crud": "lerna --scope crud run start:dev --stream",
     "dev:jobRunner": "lerna --scope job-runner run start:dev --stream",
-    "dev:services": "npm run build:libs && concurrently \"cross-env PORT=3001 npm run dev:crud\" \"cross-env PORT=3002 npm run dev:jobRunner\"",
-    "dev:apps": "concurrently \"sleep 20 && cross-env PORT=3000 npm run dev:gateway\" \"npm run dev:services\"",
+    "dev:services": "concurrently \"cross-env PORT=3001 npm run dev:crud\" \"cross-env PORT=3002 npm run dev:jobRunner\"",
+    "dev:apps": "npm run build:libs && concurrently \"sleep 30 && cross-env PORT=3000 npm run dev:gateway\" \"npm run dev:services\"",
     "dev": "npm run clean:infra && npm run dev:infra && npm run dev:apps",
     "prepare": "husky install"
   },
