@@ -64,9 +64,23 @@ REST 世界中没有一个普适性的解决方案，因此在不同的项目中
 
 GraphqQL 是基于 REST/POST 实现的更高层通信协议，因此其低层机制也符合上述方案。[Federation][federation]作为 GraphQL 世界中普适性的微服务实现，采用了上面第一个方案。而且其作为开箱即用的工具，除了 websocket 以外微服务需要的所有的功能都具备。
 
+[gateway 用法见此](./libs/nest/src/factories/createFederationGateway.ts)
+
+服务列表通过环境变量`SERVICE_LIST`注入
+
 ### 通用模块中心化管理
 
 在开发不同微服务时，必然会出现公用的模块。例如数据模型（mongoose schema）和身份验证鉴权逻辑等。传统的项目中将其在不同微服务中重复实现，可能会导致不一致的问题。因此采用 monorepo 模式管理公用模块和共同依赖项。
+
+[中心化 model](./libs/model)
+
+[中心化外部依赖](./libs/deps)
+
+### 字段级鉴权
+
+传统框架中鉴权在执行 controller 之前，而 REST 的 API 无法精确控制返回的字段，因此针对不同的鉴权逻辑必须制作不同的 API。在 code first GraphQL 中则不然，可以将鉴权逻辑下放到字段。
+
+[用例见此](./apps/crud/src/user/user.dto.ts)
 
 [nest]: https://docs.nestjs.com/
 [federation]: https://www.apollographql.com/docs/federation/

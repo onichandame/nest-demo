@@ -1,5 +1,7 @@
 import { getBootstrapper } from '@nest-libs/nest';
 
-const bootstrap = getBootstrapper({ gateway: true });
+import { AppModule } from './app.module';
+
+const bootstrap = getBootstrapper({ app: AppModule, gateway: true });
 
 bootstrap();
