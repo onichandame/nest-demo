@@ -3,6 +3,7 @@ import {
   ApolloGateway,
   NestjsGraphql,
   NestjsCommon,
+  NestjsConfig,
 } from '@nest-libs/deps';
 import { XUserHeader } from '@nest-libs/constants';
 import {
@@ -45,9 +46,18 @@ class BuildServiceModule {}
 
 export const createFederationGateway = () =>
   NestjsGraphql.GraphQLGatewayModule.forRootAsync({
-    imports: [AuthModule, BuildServiceModule],
-    inject: [SessionService, AuthService, NestjsGraphql.GATEWAY_BUILD_SERVICE],
-    useFactory: async (session: SessionService, auth: AuthService) => {
+    imports: [AuthModule, BuildServiceModule, NestjsConfig.ConfigModule],
+    inject: [
+      SessionService,
+      AuthService,
+      NestjsConfig.ConfigService,
+      NestjsGraphql.GATEWAY_BUILD_SERVICE,
+    ],
+    useFactory: async (
+      session: SessionService,
+      auth: AuthService,
+      config: NestjsConfig.ConfigService
+    ) => {
       return {
         server: {
           path: `/graphql`,
@@ -67,10 +77,7 @@ export const createFederationGateway = () =>
           },
         },
         gateway: {
-          serviceList: [
-            { name: `crud`, url: `http://localhost:3001/graphql` },
-            { name: `jobRunner`, url: `http://localhost:3002/graphql` },
-          ],
+          serviceList: JSON.parse(config.get<string>(`SERVICE_LIST`) || ``),
         },
       };
     },

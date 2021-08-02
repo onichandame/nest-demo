@@ -12,10 +12,11 @@
     "clean:infra": "concurrently \"npm run clean:mongo\"",
     "dev:mongo": "docker run -d --name mongo --restart always -p 27017:27017 mongo",
     "dev:infra": "npm run dev:mongo",
-    "dev:gateway": "lerna --scope gateway run start:dev --stream",
+    "dev:gateway": "cross-env SERVICE_LIST='[{\"name\":\"crud\",\"url\":\"http://localhost:3001/graphql\"},{\"name\":\"jobRunner\",\"url\":\"http://localhost:3002/graphql\"},{\"name\":\"auth\",\"url\":\"http://localhost:3003/graphql\"}]' lerna --scope gateway run start:dev --stream",
     "dev:crud": "lerna --scope crud run start:dev --stream",
     "dev:jobRunner": "lerna --scope job-runner run start:dev --stream",
-    "dev:services": "concurrently \"cross-env PORT=3001 npm run dev:crud\" \"cross-env PORT=3002 npm run dev:jobRunner\"",
+    "dev:auth": "lerna --scope auth run start:dev --stream",
+    "dev:services": "concurrently \"cross-env PORT=3001 npm run dev:crud\" \"cross-env PORT=3002 npm run dev:jobRunner\" \"cross-env PORT=3003 npm run dev:auth\"",
     "dev:apps": "npm run build:libs && concurrently \"sleep 30 && cross-env PORT=3000 npm run dev:gateway\" \"npm run dev:services\"",
     "dev": "npm run clean:infra && npm run dev:infra && npm run dev:apps",
     "prepare": "husky install"

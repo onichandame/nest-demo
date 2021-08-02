@@ -6,7 +6,7 @@ import { JobRecord } from '@nest-libs/model';
 import { AppService } from './app.service';
 
 @NestjsGraphql.ObjectType()
-class Record implements Partial<JobRecord> {
+class RunJobResponse implements Partial<JobRecord> {
   @NestjsGraphql.Field(() => NestjsGraphql.ID)
   id: string;
   @NestjsGraphql.Field()
@@ -20,8 +20,10 @@ export class JobResolver {
   constructor(private svc: AppService) {}
 
   @NestjsCommon.UseGuards(AdminRequired)
-  @NestjsGraphql.Mutation(() => Record)
-  async runAJob(@NestjsGraphql.Args(`name`) name: string) {
+  @NestjsGraphql.Mutation(() => RunJobResponse)
+  async runJob(
+    @NestjsGraphql.Args(`name`) name: string,
+  ): Promise<RunJobResponse> {
     const job = this.svc.getJobByName(name);
     const prevRecord = await this.svc.getLastRecord(job);
     return this.svc.runJob(job, prevRecord);
