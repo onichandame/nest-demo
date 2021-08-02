@@ -2,6 +2,18 @@
 
 NestJS 在企业级应用环境中的 PoC。
 
+## 用法
+
+环境要求：
+
+1. node 14+
+2. docker
+3. yarn
+
+```bash
+yarn && yarn dev
+```
+
 ## 背景
 
 国内传统 Node 框架固有的问题：
