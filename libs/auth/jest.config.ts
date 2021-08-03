@@ -1,4 +1,4 @@
-import { Config } from "@jest/types";
+//import { Config } from "@jest/types";
 
 export default {
   preset: "ts-jest",
@@ -6,4 +6,4 @@ export default {
   verbose: true,
   maxWorkers: 4,
   testPathIgnorePatterns: [`dist`],
-} as Config.InitialOptions;
+}; //as Config.InitialOptions;

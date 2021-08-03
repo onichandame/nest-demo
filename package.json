@@ -18,11 +18,12 @@
     "dev:auth": "lerna --scope auth run start:dev --stream",
     "dev:services": "concurrently \"cross-env PORT=3001 npm run dev:crud\" \"cross-env PORT=3002 npm run dev:jobRunner\" \"cross-env PORT=3003 npm run dev:auth\"",
     "dev:apps": "npm run build:libs && concurrently \"sleep 30 && cross-env PORT=3000 npm run dev:gateway\" \"npm run dev:services\"",
-    "dev": "npm run clean:infra && npm run dev:infra && npm run dev:apps",
+    "dev": "npm run clean:infra && npm run dev:infra && cross-env MONGO_URL=mongodb://localhost/test npm run dev:apps",
     "prepare": "husky install"
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/node": "^15.12.2",
     "concurrently": "^6.1.0",
     "cross-env": "^7.0.3",
     "husky": "^6.0.0",
