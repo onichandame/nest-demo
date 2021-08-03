@@ -9,10 +9,11 @@ NestJS 在企业级应用环境中的 PoC。
 1. node 14+
 2. docker
 3. yarn
-4. 端口 3000-3003 可用
+4. lerna
+5. 端口 3000-3003 可用
 
 ```bash
-yarn && yarn dev
+lerna bootstrap && yarn dev
 ```
 
 等待 gateway 服务上线，然后打开 http://localhost:3000/graphql 可以看到所有接口的定义。
